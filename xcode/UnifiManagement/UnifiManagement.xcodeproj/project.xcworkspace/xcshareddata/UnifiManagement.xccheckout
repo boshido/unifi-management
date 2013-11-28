@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>09CFC2BF-4EA4-4ABE-BDD5-67F2B9ECF105</string>
+	<key>IDESourceControlProjectName</key>
+	<string>UnifiManagement</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7F860334-8762-4E6F-A992-DF32FD0B7877</key>
+		<string>https://github.com/boshido/unifi-management.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>xcode/UnifiManagement/UnifiManagement.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7F860334-8762-4E6F-A992-DF32FD0B7877</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/boshido/unifi-management.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7F860334-8762-4E6F-A992-DF32FD0B7877</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7F860334-8762-4E6F-A992-DF32FD0B7877</string>
+			<key>IDESourceControlWCCName</key>
+			<string>unifi-management</string>
+		</dict>
+	</array>
+</dict>
+</plist>
