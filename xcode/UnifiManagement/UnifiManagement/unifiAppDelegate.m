@@ -8,11 +8,14 @@
 
 #import "unifiAppDelegate.h"
 
+
 @implementation unifiAppDelegate
+@synthesize window,splashView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
     return YES;
 }
 							
@@ -35,7 +38,17 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    
+    splashView = [storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"];
+    [self.window.rootViewController presentViewController:splashView animated:NO completion:nil];
+       //[self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    //}];
+    
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

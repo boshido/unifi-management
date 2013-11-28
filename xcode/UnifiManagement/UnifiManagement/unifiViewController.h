@@ -9,11 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "unifiApResource.h"
 #import "unifiUserResource.h"
-
-@interface unifiViewController : UIViewController<UIAlertViewDelegate>{
-    IBOutlet UILabel *header;
-    IBOutlet UILabel *userCount;
-    IBOutlet UILabel *apCount;
+#import "unifiSplashViewController.h"
+#import "unifiDashboardViewController.h"
+#import "MHTabBarSegue.h"
+@interface unifiViewController : UIViewController{
+   // IBOutlet UIviewco
 }
--(IBAction)btnPressed;
+@property(strong,nonatomic) NSString *apCount;
+@property(strong,nonatomic) NSString *userCount;
+
+@property (weak,nonatomic) UIViewController *destinationViewController;
+@property (strong, nonatomic) NSString *destinationIdentifier;
+@property (strong, nonatomic) UIViewController *oldViewController;
+
+
+@property (weak, nonatomic) IBOutlet UIView *container;
+@property (nonatomic) IBOutletCollection(UIButton) NSArray *menuBarButtons;
+
 @end

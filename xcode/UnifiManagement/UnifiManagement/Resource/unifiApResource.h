@@ -11,6 +11,5 @@
 
 @interface unifiApResource : NSObject/*: unifiApiConnector*/
 
--(void)getApCount:(void (^)(NSJSONSerialization *response))callback;
-
++(void)getApCount:(ApiCallbackComplete)callback;
 @end

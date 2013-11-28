@@ -9,21 +9,53 @@
 #import "unifiApiConnector.h"
 
 @implementation unifiApiConnector
-@synthesize receivedData;
+@synthesize url,parameter,receivedData,onComplete;
 
--(void)getTest:(NSString *)url withCallback:(void (^)(NSJSONSerialization *response))callbackBlock {
-    // Create the request.
-    self.onComplete = callbackBlock;
-    NSURLRequest *request=[NSURLRequest requestWithURL:[NSURL URLWithString:url]
-                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                          timeoutInterval:60.0];
-    // Create the NSMutableData to hold the received data.
-    // receivedData is an instance variable declared elsewhere.
-    //receivedData = [NSMutableData dataWithCapacity: 0];
+-(id)initWithUrl:(NSString *)initUrl andData:(NSString *)initParameter andCallback:(ApiCallbackComplete)callbackBlock{
     
-    // create the connection with the request
-    // and start loading the data
-    theConnection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    self.onComplete = callbackBlock;
+    self.url = initUrl;
+    self.parameter = initParameter;
+    return self;
+}
+
+-(id)initWithUrl:(NSString *)initurl andCallback:(ApiCallbackComplete)callbackBlock{
+
+    self.onComplete = callbackBlock;
+    self.url = initurl;
+    self.parameter = @"";
+    return self;
+}
+-(void)loadGetData {
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
+                                                    cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                                timeoutInterval:60.0];
+
+    theConnection=[[NSURLConnection alloc] initWithRequest:request  delegate:self startImmediately:YES];
+    if (!theConnection) {
+        // Release the receivedData object.
+        receivedData = nil;
+        // Inform the user that the connection failed.
+    }
+}
+
+-(void)loadPostData {
+    
+     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
+                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                       timeoutInterval:60.0];
+    // Create the request.
+    // Specify that it will be a POST request
+    request.HTTPMethod = @"POST";
+    
+    // This is how we set header fields
+    [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    // Convert your data and set your request's HTTPBody property
+    NSData *requestBodyData = [parameter dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = requestBodyData;
+    
+    theConnection=[[NSURLConnection alloc] initWithRequest:request  delegate:self startImmediately:YES];
     if (!theConnection) {
         // Release the receivedData object.
         receivedData = nil;
@@ -56,20 +88,7 @@
 {
     NSLog(@"Finish");
     self.onComplete([NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:nil]);
-    // do something with the data
-    // receivedData is declared as a property elsewhere
-//    NSLog(@"Succeeded! Received %d bytes of data",[receivedData length]);
-//    jsonObject = [NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:nil];
-//    NSLog(@"%@",[jsonObject valueForKey:@"data"]);
-//    NSArray *arr = [jsonObject valueForKey:@"data"];
-//    NSLog(@"%@",[[arr objectAtIndex:0] valueForKey:@"adopt_state"]);
-//    // Release the connection and the data object
-//    // by setting the properties (declared elsewhere)
-//    // to nil.  Note that a real-world app usually
-//    // requires the delegate to manage more than one
-//    // connection at a time, so these lines would
-//    // typically be replaced by code to iterate through
-//    // whatever data structures you are using.
+    
     theConnection = nil;
     receivedData = nil;
 }

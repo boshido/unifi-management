@@ -10,5 +10,5 @@
 #import "unifiApiConnector.h"
 
 @interface unifiUserResource : NSObject
--(void)getUserCount:(void (^)(NSJSONSerialization *response))callback;
++(void)getUserCount:(ApiCallbackComplete)callback;
 @end

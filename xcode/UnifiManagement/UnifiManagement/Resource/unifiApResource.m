@@ -10,10 +10,10 @@
 
 @implementation unifiApResource
 
--(void)getApCount:(void (^)(NSJSONSerialization *response))callback{
++(void)getApCount:(ApiCallbackComplete)callback{
     
-    unifiApiConnector *object = [[unifiApiConnector alloc] init];
-    [object getTest:@"http://202.44.47.47/unifi/ap-count" withCallback:callback];
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"http://202.44.47.47/unifi/ap-count" andCallback:callback];
+    [object loadGetData];
 }
 
 

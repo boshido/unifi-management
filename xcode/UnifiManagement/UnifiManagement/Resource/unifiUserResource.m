@@ -9,9 +9,11 @@
 #import "unifiUserResource.h"
 
 @implementation unifiUserResource
--(void)getUserCount:(void (^)(NSJSONSerialization *response))callback{
+
++(void)getUserCount:(ApiCallbackComplete)callback{
     
-    unifiApiConnector *object = [[unifiApiConnector alloc] init];
-    [object getTest:@"http://202.44.47.47/unifi/device-count" withCallback:callback];
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"http://202.44.47.47/unifi/device-count" andCallback:callback];
+    [object loadGetData];
+    
 }
 @end

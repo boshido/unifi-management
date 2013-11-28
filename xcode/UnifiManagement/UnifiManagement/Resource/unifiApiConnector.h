@@ -7,17 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+typedef void(^ApiCallbackComplete)(NSJSONSerialization *response);
 
-@interface unifiApiConnector : NSURLConnection{
+@interface unifiApiConnector : NSObject{
     NSURLConnection *theConnection;
-   // SEL onComplete;
-//    NSMutableData *receivedData;
-//    long long contentLength;
-//    NSJSONSerialization *jsonObject;
 }
+@property(nonatomic, retain) NSString * url;
+@property(nonatomic, retain) NSString * parameter;
 @property(nonatomic, strong) NSMutableData *receivedData;
-@property(nonatomic, copy) void (^onComplete)(NSJSONSerialization *response);
-//- (NSString *)getDataFrom:(NSString *)url;
+@property(nonatomic, copy) ApiCallbackComplete onComplete;
 
-- (void)getTest:(NSString *)url withCallback:(void (^)(NSJSONSerialization *response))callbackBlock ;
+- (id)initWithUrl:(NSString *)initUrl andData:(NSString *)initParameter andCallback:(ApiCallbackComplete)callbackBlock;
+- (id)initWithUrl:(NSString *)url andCallback:(ApiCallbackComplete)callbackBlock;
+- (void)loadGetData ;
+- (void)loadPostData;
 @end
