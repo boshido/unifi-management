@@ -10,13 +10,13 @@
 #import "unifiViewController.h"
 #import "unifiApResource.h"
 #import "unifiUserResource.h"
-@interface unifiDashboardViewController : UIViewController
+@interface unifiDashboardViewController : UIViewController<UITabBarControllerDelegate,UITabBarDelegate>
 {
     IBOutlet UILabel *header;
     IBOutlet UILabel *userCount;
     IBOutlet UILabel *apCount;
     IBOutlet UIImageView *logo;
-    IBOutlet UIWebView *chart;
+
 }
 @property (retain,nonatomic) IBOutletCollection(UIButton) NSArray* buttons;
 @property (retain,nonatomic) NSString *ap;

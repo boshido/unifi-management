@@ -9,15 +9,13 @@
 #import "unifiGlobalVariable.h"
 @implementation unifiGlobalVariable
 static unifiGlobalVariable *sharedGlobalData = nil;
-@synthesize count,accessToken,refreshToken;
+@synthesize name,surname,email,profilePicture,refreshToken;
 
 +(unifiGlobalVariable *)sharedGlobalData{
     if(sharedGlobalData == nil){
         sharedGlobalData = [[super allocWithZone:NULL] init];
         // initial value
-        sharedGlobalData.count=0;
-        sharedGlobalData.accessToken=@"";
-        sharedGlobalData.refreshToken=@"";
+        [self initialValue];
     }
     return sharedGlobalData;
 }
@@ -30,5 +28,13 @@ static unifiGlobalVariable *sharedGlobalData = nil;
         }
     }
     return nil;
+}
+
++(void) initialValue{
+    sharedGlobalData.name=@"";
+    sharedGlobalData.surname=@"";
+    sharedGlobalData.email=@"";
+    sharedGlobalData.profilePicture=@"";
+    sharedGlobalData.refreshToken=@"";
 }
 @end

@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<title> Unifi Management Mockup </title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6,minimum-scale=0.6">
+		<script>
+			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+			  var msViewportStyle = document.createElement("style");
+			  msViewportStyle.appendChild(
+				document.createTextNode(
+				  "@-ms-viewport{width:auto!important}"
+				)
+			  );
+			  document.getElementsByTagName("head")[0].
+				appendChild(msViewportStyle);
+			}
+		</script>
+        <style>
+            html,body{
+                width:100%;
+                height:100%;
+                padding:0px;
+                margin:0px;
+            }
+        </style>
+		<link href="css/index.css" rel="stylesheet">
+        <script src="jquery-1.9.1.min.js"></script>
+        <script src="knockout-2.2.1.js"></script>
+        <script src="globalize.min.js"></script>
+        <script src="dx.chartjs.js"></script>
+	</head>
+	<body>
+		
+        <div id="chartContainer" style="width: 100%; height: 300px;"></div>
+        <script type="text/javascript">
+			$(function ()
+              {
+              var dataSource = [
+                                { year: 1950, europe: 546 },
+                                { year: 1960, europe: 605 },
+                                { year: 1970, europe: 656 },
+                                { year: 1980, europe: 694 },
+                                { year: 1990, europe: 721 },
+                                { year: 2000, europe: 730 },
+                                { year: 2010, europe: 728 },
+                                { year: 2020, europe: 721 },
+                                { year: 2030, europe: 704 },
+                                { year: 2040, europe: 680 },
+                                { year: 2050, europe: 650 }
+                                ];
+              
+                $("#chartContainer").dxChart(
+                {
+                    dataSource: dataSource,
+                    commonSeriesSettings: {
+                        argumentField: "year"
+                    },
+                    series: [
+                        { valueField: "europe", name: "Europe" }
+                                                    
+                    ],
+                    argumentAxis:{
+                        grid:{
+                            visible: true
+                        }
+                    },
+                    tooltip:{
+                        enabled: true
+                    },
+                    title: "Recent Activities",
+                    legend: {
+                        verticalAlignment: "bottom",
+                        horizontalAlignment: "center"
+                    },
+                    commonPaneSettings: {
+                        border:{
+                            visible: true,
+                            right: false
+                        }
+                    }
+                });
+              }
+            );
+        </script>
+	</body>
+</html>

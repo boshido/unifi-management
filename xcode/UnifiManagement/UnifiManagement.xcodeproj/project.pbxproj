@@ -25,7 +25,12 @@
 		0E488DB1183C4FE5004FF995 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0E488DAF183C4FE5004FF995 /* InfoPlist.strings */; };
 		0E488DB3183C4FE5004FF995 /* UnifiManagementTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E488DB2183C4FE5004FF995 /* UnifiManagementTests.m */; };
 		0E4FD692184732E8009383C6 /* unifiGoogleResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4FD691184732E8009383C6 /* unifiGoogleResource.m */; };
+		0E4FD6951847BA30009383C6 /* unifiTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E4FD6941847BA30009383C6 /* unifiTabViewController.m */; };
 		0E66899F183DF1A400434A2F /* unifiUserResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E66899E183DF1A400434A2F /* unifiUserResource.m */; };
+		0E836376184CBCCE0009D786 /* dx.chartjs.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836372184CBCCE0009D786 /* dx.chartjs.js */; };
+		0E836377184CBCCE0009D786 /* globalize.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836373184CBCCE0009D786 /* globalize.min.js */; };
+		0E836378184CBCCE0009D786 /* jquery-1.9.1.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */; };
+		0E836379184CBCCE0009D786 /* knockout-2.2.1.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836375184CBCCE0009D786 /* knockout-2.2.1.js */; };
 		0EBCF0CC1842FB2200D11BFD /* unifiMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBCF0CB1842FB2200D11BFD /* unifiMenuButton.m */; };
 		0EBCF10F184344FF00D11BFD /* unifiSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBCF10E184344FF00D11BFD /* unifiSplashViewController.m */; };
 		0EBCF1121843763400D11BFD /* TJSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBCF1111843763400D11BFD /* TJSpinner.m */; };
@@ -64,12 +69,14 @@
 		0EBCF1621843C61B00D11BFD /* UserIcon2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EBCF1571843C61B00D11BFD /* UserIcon2@2x.png */; };
 		0EBCF1631843C61B00D11BFD /* UserIconPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EBCF1581843C61B00D11BFD /* UserIconPressed.png */; };
 		0EBCF1641843C61B00D11BFD /* UserIconPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EBCF1591843C61B00D11BFD /* UserIconPressed@2x.png */; };
-		0ED0FED11844867900349D39 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0FED01844867900349D39 /* index.html */; };
+		0ED0FED11844867900349D39 /* line.html in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0FED01844867900349D39 /* line.html */; };
 		0ED0FED418448A7600349D39 /* unifiDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FED318448A7600349D39 /* unifiDashboardViewController.m */; };
 		0ED0FED71844AB4A00349D39 /* unifiGlobalVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FED61844AB4A00349D39 /* unifiGlobalVariable.m */; };
 		0ED0FEDD1845A17300349D39 /* MHTabBarSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FEDB1845A17300349D39 /* MHTabBarSegue.m */; };
 		0ED0FF3D18466AB600349D39 /* unifiGoogleNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FF3C18466AB600349D39 /* unifiGoogleNavigationController.m */; };
 		0ED0FF4118466C1200349D39 /* unifiGoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FF4018466C1200349D39 /* unifiGoogleViewController.m */; };
+		0EE341DA184C325A00C8814A /* unifiSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE341D9184C325A00C8814A /* unifiSettingViewController.m */; };
+		0EE341DE184C7CA700C8814A /* unifiStatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,8 +116,14 @@
 		0E488DB2183C4FE5004FF995 /* UnifiManagementTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UnifiManagementTests.m; sourceTree = "<group>"; };
 		0E4FD690184732E8009383C6 /* unifiGoogleResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiGoogleResource.h; path = Resource/unifiGoogleResource.h; sourceTree = "<group>"; };
 		0E4FD691184732E8009383C6 /* unifiGoogleResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiGoogleResource.m; path = Resource/unifiGoogleResource.m; sourceTree = "<group>"; };
+		0E4FD6931847BA30009383C6 /* unifiTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiTabViewController.h; sourceTree = "<group>"; };
+		0E4FD6941847BA30009383C6 /* unifiTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiTabViewController.m; sourceTree = "<group>"; };
 		0E66899D183DF1A400434A2F /* unifiUserResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiUserResource.h; path = Resource/unifiUserResource.h; sourceTree = "<group>"; };
 		0E66899E183DF1A400434A2F /* unifiUserResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiUserResource.m; path = Resource/unifiUserResource.m; sourceTree = "<group>"; };
+		0E836372184CBCCE0009D786 /* dx.chartjs.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = dx.chartjs.js; sourceTree = "<group>"; };
+		0E836373184CBCCE0009D786 /* globalize.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = globalize.min.js; sourceTree = "<group>"; };
+		0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.1.min.js"; sourceTree = "<group>"; };
+		0E836375184CBCCE0009D786 /* knockout-2.2.1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "knockout-2.2.1.js"; sourceTree = "<group>"; };
 		0EBCF0CA1842FB2200D11BFD /* unifiMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "unifi\U0010MenuButton.h"; path = "InterfaceBuilder/unifi\U0010MenuButton.h"; sourceTree = "<group>"; };
 		0EBCF0CB1842FB2200D11BFD /* unifiMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "unifi\U0010MenuButton.m"; path = "InterfaceBuilder/unifi\U0010MenuButton.m"; sourceTree = "<group>"; };
 		0EBCF10D184344FF00D11BFD /* unifiSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiSplashViewController.h; sourceTree = "<group>"; };
@@ -152,7 +165,7 @@
 		0EBCF1571843C61B00D11BFD /* UserIcon2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UserIcon2@2x.png"; sourceTree = "<group>"; };
 		0EBCF1581843C61B00D11BFD /* UserIconPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UserIconPressed.png; sourceTree = "<group>"; };
 		0EBCF1591843C61B00D11BFD /* UserIconPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UserIconPressed@2x.png"; sourceTree = "<group>"; };
-		0ED0FED01844867900349D39 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		0ED0FED01844867900349D39 /* line.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = line.html; sourceTree = "<group>"; };
 		0ED0FED218448A7600349D39 /* unifiDashboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiDashboardViewController.h; sourceTree = "<group>"; };
 		0ED0FED318448A7600349D39 /* unifiDashboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiDashboardViewController.m; sourceTree = "<group>"; };
 		0ED0FED51844AB4A00349D39 /* unifiGlobalVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiGlobalVariable.h; path = Resource/unifiGlobalVariable.h; sourceTree = "<group>"; };
@@ -163,6 +176,10 @@
 		0ED0FF3C18466AB600349D39 /* unifiGoogleNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiGoogleNavigationController.m; sourceTree = "<group>"; };
 		0ED0FF3F18466C1200349D39 /* unifiGoogleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiGoogleViewController.h; sourceTree = "<group>"; };
 		0ED0FF4018466C1200349D39 /* unifiGoogleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiGoogleViewController.m; sourceTree = "<group>"; };
+		0EE341D8184C325A00C8814A /* unifiSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiSettingViewController.h; sourceTree = "<group>"; };
+		0EE341D9184C325A00C8814A /* unifiSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiSettingViewController.m; sourceTree = "<group>"; };
+		0EE341DC184C7CA700C8814A /* unifiStatisticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiStatisticViewController.h; path = Navigator/unifiStatisticViewController.h; sourceTree = "<group>"; };
+		0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiStatisticViewController.m; path = Navigator/unifiStatisticViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,16 +301,21 @@
 				0ED0FF3E18466AC300349D39 /* Google */,
 				0E1E4650183CE69300624634 /* Resource */,
 				0E86AC22183CAA6E001FB78B /* InterfaceBuilder */,
+				0EE341DB184C7C5B00C8814A /* Navigator */,
 				0E488D96183C4FE4004FF995 /* Main_iPhone.storyboard */,
 				0E488D99183C4FE4004FF995 /* Main_iPad.storyboard */,
 				0E488D93183C4FE4004FF995 /* unifiAppDelegate.h */,
 				0E488D94183C4FE4004FF995 /* unifiAppDelegate.m */,
+				0E4FD6931847BA30009383C6 /* unifiTabViewController.h */,
+				0E4FD6941847BA30009383C6 /* unifiTabViewController.m */,
 				0E488D9C183C4FE4004FF995 /* unifiViewController.h */,
 				0E488D9D183C4FE5004FF995 /* unifiViewController.m */,
 				0ED0FED218448A7600349D39 /* unifiDashboardViewController.h */,
 				0ED0FED318448A7600349D39 /* unifiDashboardViewController.m */,
 				0EBCF10D184344FF00D11BFD /* unifiSplashViewController.h */,
 				0EBCF10E184344FF00D11BFD /* unifiSplashViewController.m */,
+				0EE341D8184C325A00C8814A /* unifiSettingViewController.h */,
+				0EE341D9184C325A00C8814A /* unifiSettingViewController.m */,
 				0E488D9F183C4FE5004FF995 /* Images.xcassets */,
 				0E488D8B183C4FE4004FF995 /* Supporting Files */,
 			);
@@ -303,7 +325,7 @@
 		0E488D8B183C4FE4004FF995 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0ED0FED01844867900349D39 /* index.html */,
+				0E836371184C807C0009D786 /* Chart */,
 				0E1E465A183CE75600624634 /* Icon */,
 				0E488D8C183C4FE4004FF995 /* UnifiManagement-Info.plist */,
 				0E488D8D183C4FE4004FF995 /* InfoPlist.strings */,
@@ -331,6 +353,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0E836371184C807C0009D786 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				0E83637A184CBCD70009D786 /* js */,
+				0ED0FED01844867900349D39 /* line.html */,
+			);
+			name = Chart;
+			sourceTree = "<group>";
+		};
+		0E83637A184CBCD70009D786 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				0E836372184CBCCE0009D786 /* dx.chartjs.js */,
+				0E836373184CBCCE0009D786 /* globalize.min.js */,
+				0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */,
+				0E836375184CBCCE0009D786 /* knockout-2.2.1.js */,
+			);
+			name = js;
+			sourceTree = "<group>";
+		};
 		0E86AC22183CAA6E001FB78B /* InterfaceBuilder */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +395,15 @@
 				0ED0FF4018466C1200349D39 /* unifiGoogleViewController.m */,
 			);
 			name = Google;
+			sourceTree = "<group>";
+		};
+		0EE341DB184C7C5B00C8814A /* Navigator */ = {
+			isa = PBXGroup;
+			children = (
+				0EE341DC184C7CA700C8814A /* unifiStatisticViewController.h */,
+				0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */,
+			);
+			name = Navigator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,12 +486,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E836379184CBCCE0009D786 /* knockout-2.2.1.js in Resources */,
+				0E836377184CBCCE0009D786 /* globalize.min.js in Resources */,
+				0E836376184CBCCE0009D786 /* dx.chartjs.js in Resources */,
+				0E836378184CBCCE0009D786 /* jquery-1.9.1.min.js in Resources */,
 				0EBCF1631843C61B00D11BFD /* UserIconPressed.png in Resources */,
 				0EBCF1401843C5FC00D11BFD /* LineIconPressed@2x.png in Resources */,
 				0EBCF15F1843C61B00D11BFD /* UserIcon.png in Resources */,
 				0EBCF1641843C61B00D11BFD /* UserIconPressed@2x.png in Resources */,
 				0EBCF15A1843C61B00D11BFD /* TWIcon@2x.png in Resources */,
-				0ED0FED11844867900349D39 /* index.html in Resources */,
+				0ED0FED11844867900349D39 /* line.html in Resources */,
 				0EBCF14D1843C5FC00D11BFD /* TreeIcon@2x.png in Resources */,
 				0EBCF1381843C5FC00D11BFD /* APIcon@2x.png in Resources */,
 				0EBCF15E1843C61B00D11BFD /* TWIcon3@2x.png in Resources */,
@@ -494,9 +549,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E488D9E183C4FE5004FF995 /* unifiViewController.m in Sources */,
+				0EE341DA184C325A00C8814A /* unifiSettingViewController.m in Sources */,
 				0ED0FEDD1845A17300349D39 /* MHTabBarSegue.m in Sources */,
 				0ED0FED418448A7600349D39 /* unifiDashboardViewController.m in Sources */,
 				0ED0FF3D18466AB600349D39 /* unifiGoogleNavigationController.m in Sources */,
+				0E4FD6951847BA30009383C6 /* unifiTabViewController.m in Sources */,
 				0EBCF10F184344FF00D11BFD /* unifiSplashViewController.m in Sources */,
 				0E488D95183C4FE4004FF995 /* unifiAppDelegate.m in Sources */,
 				0E66899F183DF1A400434A2F /* unifiUserResource.m in Sources */,
@@ -506,6 +563,7 @@
 				0E1E465D183CEDC800624634 /* unifiApResource.m in Sources */,
 				0ED0FED71844AB4A00349D39 /* unifiGlobalVariable.m in Sources */,
 				0E4FD692184732E8009383C6 /* unifiGoogleResource.m in Sources */,
+				0EE341DE184C7CA700C8814A /* unifiStatisticViewController.m in Sources */,
 				0EBCF1121843763400D11BFD /* TJSpinner.m in Sources */,
 				0EBCF0CC1842FB2200D11BFD /* unifiMenuButton.m in Sources */,
 			);

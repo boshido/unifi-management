@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface unifiGlobalVariable : NSObject
-@property NSInteger count;
-@property(retain,nonatomic) NSString *accessToken;
+@property(retain,nonatomic) NSString *name;
+@property(retain,nonatomic) NSString *surname;
+@property(retain,nonatomic) NSString *email;
+@property(retain,nonatomic) NSString *profilePicture;
 @property(retain,nonatomic) NSString *refreshToken;
 +(unifiGlobalVariable *)sharedGlobalData;
-
++(void)initialValue;
 @end

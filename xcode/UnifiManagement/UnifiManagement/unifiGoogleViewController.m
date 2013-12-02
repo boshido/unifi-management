@@ -115,6 +115,20 @@ NSString *hd = @"";
     NSDictionary *tokenData = [NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:nil];
     
     [unifiGlobalVariable sharedGlobalData].refreshToken = [tokenData objectForKey:@"refresh_token"];
+    
+    NSString *error = [NSString stringWithFormat:@"Can not save refresh token to plist."];
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
+    NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:tokenData
+                                                                   format:NSPropertyListXMLFormat_v1_0
+                                                         errorDescription:&error];
+    if(plistData) {
+        [plistData writeToFile:plistPath atomically:YES];
+    }
+    else {
+        NSLog(@"Error : %@",error);
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

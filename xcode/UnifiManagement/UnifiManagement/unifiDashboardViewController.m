@@ -28,8 +28,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     for(UIButton *button in self.buttons){
-        //[button setTitle:@"hahaha" forState:UIControlStateNormal];
-        
+
         // Create the animation object, specifying the position property as the key path.
         CAKeyframeAnimation * theAnimation;
         theAnimation=[CAKeyframeAnimation animationWithKeyPath:@"position"];
@@ -63,6 +62,7 @@
                 break;
         }
         
+        //[self.navigationController setNavigationBarHidden:!self.navigationController.navigationBar.hidden animated:YES];
         
         theAnimation.duration=0.5;
         // Add path to animation
@@ -124,9 +124,6 @@
          [button.layer addAnimation:pulseAnimation forKey:nil];
          */
     }
-    
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"]]];
-//    [chart loadRequest:urlRequest];
 
 }
 
