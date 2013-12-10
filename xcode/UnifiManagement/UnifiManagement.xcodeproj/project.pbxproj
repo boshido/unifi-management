@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		0E1E4659183CE74000624634 /* unifiApiConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E4658183CE74000624634 /* unifiApiConnector.m */; };
 		0E1E465D183CEDC800624634 /* unifiApResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E465C183CEDC800624634 /* unifiApResource.m */; };
+		0E2032BE185702EA00D949E4 /* HomeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032BC185702EA00D949E4 /* HomeIcon.png */; };
+		0E2032BF185702EA00D949E4 /* HomeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032BD185702EA00D949E4 /* HomeIcon@2x.png */; };
+		0E2032C21857045200D949E4 /* HomeIconPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C01857045200D949E4 /* HomeIconPressed.png */; };
+		0E2032C31857045300D949E4 /* HomeIconPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C11857045200D949E4 /* HomeIconPressed@2x.png */; };
+		0E2032C8185706D100D949E4 /* BackwardIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C4185706D100D949E4 /* BackwardIcon.png */; };
+		0E2032C9185706D100D949E4 /* BackwardIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C5185706D100D949E4 /* BackwardIcon@2x.png */; };
+		0E2032CA185706D100D949E4 /* BackwardIconPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C6185706D100D949E4 /* BackwardIconPressed.png */; };
+		0E2032CB185706D100D949E4 /* BackwardIconPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C7185706D100D949E4 /* BackwardIconPressed@2x.png */; };
 		0E488D85183C4FE4004FF995 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D84183C4FE4004FF995 /* Foundation.framework */; };
 		0E488D87183C4FE4004FF995 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D86183C4FE4004FF995 /* CoreGraphics.framework */; };
 		0E488D89183C4FE4004FF995 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D88183C4FE4004FF995 /* UIKit.framework */; };
@@ -31,6 +39,7 @@
 		0E836377184CBCCE0009D786 /* globalize.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836373184CBCCE0009D786 /* globalize.min.js */; };
 		0E836378184CBCCE0009D786 /* jquery-1.9.1.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */; };
 		0E836379184CBCCE0009D786 /* knockout-2.2.1.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836375184CBCCE0009D786 /* knockout-2.2.1.js */; };
+		0EB03D6B184D0CCA00879698 /* unifiSystemResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EB03D6A184D0CCA00879698 /* unifiSystemResource.m */; };
 		0EBCF0CC1842FB2200D11BFD /* unifiMenuButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBCF0CB1842FB2200D11BFD /* unifiMenuButton.m */; };
 		0EBCF10F184344FF00D11BFD /* unifiSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBCF10E184344FF00D11BFD /* unifiSplashViewController.m */; };
 		0EBCF1121843763400D11BFD /* TJSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBCF1111843763400D11BFD /* TJSpinner.m */; };
@@ -75,8 +84,22 @@
 		0ED0FEDD1845A17300349D39 /* MHTabBarSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FEDB1845A17300349D39 /* MHTabBarSegue.m */; };
 		0ED0FF3D18466AB600349D39 /* unifiGoogleNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FF3C18466AB600349D39 /* unifiGoogleNavigationController.m */; };
 		0ED0FF4118466C1200349D39 /* unifiGoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FF4018466C1200349D39 /* unifiGoogleViewController.m */; };
+		0EE2D00E185639C800409FBE /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE2D00D185639C800409FBE /* SDWebImage.framework */; };
+		0EE2D01018563A0600409FBE /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE2D00F18563A0600409FBE /* ImageIO.framework */; };
 		0EE341DA184C325A00C8814A /* unifiSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE341D9184C325A00C8814A /* unifiSettingViewController.m */; };
 		0EE341DE184C7CA700C8814A /* unifiStatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */; };
+		0EF176651856CF7700F5CCF5 /* unifiNavigationManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF176641856CF7700F5CCF5 /* unifiNavigationManagementViewController.m */; };
+		0EF4E93B1854C04E0097FACB /* TransparentBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E93A1854C04E0097FACB /* TransparentBG.png */; };
+		0EF4E93E1854C1360097FACB /* BlackBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E93C1854C1360097FACB /* BlackBG.png */; };
+		0EF4E93F1854C1360097FACB /* WhiteBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E93D1854C1360097FACB /* WhiteBG.png */; };
+		0EF4E9411854C22D0097FACB /* White2BG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E9401854C22D0097FACB /* White2BG.png */; };
+		0EF4E94A1854D4C10097FACB /* SettingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E9481854D4C10097FACB /* SettingIcon@2x.png */; };
+		0EF4E94B1854D4C10097FACB /* SettingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E9491854D4C10097FACB /* SettingIcon.png */; };
+		0EF4E94E1854D69A0097FACB /* DiagramIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E94C1854D69A0097FACB /* DiagramIcon.png */; };
+		0EF4E94F1854D69A0097FACB /* DiagramIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E94D1854D69A0097FACB /* DiagramIcon@2x.png */; };
+		0EF4E95A1854D9460097FACB /* DashboardIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E9581854D9460097FACB /* DashboardIcon.png */; };
+		0EF4E95B1854D9460097FACB /* DashboardIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E9591854D9460097FACB /* DashboardIcon@2x.png */; };
+		0EF4E95E1854FF3E0097FACB /* UITabBarController+unifiTabBarWithHide.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF4E95D1854FF3E0097FACB /* UITabBarController+unifiTabBarWithHide.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +117,14 @@
 		0E1E4658183CE74000624634 /* unifiApiConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiApiConnector.m; path = Resource/unifiApiConnector.m; sourceTree = "<group>"; };
 		0E1E465B183CEDC800624634 /* unifiApResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiApResource.h; path = Resource/unifiApResource.h; sourceTree = "<group>"; };
 		0E1E465C183CEDC800624634 /* unifiApResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiApResource.m; path = Resource/unifiApResource.m; sourceTree = "<group>"; };
+		0E2032BC185702EA00D949E4 /* HomeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HomeIcon.png; sourceTree = "<group>"; };
+		0E2032BD185702EA00D949E4 /* HomeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HomeIcon@2x.png"; sourceTree = "<group>"; };
+		0E2032C01857045200D949E4 /* HomeIconPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HomeIconPressed.png; sourceTree = "<group>"; };
+		0E2032C11857045200D949E4 /* HomeIconPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HomeIconPressed@2x.png"; sourceTree = "<group>"; };
+		0E2032C4185706D100D949E4 /* BackwardIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackwardIcon.png; sourceTree = "<group>"; };
+		0E2032C5185706D100D949E4 /* BackwardIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackwardIcon@2x.png"; sourceTree = "<group>"; };
+		0E2032C6185706D100D949E4 /* BackwardIconPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackwardIconPressed.png; sourceTree = "<group>"; };
+		0E2032C7185706D100D949E4 /* BackwardIconPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackwardIconPressed@2x.png"; sourceTree = "<group>"; };
 		0E488D81183C4FE4004FF995 /* UnifiManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnifiManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E488D84183C4FE4004FF995 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E488D86183C4FE4004FF995 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,6 +155,8 @@
 		0E836373184CBCCE0009D786 /* globalize.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = globalize.min.js; sourceTree = "<group>"; };
 		0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.1.min.js"; sourceTree = "<group>"; };
 		0E836375184CBCCE0009D786 /* knockout-2.2.1.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "knockout-2.2.1.js"; sourceTree = "<group>"; };
+		0EB03D69184D0CCA00879698 /* unifiSystemResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiSystemResource.h; path = Resource/unifiSystemResource.h; sourceTree = "<group>"; };
+		0EB03D6A184D0CCA00879698 /* unifiSystemResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiSystemResource.m; path = Resource/unifiSystemResource.m; sourceTree = "<group>"; };
 		0EBCF0CA1842FB2200D11BFD /* unifiMenuButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "unifi\U0010MenuButton.h"; path = "InterfaceBuilder/unifi\U0010MenuButton.h"; sourceTree = "<group>"; };
 		0EBCF0CB1842FB2200D11BFD /* unifiMenuButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "unifi\U0010MenuButton.m"; path = "InterfaceBuilder/unifi\U0010MenuButton.m"; sourceTree = "<group>"; };
 		0EBCF10D184344FF00D11BFD /* unifiSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiSplashViewController.h; sourceTree = "<group>"; };
@@ -176,10 +209,26 @@
 		0ED0FF3C18466AB600349D39 /* unifiGoogleNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiGoogleNavigationController.m; sourceTree = "<group>"; };
 		0ED0FF3F18466C1200349D39 /* unifiGoogleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiGoogleViewController.h; sourceTree = "<group>"; };
 		0ED0FF4018466C1200349D39 /* unifiGoogleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiGoogleViewController.m; sourceTree = "<group>"; };
+		0EE2D00D185639C800409FBE /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
+		0EE2D00F18563A0600409FBE /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		0EE341D8184C325A00C8814A /* unifiSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiSettingViewController.h; sourceTree = "<group>"; };
 		0EE341D9184C325A00C8814A /* unifiSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiSettingViewController.m; sourceTree = "<group>"; };
 		0EE341DC184C7CA700C8814A /* unifiStatisticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiStatisticViewController.h; path = Navigator/unifiStatisticViewController.h; sourceTree = "<group>"; };
 		0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiStatisticViewController.m; path = Navigator/unifiStatisticViewController.m; sourceTree = "<group>"; };
+		0EF176631856CF7700F5CCF5 /* unifiNavigationManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiNavigationManagementViewController.h; sourceTree = "<group>"; };
+		0EF176641856CF7700F5CCF5 /* unifiNavigationManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiNavigationManagementViewController.m; sourceTree = "<group>"; };
+		0EF4E93A1854C04E0097FACB /* TransparentBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TransparentBG.png; sourceTree = "<group>"; };
+		0EF4E93C1854C1360097FACB /* BlackBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlackBG.png; sourceTree = "<group>"; };
+		0EF4E93D1854C1360097FACB /* WhiteBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WhiteBG.png; sourceTree = "<group>"; };
+		0EF4E9401854C22D0097FACB /* White2BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = White2BG.png; sourceTree = "<group>"; };
+		0EF4E9481854D4C10097FACB /* SettingIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingIcon@2x.png"; sourceTree = "<group>"; };
+		0EF4E9491854D4C10097FACB /* SettingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingIcon.png; sourceTree = "<group>"; };
+		0EF4E94C1854D69A0097FACB /* DiagramIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DiagramIcon.png; sourceTree = "<group>"; };
+		0EF4E94D1854D69A0097FACB /* DiagramIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DiagramIcon@2x.png"; sourceTree = "<group>"; };
+		0EF4E9581854D9460097FACB /* DashboardIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DashboardIcon.png; sourceTree = "<group>"; };
+		0EF4E9591854D9460097FACB /* DashboardIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DashboardIcon@2x.png"; sourceTree = "<group>"; };
+		0EF4E95C1854FF3E0097FACB /* UITabBarController+unifiTabBarWithHide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UITabBarController+unifiTabBarWithHide.h"; path = "InterfaceBuilder/UITabBarController+unifiTabBarWithHide.h"; sourceTree = "<group>"; };
+		0EF4E95D1854FF3E0097FACB /* UITabBarController+unifiTabBarWithHide.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UITabBarController+unifiTabBarWithHide.m"; path = "InterfaceBuilder/UITabBarController+unifiTabBarWithHide.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +236,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EE2D01018563A0600409FBE /* ImageIO.framework in Frameworks */,
+				0EE2D00E185639C800409FBE /* SDWebImage.framework in Frameworks */,
 				0E488D87183C4FE4004FF995 /* CoreGraphics.framework in Frameworks */,
 				0E488D89183C4FE4004FF995 /* UIKit.framework in Frameworks */,
 				0E488D85183C4FE4004FF995 /* Foundation.framework in Frameworks */,
@@ -215,6 +266,8 @@
 				0E1E465C183CEDC800624634 /* unifiApResource.m */,
 				0E66899D183DF1A400434A2F /* unifiUserResource.h */,
 				0E66899E183DF1A400434A2F /* unifiUserResource.m */,
+				0EB03D69184D0CCA00879698 /* unifiSystemResource.h */,
+				0EB03D6A184D0CCA00879698 /* unifiSystemResource.m */,
 				0E4FD690184732E8009383C6 /* unifiGoogleResource.h */,
 				0E4FD691184732E8009383C6 /* unifiGoogleResource.m */,
 				0ED0FED51844AB4A00349D39 /* unifiGlobalVariable.h */,
@@ -226,6 +279,20 @@
 		0E1E465A183CE75600624634 /* Icon */ = {
 			isa = PBXGroup;
 			children = (
+				0E2032C4185706D100D949E4 /* BackwardIcon.png */,
+				0E2032C5185706D100D949E4 /* BackwardIcon@2x.png */,
+				0E2032C6185706D100D949E4 /* BackwardIconPressed.png */,
+				0E2032C7185706D100D949E4 /* BackwardIconPressed@2x.png */,
+				0E2032BC185702EA00D949E4 /* HomeIcon.png */,
+				0E2032BD185702EA00D949E4 /* HomeIcon@2x.png */,
+				0E2032C01857045200D949E4 /* HomeIconPressed.png */,
+				0E2032C11857045200D949E4 /* HomeIconPressed@2x.png */,
+				0EF4E9581854D9460097FACB /* DashboardIcon.png */,
+				0EF4E9591854D9460097FACB /* DashboardIcon@2x.png */,
+				0EF4E94C1854D69A0097FACB /* DiagramIcon.png */,
+				0EF4E94D1854D69A0097FACB /* DiagramIcon@2x.png */,
+				0EF4E9481854D4C10097FACB /* SettingIcon@2x.png */,
+				0EF4E9491854D4C10097FACB /* SettingIcon.png */,
 				0EBCF14F1843C61B00D11BFD /* TWIcon@2x.png */,
 				0EBCF1501843C61B00D11BFD /* TWIcon2.png */,
 				0EBCF1511843C61B00D11BFD /* TWIcon2@2x.png */,
@@ -287,6 +354,8 @@
 		0E488D83183C4FE4004FF995 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0EE2D00F18563A0600409FBE /* ImageIO.framework */,
+				0EE2D00D185639C800409FBE /* SDWebImage.framework */,
 				0E488D84183C4FE4004FF995 /* Foundation.framework */,
 				0E488D86183C4FE4004FF995 /* CoreGraphics.framework */,
 				0E488D88183C4FE4004FF995 /* UIKit.framework */,
@@ -301,21 +370,20 @@
 				0ED0FF3E18466AC300349D39 /* Google */,
 				0E1E4650183CE69300624634 /* Resource */,
 				0E86AC22183CAA6E001FB78B /* InterfaceBuilder */,
-				0EE341DB184C7C5B00C8814A /* Navigator */,
+				0EE341DB184C7C5B00C8814A /* NavigationManagement */,
 				0E488D96183C4FE4004FF995 /* Main_iPhone.storyboard */,
 				0E488D99183C4FE4004FF995 /* Main_iPad.storyboard */,
 				0E488D93183C4FE4004FF995 /* unifiAppDelegate.h */,
 				0E488D94183C4FE4004FF995 /* unifiAppDelegate.m */,
 				0E4FD6931847BA30009383C6 /* unifiTabViewController.h */,
 				0E4FD6941847BA30009383C6 /* unifiTabViewController.m */,
-				0E488D9C183C4FE4004FF995 /* unifiViewController.h */,
-				0E488D9D183C4FE5004FF995 /* unifiViewController.m */,
+				0EF176631856CF7700F5CCF5 /* unifiNavigationManagementViewController.h */,
+				0EF176641856CF7700F5CCF5 /* unifiNavigationManagementViewController.m */,
 				0ED0FED218448A7600349D39 /* unifiDashboardViewController.h */,
 				0ED0FED318448A7600349D39 /* unifiDashboardViewController.m */,
-				0EBCF10D184344FF00D11BFD /* unifiSplashViewController.h */,
-				0EBCF10E184344FF00D11BFD /* unifiSplashViewController.m */,
 				0EE341D8184C325A00C8814A /* unifiSettingViewController.h */,
 				0EE341D9184C325A00C8814A /* unifiSettingViewController.m */,
+				0EF4E95F185501D30097FACB /* Deprecated */,
 				0E488D9F183C4FE5004FF995 /* Images.xcassets */,
 				0E488D8B183C4FE4004FF995 /* Supporting Files */,
 			);
@@ -327,6 +395,10 @@
 			children = (
 				0E836371184C807C0009D786 /* Chart */,
 				0E1E465A183CE75600624634 /* Icon */,
+				0EF4E93C1854C1360097FACB /* BlackBG.png */,
+				0EF4E9401854C22D0097FACB /* White2BG.png */,
+				0EF4E93D1854C1360097FACB /* WhiteBG.png */,
+				0EF4E93A1854C04E0097FACB /* TransparentBG.png */,
 				0E488D8C183C4FE4004FF995 /* UnifiManagement-Info.plist */,
 				0E488D8D183C4FE4004FF995 /* InfoPlist.strings */,
 				0E488D90183C4FE4004FF995 /* main.m */,
@@ -376,12 +448,12 @@
 		0E86AC22183CAA6E001FB78B /* InterfaceBuilder */ = {
 			isa = PBXGroup;
 			children = (
-				0ED0FEDA1845A17300349D39 /* MHTabBarSegue.h */,
-				0ED0FEDB1845A17300349D39 /* MHTabBarSegue.m */,
 				0EBCF1101843763400D11BFD /* TJSpinner.h */,
 				0EBCF1111843763400D11BFD /* TJSpinner.m */,
 				0EBCF0CA1842FB2200D11BFD /* unifiMenuButton.h */,
 				0EBCF0CB1842FB2200D11BFD /* unifiMenuButton.m */,
+				0EF4E95C1854FF3E0097FACB /* UITabBarController+unifiTabBarWithHide.h */,
+				0EF4E95D1854FF3E0097FACB /* UITabBarController+unifiTabBarWithHide.m */,
 			);
 			name = InterfaceBuilder;
 			sourceTree = "<group>";
@@ -397,13 +469,26 @@
 			name = Google;
 			sourceTree = "<group>";
 		};
-		0EE341DB184C7C5B00C8814A /* Navigator */ = {
+		0EE341DB184C7C5B00C8814A /* NavigationManagement */ = {
 			isa = PBXGroup;
 			children = (
 				0EE341DC184C7CA700C8814A /* unifiStatisticViewController.h */,
 				0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */,
 			);
-			name = Navigator;
+			name = NavigationManagement;
+			sourceTree = "<group>";
+		};
+		0EF4E95F185501D30097FACB /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				0EBCF10D184344FF00D11BFD /* unifiSplashViewController.h */,
+				0EBCF10E184344FF00D11BFD /* unifiSplashViewController.m */,
+				0ED0FEDA1845A17300349D39 /* MHTabBarSegue.h */,
+				0ED0FEDB1845A17300349D39 /* MHTabBarSegue.m */,
+				0E488D9C183C4FE4004FF995 /* unifiViewController.h */,
+				0E488D9D183C4FE5004FF995 /* unifiViewController.m */,
+			);
+			name = Deprecated;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,25 +579,41 @@
 				0EBCF1401843C5FC00D11BFD /* LineIconPressed@2x.png in Resources */,
 				0EBCF15F1843C61B00D11BFD /* UserIcon.png in Resources */,
 				0EBCF1641843C61B00D11BFD /* UserIconPressed@2x.png in Resources */,
+				0E2032C21857045200D949E4 /* HomeIconPressed.png in Resources */,
 				0EBCF15A1843C61B00D11BFD /* TWIcon@2x.png in Resources */,
+				0EF4E93F1854C1360097FACB /* WhiteBG.png in Resources */,
 				0ED0FED11844867900349D39 /* line.html in Resources */,
 				0EBCF14D1843C5FC00D11BFD /* TreeIcon@2x.png in Resources */,
+				0EF4E95A1854D9460097FACB /* DashboardIcon.png in Resources */,
 				0EBCF1381843C5FC00D11BFD /* APIcon@2x.png in Resources */,
 				0EBCF15E1843C61B00D11BFD /* TWIcon3@2x.png in Resources */,
 				0EBCF14B1843C5FC00D11BFD /* PieIconPressed@2x.png in Resources */,
 				0EBCF15D1843C61B00D11BFD /* TWIcon3.png in Resources */,
 				0EBCF14A1843C5FC00D11BFD /* PieIconPressed.png in Resources */,
+				0E2032BE185702EA00D949E4 /* HomeIcon.png in Resources */,
+				0EF4E94A1854D4C10097FACB /* SettingIcon@2x.png in Resources */,
 				0E488D9B183C4FE4004FF995 /* Main_iPad.storyboard in Resources */,
 				0EBCF13D1843C5FC00D11BFD /* LineIcon.png in Resources */,
+				0E2032CA185706D100D949E4 /* BackwardIconPressed.png in Resources */,
+				0EF4E93E1854C1360097FACB /* BlackBG.png in Resources */,
 				0EBCF1441843C5FC00D11BFD /* NotificationIconPressed.png in Resources */,
 				0EBCF1461843C5FC00D11BFD /* OverviewBG.png in Resources */,
 				0EBCF1391843C5FC00D11BFD /* APIcon2.png in Resources */,
 				0EBCF1611843C61B00D11BFD /* UserIcon2.png in Resources */,
+				0E2032CB185706D100D949E4 /* BackwardIconPressed@2x.png in Resources */,
+				0E2032C9185706D100D949E4 /* BackwardIcon@2x.png in Resources */,
+				0EF4E95B1854D9460097FACB /* DashboardIcon@2x.png in Resources */,
+				0EF4E94F1854D69A0097FACB /* DiagramIcon@2x.png in Resources */,
 				0EBCF1481843C5FC00D11BFD /* PieIcon.png in Resources */,
+				0E2032C8185706D100D949E4 /* BackwardIcon.png in Resources */,
+				0E2032BF185702EA00D949E4 /* HomeIcon@2x.png in Resources */,
 				0E488DA0183C4FE5004FF995 /* Images.xcassets in Resources */,
 				0E488D98183C4FE4004FF995 /* Main_iPhone.storyboard in Resources */,
 				0EBCF14E1843C5FC00D11BFD /* TWIcon.png in Resources */,
+				0E2032C31857045300D949E4 /* HomeIconPressed@2x.png in Resources */,
 				0EBCF1421843C5FC00D11BFD /* NotificationIcon.png in Resources */,
+				0EF4E9411854C22D0097FACB /* White2BG.png in Resources */,
+				0EF4E94B1854D4C10097FACB /* SettingIcon.png in Resources */,
 				0EBCF13C1843C5FC00D11BFD /* APIconPressed@2x.png in Resources */,
 				0EBCF1621843C61B00D11BFD /* UserIcon2@2x.png in Resources */,
 				0EBCF1371843C5FC00D11BFD /* APIcon.png in Resources */,
@@ -520,7 +621,9 @@
 				0E488D8F183C4FE4004FF995 /* InfoPlist.strings in Resources */,
 				0EBCF13E1843C5FC00D11BFD /* LineIcon@2x.png in Resources */,
 				0EBCF1451843C5FC00D11BFD /* NotificationIconPressed@2x.png in Resources */,
+				0EF4E93B1854C04E0097FACB /* TransparentBG.png in Resources */,
 				0EBCF1471843C5FC00D11BFD /* OverviewBG@2x.png in Resources */,
+				0EF4E94E1854D69A0097FACB /* DiagramIcon.png in Resources */,
 				0EBCF13F1843C5FC00D11BFD /* LineIconPressed.png in Resources */,
 				0EBCF1491843C5FC00D11BFD /* PieIcon@2x.png in Resources */,
 				0EBCF1601843C61B00D11BFD /* UserIcon@2x.png in Resources */,
@@ -553,8 +656,10 @@
 				0ED0FEDD1845A17300349D39 /* MHTabBarSegue.m in Sources */,
 				0ED0FED418448A7600349D39 /* unifiDashboardViewController.m in Sources */,
 				0ED0FF3D18466AB600349D39 /* unifiGoogleNavigationController.m in Sources */,
+				0EF4E95E1854FF3E0097FACB /* UITabBarController+unifiTabBarWithHide.m in Sources */,
 				0E4FD6951847BA30009383C6 /* unifiTabViewController.m in Sources */,
 				0EBCF10F184344FF00D11BFD /* unifiSplashViewController.m in Sources */,
+				0EB03D6B184D0CCA00879698 /* unifiSystemResource.m in Sources */,
 				0E488D95183C4FE4004FF995 /* unifiAppDelegate.m in Sources */,
 				0E66899F183DF1A400434A2F /* unifiUserResource.m in Sources */,
 				0E1E4659183CE74000624634 /* unifiApiConnector.m in Sources */,
@@ -566,6 +671,7 @@
 				0EE341DE184C7CA700C8814A /* unifiStatisticViewController.m in Sources */,
 				0EBCF1121843763400D11BFD /* TJSpinner.m in Sources */,
 				0EBCF0CC1842FB2200D11BFD /* unifiMenuButton.m in Sources */,
+				0EF176651856CF7700F5CCF5 /* unifiNavigationManagementViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -704,10 +810,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/boshido/Desktop/Git/unifi-management/xcode/UnifiManagement",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnifiManagement/UnifiManagement-Prefix.pch";
 				INFOPLIST_FILE = "UnifiManagement/UnifiManagement-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -722,10 +833,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/boshido/Desktop/Git/unifi-management/xcode/UnifiManagement",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UnifiManagement/UnifiManagement-Prefix.pch";
 				INFOPLIST_FILE = "UnifiManagement/UnifiManagement-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

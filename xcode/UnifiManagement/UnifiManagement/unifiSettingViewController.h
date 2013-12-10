@@ -9,12 +9,29 @@
 #import <UIKit/UIKit.h>
 #import "unifiGlobalVariable.h"
 #import "unifiApiConnector.h"
+#import "unifiGoogleResource.h"
+#import "TJSpinner.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "unifiTabViewController.h"
+
+@protocol unifiSettingViewControllerDelegate;
 
 @interface unifiSettingViewController : UIViewController{
     IBOutlet UILabel *name;
     IBOutlet UILabel *surname;
     IBOutlet UILabel *email;
+    NSString *url;
+    TJSpinner *spinner;
     IBOutlet UIImageView *profilePicture;
+    __weak id<unifiSettingViewControllerDelegate> delegate;
+
 }
+@property(weak,nonatomic) id<unifiSettingViewControllerDelegate> delegate;
+
 -(IBAction)signOut:(id)sender;
+@end
+
+@protocol unifiSettingViewControllerDelegate<NSObject>
+- (void)settingView:(unifiSettingViewController *)viewController
+             didSignoutSign:(BOOL)sign;
 @end

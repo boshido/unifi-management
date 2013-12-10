@@ -15,9 +15,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    UIImage* tabBarBackground = [UIImage imageNamed:@"TWIcon.png"];
-    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tabbar_selected.png"]];
+    
+    UIImage* BarBackground = [UIImage imageNamed:@"BlackBG.png"];
+    // For Navigation Bar
+    [[UINavigationBar appearance] setBackgroundImage:BarBackground forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
+    
+    // For Tab Bar
+//    [[UITabBar appearance] setBackgroundImage:BarBackground];
+//    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"BarBG.png"]];
+    
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -42,10 +49,10 @@
     
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    
-    splashView = [storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"];
-    [self.window.rootViewController presentViewController:splashView animated:NO completion:nil];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+//    
+//    splashView = [storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"];
+//    [self.window.rootViewController presentViewController:splashView animated:NO completion:nil];
        //[self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     //}];
     

@@ -2,7 +2,7 @@
 	<head>
 		<title> Unifi Management Mockup </title>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=0.6, maximum-scale=0.6,minimum-scale=0.6">
+		<meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=0.7,minimum-scale=0.7">
 		<script>
 			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 			  var msViewportStyle = document.createElement("style");
@@ -21,6 +21,7 @@
                 height:100%;
                 padding:0px;
                 margin:0px;
+                background-color:rgb(31, 171, 149);
             }
         </style>
 		<link href="css/index.css" rel="stylesheet">
@@ -31,7 +32,7 @@
 	</head>
 	<body>
 		
-        <div id="chartContainer" style="width: 100%; height: 300px;"></div>
+        <div id="chartContainer" style="width: 100%; height: 260px;"></div>
         <script type="text/javascript">
 			$(function ()
               {
@@ -40,12 +41,12 @@
                                 { year: 1960, europe: 605 },
                                 { year: 1970, europe: 656 },
                                 { year: 1980, europe: 694 },
-                                { year: 1990, europe: 721 },
+                                { year: 1990, europe: 400 },
                                 { year: 2000, europe: 730 },
                                 { year: 2010, europe: 728 },
-                                { year: 2020, europe: 721 },
+                                { year: 2020, europe: 300 },
                                 { year: 2030, europe: 704 },
-                                { year: 2040, europe: 680 },
+                                { year: 2040, europe: 100 },
                                 { year: 2050, europe: 650 }
                                 ];
               
@@ -56,28 +57,76 @@
                         argumentField: "year"
                     },
                     series: [
-                        { valueField: "europe", name: "Europe" }
+                        { type: 'spline' , valueField: "europe", name: "Europe" , color: 'rgba(62,62,62,1)'}
                                                     
                     ],
                     argumentAxis:{
-                        grid:{
-                            visible: true
+                       /* grid: {
+                            visible: true,
+                            color: 'rgba(62,62,62,1)'
+                        }*/
+                    },
+                    valueAxis: {
+                        grid: {
+                            visible: true,
+                            color: 'rgba(62,62,62,1)',
+                                             size:2
+                        },
+                        title:{
+                            text: 'Megabytes',
+                            font: {
+                                color: 'rgba(255,255,255,1)',
+                                opacity: 1,
+                                size: 14,
+                                weight: 800
+                            }
                         }
                     },
                     tooltip:{
-                        enabled: true
+                        enabled: true,
+                        color:'rgba(255, 255, 255,1)',
+                        font: {  color: 'rgba(80,80,80,1)' }
                     },
-                    title: "Recent Activities",
+                    title: {
+                        text: 'Recent Activities',
+                        font: {
+                            color: 'rgba(255,255,255,1)',
+                            opacity: 1,
+                            size: 20,
+                            weight: 800
+                        }
+                    },
                     legend: {
                         verticalAlignment: "bottom",
-                        horizontalAlignment: "center"
+                        horizontalAlignment: "center",
+                        font: {
+                            color: 'rgba(255,255,255,1)',
+                            opacity: 0.75,
+                            size: 20,
+                            weight: 800
+                        },
+                        visible:false
+                    },
+                    commonAxisSettings: {
+                        label: {
+                             font: {  size: 12,weight: 800,color: 'rgba(255,255,255,1)' }
+                        }
                     },
                     commonPaneSettings: {
-                        border:{
+                      /* border:{
                             visible: true,
-                            right: false
-                        }
+                            right: false,
+                            top:false
+                            color: 'rgba(62,62,62,1)'
+                        } ,
+                        backgroundColor: 'rgba(27, 183, 166,0.5)'*/
+                    },
+                    margin:{
+                        top:10,
+                        right:10,
+                        left:10
                     }
+                   
                 });
               }
             );

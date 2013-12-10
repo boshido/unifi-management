@@ -29,6 +29,10 @@
 	// Do any additional setup after loading the view.
     self.delegate = self;
     
+    unifiSettingViewController * tmp = [self.viewControllers objectAtIndex:2];
+    tmp.delegate =  [self.viewControllers objectAtIndex:0];
+    
+    
 //    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
 //    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
 //    [self.view addGestureRecognizer:swipeLeft];
@@ -48,7 +52,8 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-    NSLog(@"ASDSA");
+    NSLog(@"Change Tab");
+    
     NSArray *tabViewControllers = tabBarController.viewControllers;
     UIView * fromView = tabBarController.selectedViewController.view;
     UIView * toView = viewController.view;
@@ -56,7 +61,7 @@
         return false;
     NSUInteger fromIndex = [tabViewControllers indexOfObject:tabBarController.selectedViewController];
     NSUInteger toIndex = [tabViewControllers indexOfObject:viewController];
-    
+
     [UIView transitionFromView:fromView
                         toView:toView
                       duration:0.3
@@ -66,6 +71,7 @@
                             tabBarController.selectedIndex = toIndex;
                         }
                     }];
+    
     return true;
 }
 

@@ -10,7 +10,7 @@
 #import "unifiGlobalVariable.h"
 @interface unifiGoogleViewController : UIViewController<UIWebViewDelegate>
 {
-    
+    NSURLConnection *theConnection;
     NSMutableData *receivedData;
 }
 
@@ -18,4 +18,5 @@
 @property (nonatomic, retain) NSString *isLogin;
 @property (assign, nonatomic) Boolean isReader;
 
+-(IBAction)cancelAuthenticaiton:(id)sender;
 @end

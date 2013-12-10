@@ -65,7 +65,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSLog(@"Response");
+   
     receivedData = [[NSMutableData alloc] initWithLength:0];
 }
 
@@ -86,7 +86,6 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"Finish");
     self.onComplete([NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:nil]);
     
     theConnection = nil;

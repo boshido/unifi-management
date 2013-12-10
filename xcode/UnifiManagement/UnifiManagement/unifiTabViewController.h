@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "unifiSettingViewController.h"
 
 @interface unifiTabViewController : UITabBarController<UITabBarControllerDelegate,UIGestureRecognizerDelegate>
 @property NSInteger controllerIndex;

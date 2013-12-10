@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 typedef void(^ApiCallbackComplete)(NSJSONSerialization *response);
+static NSString *ApiServerAddress = @"192.168.0.2";
 
 @interface unifiApiConnector : NSObject{
     NSURLConnection *theConnection;

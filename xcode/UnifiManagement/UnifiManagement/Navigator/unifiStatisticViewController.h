@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "unifiSystemResource.h"
 
 @interface unifiStatisticViewController : UIViewController{
     IBOutlet UIWebView *chart;
+    IBOutlet UIView *statusView,*summaryView;
 }
+-(IBAction)backToMain:(id)sender;
 @end

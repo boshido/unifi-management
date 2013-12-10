@@ -12,7 +12,7 @@
 
 +(void)getApCount:(ApiCallbackComplete)callback{
     
-    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"http://202.44.47.47/unifi/ap-count" andCallback:callback];
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/ap-count",ApiServerAddress] andCallback:callback];
     [object loadGetData];
 }
 
