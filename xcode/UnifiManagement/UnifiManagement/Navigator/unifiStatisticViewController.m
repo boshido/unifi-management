@@ -103,6 +103,8 @@
                     if(responseJSON != nil){
                         if([[responseJSON valueForKey:@"code"] intValue] == 200){
                             for(NSJSONSerialization *json in [responseJSON valueForKey:@"data"]){
+                                if([ json valueForKey:@"google_id"] == nil)continue;
+                                
                                 UILabel *email,*name,*hostname;
                                 email = [[UILabel alloc] initWithFrame:CGRectMake(14, contentSize, 92, 21)];
                                 name = [[UILabel alloc] initWithFrame:CGRectMake(115, contentSize, 116, 21)];
