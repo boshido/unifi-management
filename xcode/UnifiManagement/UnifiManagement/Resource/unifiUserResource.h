@@ -11,4 +11,5 @@
 
 @interface unifiUserResource : NSObject
 +(void)getUserCount:(ApiCallbackComplete)callback;
++(void)getUser:(ApiCallbackComplete)callback FromMac:(NSArray *)userArray;
 @end

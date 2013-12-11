@@ -86,7 +86,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    self.onComplete([NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:nil]);
+    self.onComplete([NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:nil],[[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
     
     theConnection = nil;
     receivedData = nil;

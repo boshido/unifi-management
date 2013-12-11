@@ -17,6 +17,7 @@
 		0E2032C9185706D100D949E4 /* BackwardIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C5185706D100D949E4 /* BackwardIcon@2x.png */; };
 		0E2032CA185706D100D949E4 /* BackwardIconPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C6185706D100D949E4 /* BackwardIconPressed.png */; };
 		0E2032CB185706D100D949E4 /* BackwardIconPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C7185706D100D949E4 /* BackwardIconPressed@2x.png */; };
+		0E2032CD185794AF00D949E4 /* jquery.mobile-1.3.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032CC185794AF00D949E4 /* jquery.mobile-1.3.2.min.js */; };
 		0E488D85183C4FE4004FF995 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D84183C4FE4004FF995 /* Foundation.framework */; };
 		0E488D87183C4FE4004FF995 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D86183C4FE4004FF995 /* CoreGraphics.framework */; };
 		0E488D89183C4FE4004FF995 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D88183C4FE4004FF995 /* UIKit.framework */; };
@@ -125,6 +126,7 @@
 		0E2032C5185706D100D949E4 /* BackwardIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackwardIcon@2x.png"; sourceTree = "<group>"; };
 		0E2032C6185706D100D949E4 /* BackwardIconPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackwardIconPressed.png; sourceTree = "<group>"; };
 		0E2032C7185706D100D949E4 /* BackwardIconPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackwardIconPressed@2x.png"; sourceTree = "<group>"; };
+		0E2032CC185794AF00D949E4 /* jquery.mobile-1.3.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.mobile-1.3.2.min.js"; sourceTree = "<group>"; };
 		0E488D81183C4FE4004FF995 /* UnifiManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnifiManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E488D84183C4FE4004FF995 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E488D86183C4FE4004FF995 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -437,6 +439,7 @@
 		0E83637A184CBCD70009D786 /* js */ = {
 			isa = PBXGroup;
 			children = (
+				0E2032CC185794AF00D949E4 /* jquery.mobile-1.3.2.min.js */,
 				0E836372184CBCCE0009D786 /* dx.chartjs.js */,
 				0E836373184CBCCE0009D786 /* globalize.min.js */,
 				0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */,
@@ -575,6 +578,7 @@
 				0E836377184CBCCE0009D786 /* globalize.min.js in Resources */,
 				0E836376184CBCCE0009D786 /* dx.chartjs.js in Resources */,
 				0E836378184CBCCE0009D786 /* jquery-1.9.1.min.js in Resources */,
+				0E2032CD185794AF00D949E4 /* jquery.mobile-1.3.2.min.js in Resources */,
 				0EBCF1631843C61B00D11BFD /* UserIconPressed.png in Resources */,
 				0EBCF1401843C5FC00D11BFD /* LineIconPressed@2x.png in Resources */,
 				0EBCF15F1843C61B00D11BFD /* UserIcon.png in Resources */,

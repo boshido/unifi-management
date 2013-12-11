@@ -147,9 +147,9 @@
 -(void)loadDashBoardInfo{
     __block bool flag = NO;
     
-    ApiCallbackComplete apCallback = ^(NSJSONSerialization *response){
-        NSInteger connected =[[[response valueForKey:@"data"] valueForKey:@"connected"] intValue];
-        NSInteger disconnected =[[[response valueForKey:@"data"] valueForKey:@"disconnected"] intValue];
+    ApiCallbackComplete apCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
+        NSInteger connected =[[[responseJSON valueForKey:@"data"] valueForKey:@"connected"] intValue];
+        NSInteger disconnected =[[[responseJSON valueForKey:@"data"] valueForKey:@"disconnected"] intValue];
         apCount.text = [NSString stringWithFormat:@"%i / %i",connected,connected+disconnected];
         
         if(flag){
@@ -159,9 +159,9 @@
         }
         flag = YES;
     };
-    ApiCallbackComplete userCallback = ^(NSJSONSerialization *response){
-        NSInteger authorized =[[[response valueForKey:@"data"] valueForKey:@"authorized"] intValue];
-        NSInteger non_authorized =[[[response valueForKey:@"data"] valueForKey:@"non_authorized"] intValue];
+    ApiCallbackComplete userCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
+        NSInteger authorized =[[[responseJSON valueForKey:@"data"] valueForKey:@"authorized"] intValue];
+        NSInteger non_authorized =[[[responseJSON valueForKey:@"data"] valueForKey:@"non_authorized"] intValue];
         userCount.text = [NSString stringWithFormat:@"%i / %i",authorized,authorized+non_authorized];
         
         if(flag){

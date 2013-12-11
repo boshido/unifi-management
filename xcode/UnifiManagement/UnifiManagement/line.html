@@ -24,8 +24,8 @@
                 background-color:rgb(31, 171, 149);
             }
         </style>
-		<link href="css/index.css" rel="stylesheet">
         <script src="jquery-1.9.1.min.js"></script>
+        <script src="jquery.mobile-1.3.2.min.js"></script>
         <script src="knockout-2.2.1.js"></script>
         <script src="globalize.min.js"></script>
         <script src="dx.chartjs.js"></script>
@@ -34,46 +34,88 @@
 		
         <div id="chartContainer" style="width: 100%; height: 260px;"></div>
         <script type="text/javascript">
-			$(function ()
-              {
-              var dataSource = [
-                                { year: 1950, europe: 546 },
-                                { year: 1960, europe: 605 },
-                                { year: 1970, europe: 656 },
-                                { year: 1980, europe: 694 },
-                                { year: 1990, europe: 400 },
-                                { year: 2000, europe: 730 },
-                                { year: 2010, europe: 728 },
-                                { year: 2020, europe: 300 },
-                                { year: 2030, europe: 704 },
-                                { year: 2040, europe: 100 },
-                                { year: 2050, europe: 650 }
-                                ];
+            $(document).on('touchstart','*', function(e) {
+                //this will prevent all elements below the clicked item from firing as well.  
+                event.stopPropagation();
+                //display element text if available
+                //alert($(this).text());
+            });
+
+            function showLineChart(source)
+            {
+
+                source = source.data;
+                var dataSource = [];
+                var categories = [];       
+                var max = Math.max.apply(Math,source.map(function(o){return o.bytes;}));
+                var label = getUnit(max);
+
+                for(var y in source){
+                    dataSource.push({
+                        date:source[y].datetime.sec*1000,
+                        traffic:source[y].bytes,
+                        tag:source[y]._id
+                    });  
+                }
               
                 $("#chartContainer").dxChart(
                 {
                     dataSource: dataSource,
                     commonSeriesSettings: {
-                        argumentField: "year"
+                        argumentField: "date",
+                        tagField:"tag",
+                        label: {
+                            visible: true,
+                            connector: { visible: true },  
+                            format: 'fixedPoint',
+                            precision: 2,
+                            customizeText: function(value){
+
+                                return parseUnitWithLabel(value.value);
+                            }
+                        }
                     },
                     series: [
-                        { type: 'spline' , valueField: "europe", name: "Europe" , color: 'rgba(62,62,62,1)'}
+                        { type: 'spline' , valueField: "traffic", name: "Traffic" , color: 'rgba(62,62,62,1)'}
                                                     
                     ],
+                    pointClick: function (clickedPoint,e) { 
+                        var iframe = document.createElement("IFRAME");
+                        iframe.setAttribute("src", "js-call:showUser:"+clickedPoint.tag);
+                        document.documentElement.appendChild(iframe);
+                        iframe.parentNode.removeChild(iframe);
+                        iframe = null;
+                    },
                     argumentAxis:{
+                       argumentType: 'datetime',
+                       label:{
+                            customizeText: function () {
+                                var hours = this.value.getHours();
+                                var minutes = this.value.getMinutes();
+                                if (minutes < 10)minutes = "0" + minutes;
+
+                                 
+                                return hours +":" + minutes;
+                            }
+                       }
                        /* grid: {
                             visible: true,
                             color: 'rgba(62,62,62,1)'
                         }*/
                     },
                     valueAxis: {
+                        label:{
+                            customizeText: function () {
+                                return parseUnit(this.value,label);
+                            }
+                        },
                         grid: {
                             visible: true,
                             color: 'rgba(62,62,62,1)',
                                              size:2
                         },
                         title:{
-                            text: 'Megabytes',
+                            text: label,
                             font: {
                                 color: 'rgba(255,255,255,1)',
                                 opacity: 1,
@@ -83,12 +125,18 @@
                         }
                     },
                     tooltip:{
-                        enabled: true,
+                        enabled: false,
+                        format: 'fixedPoint',
+                        precision: 2,
+                        customizeText: function(value){
+
+                            return parseUnitWithLabel(value.value);
+                        },
                         color:'rgba(255, 255, 255,1)',
                         font: {  color: 'rgba(80,80,80,1)' }
                     },
                     title: {
-                        text: 'Recent Activities',
+                        text: 'Recent Traffic<br>'+getDate(new Date()),
                         font: {
                             color: 'rgba(255,255,255,1)',
                             opacity: 1,
@@ -122,14 +170,103 @@
                         backgroundColor: 'rgba(27, 183, 166,0.5)'*/
                     },
                     margin:{
-                        top:10,
+                        top:20,
                         right:10,
                         left:10
                     }
-                   
                 });
-              }
-            );
+            }
+
+            function parseUnitWithLabel(data){
+                data = parseInt(data);
+                if(Math.floor(data/1073741824) != 0){
+                    data = data / 1073741824;
+                    label = 'GB';
+                    data = data.toFixed(2);
+                }
+                else if(Math.floor(data / 1048576) != 0){
+                    data = data / 1048576;
+                    label = 'MB';
+                    data = data.toFixed(2);
+                }                   
+                else if(Math.floor(data / 1024) != 0){
+                    data = data / 1024;
+                    label = 'KB';
+                    data = data.toFixed(2);
+                }
+                else{
+                    label = 'Bytes';
+                }
+                return data+' '+label;
+            }
+
+            function parseUnit(data,type){
+                data = parseInt(data);
+                if(type == 'GigaBytes'){
+                    data = data / 1073741824;
+                }
+                else if(type == 'MegaBytes'){
+                    data = data / 1048576;
+                }                   
+                else if(type == 'KiloBytes'){
+                    data = data / 1024;
+                }
+
+                return data.toFixed(1);
+            }
+
+            function getUnit(data){
+                data = parseInt(data);
+                if(Math.floor(data/1073741824) != 0){
+                    label = 'GigaBytes';
+                }
+                else if(Math.floor(data / 1048576) != 0){
+                    label = 'MegaBytes';
+                }                   
+                else if(Math.floor(data / 1024) != 0){
+                    label = 'KiloBytes';
+                }
+                else{
+                    label = 'Bytes';
+                }
+                return label;
+            }
+            
+            function getDate(parameter){
+                var d = new Date(parameter); //Unix Timestamp millisecond
+                var curr_date = d.getDate();
+                var curr_month = d.getMonth() + 1; //Months are zero based
+                var curr_year = d.getFullYear()+43-2000;
+                return curr_date+'/'+curr_month+'/'+curr_year;
+            }               
+            function getTime(parameter){
+                var d = new Date(parameter); //Unix Timestamp millisecond
+                var curr_hours = d.getHours();
+                var curr_minutes = d.getMinutes();
+                var curr_seconds = d.getSeconds();
+                
+                if (curr_minutes < 10) curr_minutes = "0" + curr_minutes;
+                if (curr_seconds < 10) curr_seconds = "0" + curr_seconds;
+
+                return curr_hours + ":" + curr_minutes + ":" + curr_seconds;
+            }
+            function getDuration(msec){
+                var dd = Math.floor(msec / 1000 / 60 / 60 / 24);
+                msec -= dd * 1000 * 60 * 60 * 24;
+                var hh = Math.floor(msec / 1000 / 60 / 60);
+                msec -= hh * 1000 * 60 * 60;
+                var mm = Math.floor(msec / 1000 / 60);
+                msec -= mm * 1000 * 60;
+                var ss = Math.floor(msec / 1000);
+                msec -= ss * 1000;
+                
+                dd = dd != 0 ? dd+'d':'';
+                hh = hh != 0 ? hh+'h':'';
+                mm = mm != 0 ? mm+'m':'';
+                ss = ss != 0 ? ss+'s':'';
+                
+                return dd+' '+hh+' '+mm+' '+ss;
+            }
         </script>
 	</body>
 </html>

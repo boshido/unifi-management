@@ -69,12 +69,12 @@
     else{
         
         [unifiGoogleResource
-            getUserData:^(NSJSONSerialization *response) {
-                NSLog(@"%@",response);
-                [unifiGlobalVariable sharedGlobalData].name = [response valueForKey:@"given_name"];
-                [unifiGlobalVariable sharedGlobalData].surname = [response valueForKey:@"family_name"];
-                [unifiGlobalVariable sharedGlobalData].email = [response valueForKey:@"email"];
-                [unifiGlobalVariable sharedGlobalData].profilePicture = [response valueForKey:@"picture"];
+            getUserData:^(NSJSONSerialization *responseJSON,NSString *responseNSString) {
+                NSLog(@"%@",responseJSON);
+                [unifiGlobalVariable sharedGlobalData].name = [responseJSON valueForKey:@"given_name"];
+                [unifiGlobalVariable sharedGlobalData].surname = [responseJSON valueForKey:@"family_name"];
+                [unifiGlobalVariable sharedGlobalData].email = [responseJSON valueForKey:@"email"];
+                [unifiGlobalVariable sharedGlobalData].profilePicture = [responseJSON valueForKey:@"picture"];
                 [self dismissViewControllerAnimated:NO completion:nil];
                 [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiTabViewController"] animated:NO completion:nil];
             }

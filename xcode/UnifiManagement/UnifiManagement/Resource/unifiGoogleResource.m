@@ -25,10 +25,10 @@
 
 +(void)getUserData:(ApiCallbackComplete)callback withRefreshToken:(NSString *)refreshToken{
     
-    ApiCallbackComplete getAccessToken = ^(NSJSONSerialization *response){
-        NSLog(@"%@",response);
+    ApiCallbackComplete getAccessToken = ^(NSJSONSerialization *responseJSON,NSString *responseNSString){
+        NSLog(@"%@",responseJSON);
          NSLog(@"%@",refreshToken);
-        unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"https://www.googleapis.com/oauth2/v1/userinfo?access_token=%@",[response valueForKey:@"access_token"]]  andCallback:callback];
+        unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"https://www.googleapis.com/oauth2/v1/userinfo?access_token=%@",[responseJSON valueForKey:@"access_token"]]  andCallback:callback];
         [object loadGetData];
     };
     [ self getAccessToken:getAccessToken withRefreshToken:refreshToken];

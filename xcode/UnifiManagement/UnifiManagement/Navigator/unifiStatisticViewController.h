@@ -8,10 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "unifiSystemResource.h"
+#import "unifiUserResource.h"
 
-@interface unifiStatisticViewController : UIViewController{
+@interface unifiStatisticViewController : UIViewController<UIWebViewDelegate>{
     IBOutlet UIWebView *chart;
     IBOutlet UIView *statusView,*summaryView;
+    IBOutlet UIScrollView *scrollView;
+    NSJSONSerialization *statistic;
+    NSInteger contentSize;
 }
--(IBAction)backToMain:(id)sender;
+
+-(IBAction)backToParent:(id)sender;
+-(IBAction)backToHome:(id)sender;
+
 @end

@@ -35,7 +35,7 @@
     [spinner setNumberOfStrokes:8];
     spinner.hidesWhenStopped = YES;
     [spinner setPatternStyle:TJActivityIndicatorPatternStylePetal];
-    spinner.center = CGPointMake(62, 80);
+    spinner.center = CGPointMake(62, 85);
     [spinner startAnimating];
     [self.view addSubview:spinner];
     // border radius
@@ -48,11 +48,11 @@
     __weak typeof(profilePicture) profilePictureWeak = profilePicture;
      __weak typeof(spinner) spinnerWeak = spinner;
     
-    [unifiGoogleResource getUserData:^(NSJSONSerialization *response) {
-            name.text = [response valueForKey:@"given_name"];
-            surname.text = [response valueForKey:@"family_name"];
-            email.text  = [response valueForKey:@"email"];
-        [profilePicture setImageWithURL:[NSURL URLWithString:[response valueForKey:@"picture"]]
+    [unifiGoogleResource getUserData:^(NSJSONSerialization *responseJSON,NSString * responseNSString) {
+            name.text = [responseJSON valueForKey:@"given_name"];
+            surname.text = [responseJSON valueForKey:@"family_name"];
+            email.text  = [responseJSON valueForKey:@"email"];
+        [profilePicture setImageWithURL:[NSURL URLWithString:[responseJSON valueForKey:@"picture"]]
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
 
                     [UIView animateWithDuration:0.5
@@ -101,7 +101,7 @@
     }
     else
     {
-         ApiCallbackComplete callback = ^(NSJSONSerialization *response){
+         ApiCallbackComplete callback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
              NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
              NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
          

@@ -16,4 +16,17 @@
     [object loadGetData];
     
 }
++(void)getUser:(ApiCallbackComplete)callback FromMac:(NSArray *)userArray{
+    if([userArray count]>0){
+        NSMutableString *parameter = [NSMutableString stringWithString:@""];
+        for(NSString * user in userArray){
+            [parameter appendFormat:@"&mac[]=%@",user];
+        }
+        unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/user?%@",ApiServerAddress,[parameter substringFromIndex:1]] andCallback:callback];
+        [object loadGetData];
+    }
+    else{
+        callback(nil,nil);
+    }
+}
 @end
