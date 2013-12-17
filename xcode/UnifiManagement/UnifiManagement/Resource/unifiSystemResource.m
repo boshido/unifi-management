@@ -9,9 +9,9 @@
 #import "unifiSystemResource.h"
 
 @implementation unifiSystemResource
-+(void)getTrafficReport:(ApiCallbackComplete)callback withType:(NSString *)type{
++(void)getTrafficReport:(ApiCallbackComplete)callback withStartTime:(NSTimeInterval )time andType:(NSString *)type{
     unifiApiConnector *object = [[unifiApiConnector alloc]
-        initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/traffic-report?type=%@",ApiServerAddress,type]
+        initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/traffic-report?time=%f&type=%@",ApiServerAddress,time,type]
         andCallback:callback
     ];
     

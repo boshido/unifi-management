@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,4 +39,6 @@
         didSignoutSign:(BOOL)sign{
     [self popToRootViewControllerAnimated:NO];
 }
+
+
 @end

@@ -10,6 +10,10 @@
 
 @implementation unifiUserResource
 
++(void)getUserList:(ApiCallbackComplete)callback{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/user-list",ApiServerAddress] andCallback:callback];
+    [object loadGetData];
+}
 +(void)getUserCount:(ApiCallbackComplete)callback{
     
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-count",ApiServerAddress] andCallback:callback];

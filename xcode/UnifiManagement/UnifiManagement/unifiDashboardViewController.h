@@ -7,11 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "unifiViewController.h"
-#import "unifiApResource.h"
-#import "unifiUserResource.h"
 #import "TJSpinner.h"
-#import "UITabBarController+unifiTabBarWithHide.h"
 
 @interface unifiDashboardViewController : UIViewController<UITabBarControllerDelegate,UITabBarDelegate>
 {

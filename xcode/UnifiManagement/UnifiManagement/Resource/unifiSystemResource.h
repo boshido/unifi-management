@@ -10,6 +10,6 @@
 #import "unifiApiConnector.h"
 
 @interface unifiSystemResource : NSObject
-+(void)getTrafficReport:(ApiCallbackComplete)callback withType:(NSString *)type;
++(void)getTrafficReport:(ApiCallbackComplete)callback withStartTime:(NSTimeInterval )time andType:(NSString *)type;
 +(void)getDeviceReport:(ApiCallbackComplete)callback withType:(NSString *)type;
 @end

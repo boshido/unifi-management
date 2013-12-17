@@ -10,6 +10,7 @@
 #import "unifiApiConnector.h"
 
 @interface unifiUserResource : NSObject
++(void)getUserList:(ApiCallbackComplete)callback;
 +(void)getUserCount:(ApiCallbackComplete)callback;
 +(void)getUser:(ApiCallbackComplete)callback FromMac:(NSArray *)userArray;
 @end

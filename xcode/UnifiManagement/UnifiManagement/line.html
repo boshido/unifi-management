@@ -41,7 +41,7 @@
                 //alert($(this).text());
             });
 
-            function showLineChart(source)
+            function showLineChart(source,type)
             {
 
                 source = source.data;
@@ -51,11 +51,13 @@
                 var label = getUnit(max);
 
                 for(var y in source){
-                    dataSource.push({
-                        date:source[y].datetime.sec*1000,
+                    dataSource.unshift({
+                        date:getDateForChart(type,new Date(source[y].datetime.sec*1000)),
                         traffic:source[y].bytes,
                         tag:source[y]._id
                     });  
+
+                   // categories.push(source[y].datetime.sec*1000);
                 }
               
                 $("#chartContainer").dxChart(
@@ -87,16 +89,12 @@
                         iframe = null;
                     },
                     argumentAxis:{
-                       argumentType: 'datetime',
+                       argumentType: 'discrete',
                        label:{
+                            alignment:'center'/*,
                             customizeText: function () {
-                                var hours = this.value.getHours();
-                                var minutes = this.value.getMinutes();
-                                if (minutes < 10)minutes = "0" + minutes;
-
-                                 
-                                return hours +":" + minutes;
-                            }
+                                return getDateForChart(type,this.value);                             
+                            }*/
                        }
                        /* grid: {
                             visible: true,
@@ -170,7 +168,7 @@
                         backgroundColor: 'rgba(27, 183, 166,0.5)'*/
                     },
                     margin:{
-                        top:20,
+                        top:40,
                         right:10,
                         left:10
                     }
@@ -232,6 +230,21 @@
                 return label;
             }
             
+            function getDateForChart(parameter,time){
+                if(parameter=='hourly'){
+                    var hours = time.getHours();
+                    var minutes = time.getMinutes();
+                    if (minutes < 10)minutes = "0" + minutes;
+                    return hours +":" + minutes;
+                }
+                else{
+                    var day = time.getDate();
+                    var month = time.getMonth();
+                    var year = time.getFullYear();
+                    return day;
+                }
+            }
+
             function getDate(parameter){
                 var d = new Date(parameter); //Unix Timestamp millisecond
                 var curr_date = d.getDate();

@@ -7,6 +7,11 @@
 //
 
 #import "unifiSettingViewController.h"
+#import "unifiGlobalVariable.h"
+#import "unifiApiConnector.h"
+#import "unifiGoogleResource.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "unifiTabViewController.h"
 
 @interface unifiSettingViewController ()
 
@@ -52,7 +57,7 @@
             name.text = [responseJSON valueForKey:@"given_name"];
             surname.text = [responseJSON valueForKey:@"family_name"];
             email.text  = [responseJSON valueForKey:@"email"];
-        [profilePicture setImageWithURL:[NSURL URLWithString:[responseJSON valueForKey:@"picture"]]
+            [profilePicture setImageWithURL:[NSURL URLWithString:[responseJSON valueForKey:@"picture"]]
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
 
                     [UIView animateWithDuration:0.5

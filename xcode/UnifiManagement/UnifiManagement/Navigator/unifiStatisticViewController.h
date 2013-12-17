@@ -7,18 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "unifiSystemResource.h"
-#import "unifiUserResource.h"
 
-@interface unifiStatisticViewController : UIViewController<UIWebViewDelegate>{
+@interface unifiStatisticViewController : UIViewController<UIWebViewDelegate,UIGestureRecognizerDelegate>{
     IBOutlet UIWebView *chart;
-    IBOutlet UIView *statusView,*summaryView;
+    IBOutlet UIView *statusView,*coverView;
     IBOutlet UIScrollView *scrollView;
+    IBOutlet UIButton *hourlyButton,*dateButton;
+    IBOutlet UILabel *average;
+    NSString *timeType;
+    double time;
+    
     NSJSONSerialization *statistic;
     NSInteger contentSize;
+    
 }
 
 -(IBAction)backToParent:(id)sender;
 -(IBAction)backToHome:(id)sender;
-
+-(IBAction)toggleChart:(id)sender;
 @end

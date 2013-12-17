@@ -7,12 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "unifiGlobalVariable.h"
-#import "unifiApiConnector.h"
-#import "unifiGoogleResource.h"
 #import "TJSpinner.h"
-#import <SDWebImage/UIImageView+WebCache.h>
-#import "unifiTabViewController.h"
 
 @protocol unifiSettingViewControllerDelegate;
 

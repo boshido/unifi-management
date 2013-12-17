@@ -28,7 +28,6 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.delegate = self;
-    
     unifiSettingViewController * tmp = [self.viewControllers objectAtIndex:2];
     tmp.delegate =  [self.viewControllers objectAtIndex:0];
     
@@ -75,23 +74,5 @@
     return true;
 }
 
-//-(void) swipeRight:(UISwipeGestureRecognizer *) recognizer {
-//    if (recognizer.direction == UISwipeGestureRecognizerDirectionRight)
-//    {
-//        [(UITabBarController*)self.tabBarController setSelectedIndex:self.selectedIndex+1];
-//        [self.tabBarController setSelectedIndex:self.selectedIndex+1];
-//        NSLog(@"Swipe right");
-//    }
-//    
-//}
-//
-//-(void) swipeLeft:(UISwipeGestureRecognizer *) recognizer {
-//    if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
-//    {
-//        [ self.tabBarController setSelectedIndex:self.selectedIndex-1];
-//        NSLog(@"Swipe left");
-//    }
-//    
-//}
 
 @end

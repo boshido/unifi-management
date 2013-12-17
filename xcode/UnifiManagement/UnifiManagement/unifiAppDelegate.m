@@ -21,6 +21,8 @@
     [[UINavigationBar appearance] setBackgroundImage:BarBackground forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackOpaque];
     
+    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"BlackBG.png"]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"BlackBG.png"]];
     // For Tab Bar
 //    [[UITabBar appearance] setBackgroundImage:BarBackground];
 //    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"BarBG.png"]];
