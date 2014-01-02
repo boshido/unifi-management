@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface unifiUserViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+{
+    UITapGestureRecognizer *dismissKeybaordTap;
+}
 @property(retain,nonatomic)IBOutlet UITableView *userTable;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property(retain,nonatomic) NSMutableArray *userOnline;
-@property(retain,nonatomic) NSMutableArray *userOffline;
-@property(retain,nonatomic) NSMutableArray *userSearch;
+@property(retain,nonatomic) IBOutlet UIView *filterView;
+@property(retain,nonatomic) NSMutableArray *userOnline,*userOffline,*userSearch;
 @property NSInteger filterState;
 @property bool isSearched;
 

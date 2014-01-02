@@ -8,14 +8,16 @@
 
 #import "unifiUserViewController.h"
 #import "unifiUserResource.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "unifiProfileViewController.h"
+#import "unifiTableViewCell.h"
+#import "DejalActivityView.h"
 
 @interface unifiUserViewController ()
 
 @end
 
 @implementation unifiUserViewController
-@synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterState,isSearched;
+@synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterView,filterState,isSearched;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,28 +48,55 @@
     isSearched=NO;
     userOnline = [[NSMutableArray alloc] init];
     userOffline = [[NSMutableArray alloc] init];
-                   
+    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+    
     [unifiUserResource getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
         
-        for(NSJSONSerialization *json in [responseJSON valueForKey:@"data"]){
-            if([[json valueForKey:@"online"] intValue]>0){
-                [ userOnline addObject:json];
-            }
-            else{
-                [ userOffline addObject:json];
-            }
-        }
-        NSLog(@"%@",userOnline);
-        NSLog(@"%@",userOffline);
+        __block NSInteger count = 0;
+        __block NSData *data;
+        __block UIImage *image;
+        for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
 
-        [userTable reloadData];
+            dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            dispatch_async(concurrentQueue, ^{
+
+                if([json valueForKey:@"picture"] != NULL){
+                    data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[json valueForKey:@"picture"]]];
+                    image = [[UIImage alloc]initWithData:data ];
+                    
+                }
+                else{
+                    image = [UIImage imageNamed:@"profile.jpg"];
+                }
+                NSDictionary *dictionary = @{ @"json"     : json,
+                                              @"image" : image,
+                                            };
+            
+                if([[json valueForKey:@"online"] intValue]>0){
+                    [userOnline addObject:dictionary];
+                }
+                else{
+                    [userOffline addObject:dictionary];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    count++;
+                    if(count >= [[responseJSON valueForKey:@"data"] count]){
+                        [userTable reloadData];
+                        [DejalBezelActivityView removeViewAnimated:YES];
+                    }
+                });
+            });
+        }
+
+        //[userTable reloadData];
     }];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+    UITapGestureRecognizer *filterTap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
-                                   action:@selector(dismissKeyboard)];
+                                   action:@selector(filterTap)];
     
-    [self.view addGestureRecognizer:tap];
+    [filterView addGestureRecognizer:filterTap];
     
 }
 - (void)didReceiveMemoryWarning
@@ -84,83 +113,121 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-//
-//-(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
-//{
-//    if(text.length == 0)
-//    {
-//        isSearched = NO;
-//    }
-//    else
-//    {
-//        isSearched = YES;
-//        userSearch = [[NSMutableArray alloc] init];
-//        __weak NSArray *tmp;
-//        if(filterState==1) tmp = userOnline;
-//        else tmp = userOffline;
-//        
-//        for (NSJSONSerialization* json in tmp)
-//        {
-//            NSRange nameRange = [json.name rangeOfString:text options:NSCaseInsensitiveSearch];
-//            NSRange descriptionRange = [food.description rangeOfString:text options:NSCaseInsensitiveSearch];
-//            if(nameRange.location != NSNotFound || descriptionRange.location != NSNotFound)
-//            {
-//                [filteredTableData addObject:food];
-//            }
-//        }
-//    }
-//    
-//    [self.userTable reloadData];
-//}
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)bar {
+    dismissKeybaordTap = [[UITapGestureRecognizer alloc]
+                                                  initWithTarget:self
+                                                  action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:dismissKeybaordTap];
+}
+
+-(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
+{
+   
+    if(text.length == 0)
+    {
+        isSearched = NO;
+    }
+    else
+    {
+        isSearched = YES;
+        userSearch = [[NSMutableArray alloc] init];
+        __weak NSArray *tmp;
+        if(filterState==1) tmp = userOnline;
+        else tmp = userOffline;
+        
+        for (NSJSONSerialization* json in tmp)
+        {
+            NSRange nameRange = [[[json valueForKey:@"json"] valueForKey:@"name"] rangeOfString:text options:NSCaseInsensitiveSearch];
+            if(nameRange.location != NSNotFound)
+            {
+                [userSearch addObject:json];
+            }
+        }
+    }
+    
+    [self.userTable reloadData];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(filterState==1)return [userOnline count];
+    if(isSearched)return [userSearch count];
+    else if(filterState==1)return [userOnline count];
     else return [userOffline count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    unifiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+        cell = [[unifiTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
     }
     
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-//    [cell.imageView.layer setCornerRadius:22];
-//    [cell.imageView.layer setMasksToBounds: YES];
-//    // border
-//    [cell.imageView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-//    [cell.imageView.layer setBorderWidth:0.3f];
-    NSString *pictureUrl;
+    [cell.imageView.layer setCornerRadius:17.5f];
+    [cell.imageView.layer setMasksToBounds: YES];
+    // border
+    [cell.imageView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [cell.imageView.layer setBorderWidth:0.3f];
     
-    if(filterState==1){
-        cell.textLabel.text = [[userOnline objectAtIndex:indexPath.row] objectForKey:@"name"];
-        pictureUrl = [[userOnline objectAtIndex:indexPath.row] objectForKey:@"picture"];
+    if(isSearched){
+        cell.textLabel.text = [[[userSearch objectAtIndex:indexPath.row] objectForKey:@"json"] objectForKey:@"name"];
+        cell.imageView.image = [[userSearch objectAtIndex:indexPath.row] objectForKey:@"image"];
+    }
+    else if(filterState==1){
+        cell.textLabel.text = [[[userOnline objectAtIndex:indexPath.row] objectForKey:@"json"] objectForKey:@"name"];
+        cell.imageView.image = [[userOnline objectAtIndex:indexPath.row] objectForKey:@"image"];
     }
     else{
-        cell.textLabel.text = [[userOffline objectAtIndex:indexPath.row] objectForKey:@"name"];
-        pictureUrl = [[userOnline objectAtIndex:indexPath.row] objectForKey:@"picture"];
+        cell.textLabel.text = [[[userOffline objectAtIndex:indexPath.row] objectForKey:@"json"] objectForKey:@"name"];
+        cell.imageView.image = [[userOffline objectAtIndex:indexPath.row] objectForKey:@"image"];
     }
-    
-    
-    [cell.imageView setImageWithURL:[NSURL URLWithString:pictureUrl]
-        placeholderImage:[UIImage imageNamed:@"DateIcon.png"]
-        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-            
-        }
-     ];
-    
 
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    unifiProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiProfileViewController"];
+
+    if(isSearched){
+        [profile setUserData:[[userSearch objectAtIndex:indexPath.row] objectForKey:@"json"]];
+    }
+    else if(filterState==1){
+        [profile setUserData:[[userOnline objectAtIndex:indexPath.row] objectForKey:@"json"]];
+    }
+    else{
+        [profile setUserData:[[userOffline objectAtIndex:indexPath.row] objectForKey:@"json"]];
+    }
+    
+    [[self navigationController] pushViewController:profile animated:YES];
 }
 
 - (void) dismissKeyboard
 {
+    [self.view removeGestureRecognizer:dismissKeybaordTap];
     // add self
     [self.searchBar resignFirstResponder];
+}
+-(void) filterTap
+{
+    UILabel *label = (UILabel *)[self.view viewWithTag:100];
+    UIImageView *image = (UIImageView *)[self.view viewWithTag:101];
+    
+    if(filterState==1)
+    {
+        [label setText:@"Offline"];
+        [image setHighlighted:YES];
+        filterState=2;
+    }
+    else {
+        [label setText:@"Online"];
+        [image setHighlighted:NO];
+        filterState=1;
+    }
+        
+    [self.userTable reloadData];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;

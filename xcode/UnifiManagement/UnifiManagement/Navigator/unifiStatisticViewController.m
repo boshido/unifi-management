@@ -39,7 +39,7 @@
 //    topBorder.backgroundColor = [UIColor colorWithRed:0.867 green:0.867 blue:0.867 alpha:1.0].CGColor;
 //    [summaryView.layer addSublayer:topBorder];
     
-    bottomBorder.frame = CGRectMake(0.0f, 35, statusView.frame.size.width, 1.0f);
+    bottomBorder.frame = CGRectMake(0.0f, statusView.frame.size.height, statusView.frame.size.width, 1.0f);
     bottomBorder.backgroundColor = [UIColor colorWithRed:0.867 green:0.867 blue:0.867 alpha:1.0].CGColor;
     [statusView.layer addSublayer:bottomBorder ];
     
@@ -63,7 +63,6 @@
     swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
     [chart addGestureRecognizer:swipeRight];
     swipeRight.delegate = self;
-
     
 }
 
@@ -267,5 +266,7 @@
         [button setSelected:YES];
     }
 }
-
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleBlackTranslucent;
+}
 @end
