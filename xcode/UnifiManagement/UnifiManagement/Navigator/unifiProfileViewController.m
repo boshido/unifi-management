@@ -67,8 +67,10 @@
 //           
 //        });
 //    });
-
-    [profilePicture setImageWithURL:[NSURL URLWithString:[userData valueForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"profile.jpg"]];
+    if([userData valueForKey:@"picture"] != [NSNull null]){
+        [profilePicture setImageWithURL:[NSURL URLWithString:[userData valueForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"profile.jpg"]];
+    }
+    else [profilePicture setImage:[UIImage imageNamed:@"profile.jpg"]];
     
     [unifiDeviceResource getAuthorizedDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
         onlineDevice  = [[responseJSON valueForKey:@"data"] valueForKey:@"online"];

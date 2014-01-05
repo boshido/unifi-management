@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 typedef void(^ApiCallbackComplete)(NSJSONSerialization *responseJSON,NSString *responseNSString);
 
-static NSString *ApiServerAddress = @"192.168.0.2";
+static NSString *ApiServerAddress = @"202.44.47.47";
 
 @interface unifiApiConnector : NSObject{
     NSURLConnection *theConnection;

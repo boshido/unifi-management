@@ -60,14 +60,14 @@
 
             dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
             dispatch_async(concurrentQueue, ^{
-
-                if([json valueForKey:@"picture"] != NULL){
-                    data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[json valueForKey:@"picture"]]];
-                    image = [[UIImage alloc]initWithData:data ];
-                    
+                
+                if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
+                    image = [UIImage imageNamed:@"profile.jpg"];
                 }
                 else{
-                    image = [UIImage imageNamed:@"profile.jpg"];
+                    
+                    data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[json valueForKey:@"picture"]]];
+                    image = [[UIImage alloc]initWithData:data ];
                 }
                 NSDictionary *dictionary = @{ @"json"     : json,
                                               @"image" : image,
