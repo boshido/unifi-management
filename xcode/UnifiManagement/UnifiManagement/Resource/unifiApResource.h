@@ -11,5 +11,6 @@
 
 @interface unifiApResource : NSObject/*: unifiApiConnector*/
 
-+(void)getApCount:(ApiCallbackComplete)callback;
++(void)getApCount:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback;
++(void)getApMapCount:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback;
 @end

@@ -10,11 +10,16 @@
 
 @implementation unifiApResource
 
-+(void)getApCount:(ApiCallbackComplete)callback{
++(void)getApCount:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
     
-    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/ap-count",ApiServerAddress] andCallback:callback];
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/ap-count",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
 
++(void)getApMapCount:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
+    
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/ap-map-count",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
 
 @end

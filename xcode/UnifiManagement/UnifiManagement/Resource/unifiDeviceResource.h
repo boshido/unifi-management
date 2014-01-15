@@ -10,6 +10,6 @@
 #import "unifiApiConnector.h"
 
 @interface unifiDeviceResource : NSObject
-+(void)getDeviceCount:(ApiCallbackComplete)callback;
-+(void)getAuthorizedDevice:(ApiCallbackComplete)callback withGoogleId:(NSString *)googleId;
++(void)getDeviceCount:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback;
++(void)getAuthorizedDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromGoogleId:(NSString *)googleId;
 @end

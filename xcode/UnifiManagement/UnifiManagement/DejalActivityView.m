@@ -539,10 +539,11 @@ static DejalActivityView *dejalActivityView = nil;
 - (TJSpinner *)makeActivityIndicator;
 {
     TJSpinner *indicator = [[TJSpinner alloc] initWithSpinnerType:kTJSpinnerTypeActivityIndicator];
-    [indicator setColor:[UIColor colorWithRed:17/255.00 green:181/255.00 blue:255.00/255.00 alpha:1.0]];
-    [indicator setStrokeWidth:30];
-    [indicator setInnerRadius:30];
-    [indicator setOuterRadius:39];
+    //[indicator setColor:[UIColor colorWithRed:17/255.00 green:181/255.00 blue:255.00/255.00 alpha:1.0]];
+    [indicator setColor:[UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0]];
+    [indicator setStrokeWidth:15];
+    [indicator setInnerRadius:8];
+    [indicator setOuterRadius:20];
     [indicator setNumberOfStrokes:8];
     indicator.hidesWhenStopped = YES;
     [indicator setPatternStyle:TJActivityIndicatorPatternStylePetal];
@@ -718,12 +719,14 @@ static DejalActivityView *dejalActivityView = nil;
     if (!dejalActivityView)
         return;
     
-    if (animated)
+    if (!animated)
         [dejalActivityView animateRemove];
     else
         [[self class] removeView];
 }
-
++ (void)removeViewAnimated:(BOOL)animated withDelay:(float)delaytime{
+    [self performSelector:@selector(removeViewAnimated:) withObject:nil afterDelay:delaytime];
+}
 @end
 
 

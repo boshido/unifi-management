@@ -9,12 +9,12 @@
 #import "unifiDeviceResource.h"
 
 @implementation unifiDeviceResource
-+(void)getDeviceCount:(ApiCallbackComplete)callback{
-    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-count",ApiServerAddress] andCallback:callback];
++(void)getDeviceCount:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-count",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
-+(void)getAuthorizedDevice:(ApiCallbackComplete)callback withGoogleId:(NSString *)googleId{
-    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/authorized-device?google_id=%@",ApiServerAddress,googleId] andCallback:callback];
++(void)getAuthorizedDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromGoogleId:(NSString *)googleId{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/authorized-device?google_id=%@",ApiServerAddress,googleId] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
 @end

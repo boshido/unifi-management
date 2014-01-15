@@ -75,7 +75,8 @@
             ];
         
         }
-        withRefreshToken:[unifiGlobalVariable sharedGlobalData].refreshToken
+        withHandleError:nil
+        fromRefreshToken:[unifiGlobalVariable sharedGlobalData].refreshToken
     ];
 
 
@@ -106,7 +107,7 @@
     }
     else
     {
-         ApiCallbackComplete callback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
+         ApiCompleteCallback completeCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
              NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
              NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
          
@@ -125,7 +126,7 @@
               shouldSelectViewController:[self.tabBarController.viewControllers objectAtIndex:0]];  // send didSelectViewController to the tabBarController delegate
          };
         
-         unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"https://accounts.google.com/Logout"  andCallback:callback];
+         unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"https://accounts.google.com/Logout" withCompleteCallback:completeCallback withErrorCallback:nil];
          [object loadGetData];
 
         

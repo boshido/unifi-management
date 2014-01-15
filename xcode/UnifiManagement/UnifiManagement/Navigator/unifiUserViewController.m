@@ -17,7 +17,7 @@
 @end
 
 @implementation unifiUserViewController
-@synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterView,filterState,isSearched;
+@synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterState,isSearched;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,52 +51,50 @@
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     
-    [unifiUserResource getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
-        
-        __block NSInteger count = 0;
-        __block NSData *data;
-        __block UIImage *image;
-        for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-
-            dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-            dispatch_async(concurrentQueue, ^{
-                
-                if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
-                    image = [UIImage imageNamed:@"profile.jpg"];
-                }
-                else{
-                    
-                    data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[json valueForKey:@"picture"]]];
-                    image = [[UIImage alloc]initWithData:data ];
-                }
-                NSDictionary *dictionary = @{ @"json"     : json,
-                                              @"image" : image,
-                                            };
+    [unifiUserResource
+        getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+            __block NSInteger count = 0;
+            __block NSData *data;
+            __block UIImage *image;
+            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
             
-                if([[json valueForKey:@"online"] intValue]>0){
-                    [userOnline addObject:dictionary];
-                }
-                else{
-                    [userOffline addObject:dictionary];
-                }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    count++;
-                    if(count >= [[responseJSON valueForKey:@"data"] count]){
-                        [userTable reloadData];
-                        [DejalBezelActivityView removeViewAnimated:YES];
+                dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+                dispatch_async(concurrentQueue, ^{
+                
+                    if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
+                        image = [UIImage imageNamed:@"profile.jpg"];
                     }
+                    else{
+                    
+                        data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[json valueForKey:@"picture"]]];
+                        image = [[UIImage alloc]initWithData:data ];
+                    }
+                    NSDictionary *dictionary = @{ @"json"     : json,
+                                                  @"image" : image,
+                                                  };
+                
+                    if([[json valueForKey:@"online"] intValue]>0){
+                        [userOnline addObject:dictionary];
+                    }
+                    else{
+                        [userOffline addObject:dictionary];
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        count++;
+                        if(count >= [[responseJSON valueForKey:@"data"] count]){
+                            [userTable reloadData];
+                            [DejalBezelActivityView removeViewAnimated:YES];
+                        }
+                    });
                 });
-            });
-        }
+            }
 
         //[userTable reloadData];
-    }];
-    
-    UITapGestureRecognizer *filterTap = [[UITapGestureRecognizer alloc]
-                                   initWithTarget:self
-                                   action:@selector(filterTap)];
-    
-    [filterView addGestureRecognizer:filterTap];
+        }
+        withHandleError:^(NSError *error) {
+            [DejalBezelActivityView removeViewAnimated:YES];
+        }
+    ];
     
 }
 - (void)didReceiveMemoryWarning
@@ -210,20 +208,18 @@
     // add self
     [self.searchBar resignFirstResponder];
 }
--(void) filterTap
+
+-(IBAction)filter:(id)sender
 {
-    UILabel *label = (UILabel *)[self.view viewWithTag:100];
-    UIImageView *image = (UIImageView *)[self.view viewWithTag:101];
+
     
     if(filterState==1)
     {
-        [label setText:@"Offline"];
-        [image setHighlighted:YES];
+        [sender setSelected:YES];
         filterState=2;
     }
     else {
-        [label setText:@"Online"];
-        [image setHighlighted:NO];
+        [sender setSelected:NO];
         filterState=1;
     }
         

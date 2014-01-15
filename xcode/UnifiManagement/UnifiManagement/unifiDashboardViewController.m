@@ -152,33 +152,33 @@
 
 -(void)loadDashBoardInfo{
     __block bool flag = NO;
-    
-    ApiCallbackComplete apCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
-        NSInteger connected =[[[responseJSON valueForKey:@"data"] valueForKey:@"connected"] intValue];
-        NSInteger disconnected =[[[responseJSON valueForKey:@"data"] valueForKey:@"disconnected"] intValue];
-        apCount.text = [NSString stringWithFormat:@"%i / %i",connected,connected+disconnected];
-        
-        if(flag){
-            //[self dismissViewControllerAnimated:NO completion:nil];
-            NSLog(@"%@",[NSString stringWithFormat:@"%i / %i",connected,connected+disconnected]);
-            [self setLoadingMode:NO];
-        }
-        flag = YES;
-    };
-    ApiCallbackComplete userCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
-        NSInteger authorized =[[[responseJSON valueForKey:@"data"] valueForKey:@"authorized"] intValue];
-        NSInteger non_authorized =[[[responseJSON valueForKey:@"data"] valueForKey:@"non_authorized"] intValue];
-        userCount.text = [NSString stringWithFormat:@"%i / %i",authorized,authorized+non_authorized];
-        
-        if(flag){
-            //[self dismissViewControllerAnimated:NO completion:nil];
-            NSLog(@"%@",[NSString stringWithFormat:@"%i / %i",authorized,authorized+non_authorized]);
-            [self setLoadingMode:NO];
-        }
-        flag = YES;
-    };
-    [unifiApResource getApCount:apCallback];
-    [unifiUserResource getUserCount:userCallback];
+//    
+//    ApiCompleteCallback apCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
+//        NSInteger connected =[[[responseJSON valueForKey:@"data"] valueForKey:@"connected"] intValue];
+//        NSInteger disconnected =[[[responseJSON valueForKey:@"data"] valueForKey:@"disconnected"] intValue];
+//        apCount.text = [NSString stringWithFormat:@"%i / %i",connected,connected+disconnected];
+//        
+//        if(flag){
+//            //[self dismissViewControllerAnimated:NO completion:nil];
+//            NSLog(@"%@",[NSString stringWithFormat:@"%i / %i",connected,connected+disconnected]);
+//            [self setLoadingMode:NO];
+//        }
+//        flag = YES;
+//    };
+//    ApiCompleteCallback userCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
+//        NSInteger authorized =[[[responseJSON valueForKey:@"data"] valueForKey:@"authorized"] intValue];
+//        NSInteger non_authorized =[[[responseJSON valueForKey:@"data"] valueForKey:@"non_authorized"] intValue];
+//        userCount.text = [NSString stringWithFormat:@"%i / %i",authorized,authorized+non_authorized];
+//        
+//        if(flag){
+//            //[self dismissViewControllerAnimated:NO completion:nil];
+//            NSLog(@"%@",[NSString stringWithFormat:@"%i / %i",authorized,authorized+non_authorized]);
+//            [self setLoadingMode:NO];
+//        }
+//        flag = YES;
+//    };
+//    [unifiApResource getApCount:apCallback withHandleError:nil];
+//    [unifiUserResource getUserCount:userCallback withHandleError:nil];
 }
 -(void)setLoadingMode:(BOOL)flag{
     

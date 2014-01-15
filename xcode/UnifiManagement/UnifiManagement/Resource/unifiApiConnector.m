@@ -11,21 +11,24 @@
 @implementation unifiApiConnector
 @synthesize url,parameter,receivedData,onComplete;
 
--(id)initWithUrl:(NSString *)initUrl andData:(NSString *)initParameter andCallback:(ApiCallbackComplete)callbackBlock{
+-(id)initWithUrl:(NSString *)initUrl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback andData:(NSString *)initParameter {
     
-    self.onComplete = callbackBlock;
+    self.onComplete = completeCallback;
+    self.onError = errorCallback;
     self.url = initUrl;
     self.parameter = initParameter;
     return self;
 }
 
--(id)initWithUrl:(NSString *)initurl andCallback:(ApiCallbackComplete)callbackBlock{
+-(id)initWithUrl:(NSString *)initurl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback{
 
-    self.onComplete = callbackBlock;
+    self.onComplete = completeCallback;
+    self.onError = errorCallback;
     self.url = initurl;
     self.parameter = @"";
     return self;
 }
+
 -(void)loadGetData {
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
@@ -82,6 +85,7 @@
     NSLog(@"Connection failed! Error - %@ %@",
           [error localizedDescription],
           [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
+    if(self.onError != nil)self.onError(error);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection

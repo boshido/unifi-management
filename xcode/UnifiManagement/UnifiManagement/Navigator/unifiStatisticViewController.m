@@ -48,7 +48,7 @@
     timeType = @"hourly";
     time = 0.0f;
     
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"line" ofType:@"html"]]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"trafficchart" ofType:@"html"]]];
     chart.delegate = self;
     chart.scrollView.scrollEnabled = NO;
     chart.scrollView.bounces = NO;
@@ -97,8 +97,7 @@
     
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
-    ApiCallbackComplete callback = ^(NSJSONSerialization *responseJSON,NSString *responseNSString){
-        NSLog(@"%@",responseNSString);
+    ApiCompleteCallback completeCallback = ^(NSJSONSerialization *responseJSON,NSString *responseNSString){
         statistic = responseJSON;
         [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"showLineChart(%@,\"%@\")", responseNSString,timeType]];
         [DejalBezelActivityView removeViewAnimated:YES];
@@ -123,79 +122,108 @@
         }
        
     };
+    ApiErrorCallback errorCallback =^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:YES];
+    };
     
-    [unifiSystemResource getTrafficReport:callback withStartTime:[[NSDate date] timeIntervalSince1970]+time andType:timeType];
+    [unifiSystemResource getTrafficReport:completeCallback withHandleError:errorCallback fromStartTime:[[NSDate date] timeIntervalSince1970]+time andType:timeType];
 }
 
 -(void)showUser:(NSString *)id{
     
     contentSize = 5;
+    
     [scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     for(NSJSONSerialization *json in [statistic valueForKey:@"data"]){
+    
         if([[json valueForKey:@"_id"] isEqualToString:id]){
             [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
             [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
-            [unifiUserResource
-                getUser:^(NSJSONSerialization *responseJSON,NSString *responseString){
-                    if(coverView.alpha==1)coverView.alpha=0;
-                    if(responseJSON != nil){
-                        if([[responseJSON valueForKey:@"code"] intValue] == 200){
-                            NSInteger index=0;
-                            for(NSJSONSerialization *json in [responseJSON valueForKey:@"data"]){
-                                if([ json valueForKey:@"google_id"] == nil)continue;
+            if([[json valueForKey:@"guest_macs"] count]>0){
+                [unifiUserResource
+                    getUser:^(NSJSONSerialization *responseJSON,NSString *responseString){
+                        if(coverView.alpha==1)coverView.alpha=0;
+                        if(responseJSON != nil){
+                            if([[responseJSON valueForKey:@"code"] intValue] == 200){
+                                for(NSJSONSerialization *json in [responseJSON valueForKey:@"data"]){
+                                    if([ json valueForKey:@"google_id"] == nil)continue;
                                 
-                                UILabel *describe,*hostname;
-                                describe = [[UILabel alloc] initWithFrame:CGRectMake(11, contentSize, 185, 21)];
-                                hostname = [[UILabel alloc] initWithFrame:CGRectMake(204, contentSize, 103, 21)];
+                                    UILabel *describe,*hostname;
+                                    describe = [[UILabel alloc] initWithFrame:CGRectMake(11, contentSize, 185, 21)];
+                                    hostname = [[UILabel alloc] initWithFrame:CGRectMake(204, contentSize, 103, 21)];
                     
+                                    [describe setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
+                                    [describe setTextAlignment:NSTextAlignmentLeft];
+                                    [describe setFont:[UIFont systemFontOfSize:11]];
+                                
+                                    NSString *describeStr = [NSString stringWithFormat:@"%@ %@",[json valueForKey:@"fname"],[json valueForKey:@"lname"]];
+                                    if([describeStr isEqualToString:@"- -"]){
+                                   
+                                        [describe setText:[json valueForKey:@"email"]];
+                                    }
+                                    else{
+                                        [describe setText:describeStr];
+                                    }
+                                
+                                
+                                    [hostname setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
+                                    [hostname setTextAlignment:NSTextAlignmentLeft];
+                                    [hostname setFont:[UIFont systemFontOfSize:11]];
+                                    if([json valueForKey:@"hostname"] != NULL) [hostname setText:[json valueForKey:@"hostname"]];
+                                    else [hostname setText:[json valueForKey:@"mac"]];
+                                
+                                    [scrollView addSubview:describe];
+                                    [scrollView addSubview:hostname];
+                                
+                                    unifiUITapGestureRecognizer* describeGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(describeTapped:)];
+                                    // if labelView is not set userInteractionEnabled, you must do so
+                                    [describeGesture initParameter];
+                                    [describeGesture setParameter:[json valueForKey:@"google_id"] withKey:@"google_id"];
+                                    [describe setUserInteractionEnabled:YES];
+                                    [describe addGestureRecognizer:describeGesture];
+                                
+                                    unifiUITapGestureRecognizer* hostnameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(hostnameTapped:)];
+                                    // if labelView is not set userInteractionEnabled, you must do so
+                                    [hostnameGesture initParameter];
+                                    [hostnameGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
+                                    [hostname setUserInteractionEnabled:YES];
+                                    [hostname addGestureRecognizer:hostnameGesture];
+                                
+                                    contentSize+=20;
+                                    [scrollView setContentSize:CGSizeMake(68, contentSize)];
+                                    
+                                }
+                            }
+                            else{
+                                UILabel *describe = [[UILabel alloc] initWithFrame:CGRectMake(75, 100, 250, 21)];
                                 [describe setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
                                 [describe setTextAlignment:NSTextAlignmentLeft];
-                                [describe setFont:[UIFont systemFontOfSize:11]];
-                                
-                                NSString *describeStr = [NSString stringWithFormat:@"%@ %@",[json valueForKey:@"fname"],[json valueForKey:@"lname"]];
-                                if([describeStr isEqualToString:@"- -"]){
-                                   
-                                    [describe setText:[json valueForKey:@"email"]];
-                                }
-                                else{
-                                     [describe setText:describeStr];
-                                }
-                                
-                                
-                                [hostname setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
-                                [hostname setTextAlignment:NSTextAlignmentLeft];
-                                [hostname setFont:[UIFont systemFontOfSize:11]];
-                                if([json valueForKey:@"hostname"] != NULL) [hostname setText:[json valueForKey:@"hostname"]];
-                                else [hostname setText:[json valueForKey:@"mac"]];
+                                [describe setFont:[UIFont systemFontOfSize:12]];
+                                [describe setText:@"No device connect at this time"];
                                 
                                 [scrollView addSubview:describe];
-                                [scrollView addSubview:hostname];
-                                
-                                unifiUITapGestureRecognizer* describeGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(describeTapped:)];
-                                // if labelView is not set userInteractionEnabled, you must do so
-                                [describeGesture initParameter];
-                                [describeGesture setParameter:[json valueForKey:@"google_id"] withKey:@"google_id"];
-                                [describe setUserInteractionEnabled:YES];
-                                [describe addGestureRecognizer:describeGesture];
-                                
-                                unifiUITapGestureRecognizer* hostnameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(hostnameTapped:)];
-                                // if labelView is not set userInteractionEnabled, you must do so
-                                [hostnameGesture initParameter];
-                                [hostnameGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
-                                [hostname setUserInteractionEnabled:YES];
-                                [hostname addGestureRecognizer:hostnameGesture];
-                                
-                                contentSize+=20;
-                                [scrollView setContentSize:CGSizeMake(68, contentSize)];
-                                
                             }
-                            index++;
                         }
-                    }
                     [DejalBezelActivityView removeViewAnimated:YES];
-                }
-                FromMac:[json valueForKey:@"guest_macs"]
-            ];
+                    }
+                    withHandleError:^(NSError *error) {
+                        [DejalBezelActivityView removeViewAnimated:YES];
+                    }
+                    fromMac:[json valueForKey:@"guest_macs"]
+                ];
+            }
+            else{
+                if(coverView.alpha==1)coverView.alpha=0;
+                UILabel *describe = [[UILabel alloc] initWithFrame:CGRectMake(75, 100, 250, 21)];
+                [describe setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
+                [describe setTextAlignment:NSTextAlignmentLeft];
+                [describe setFont:[UIFont systemFontOfSize:12]];
+                [describe setText:@"No device connect at this time"];
+                
+                [scrollView addSubview:describe];
+                [DejalBezelActivityView removeViewAnimated:YES withDelay:0.5];
+            }
         }
     }
 }
@@ -208,7 +236,6 @@
         }
         else{
             time -= 60*60*24*7;
-            //NSLog(@"%f",[[NSDate date] timeIntervalSince1970]+time);
         }
         [self showGraph];
         NSLog(@"Swipe Right");
@@ -219,14 +246,13 @@
     if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
     {
         if([timeType isEqualToString:@"hourly"]){
-            time += 60*60*7;
+            if([[NSDate date] timeIntervalSince1970]+(time+60*60*7) <= [[NSDate date] timeIntervalSince1970]) {time += 60*60*7;[self showGraph];}
+            
         }
         else{
-             time += 60*60*24*7;
-            
-          // NSLog(@"%f",[[NSDate date] timeIntervalSince1970]+time);
+            if([[NSDate date] timeIntervalSince1970]+(time+60*60*24*7) <= [[NSDate date] timeIntervalSince1970]) {time += 60*60*24*7;[self showGraph];}
         }
-        [self showGraph];
+        
         NSLog(@"Swipe Left");
     }
 

@@ -9,18 +9,18 @@
 #import "unifiSystemResource.h"
 
 @implementation unifiSystemResource
-+(void)getTrafficReport:(ApiCallbackComplete)callback withStartTime:(NSTimeInterval )time andType:(NSString *)type{
++(void)getTrafficReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStartTime:(NSTimeInterval )time andType:(NSString *)type{
     unifiApiConnector *object = [[unifiApiConnector alloc]
         initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/traffic-report?time=%f&type=%@",ApiServerAddress,time,type]
-        andCallback:callback
+        withCompleteCallback:completeCallback withErrorCallback:errorCallback
     ];
     
     [object loadGetData];
 }
-+(void)getDeviceReport:(ApiCallbackComplete)callback withType:(NSString *)type{
++(void)getDeviceReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromType:(NSString *)type{
     unifiApiConnector *object = [[unifiApiConnector alloc]
         initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-report?type=%@",ApiServerAddress,type]
-        andCallback:callback
+        withCompleteCallback:completeCallback withErrorCallback:errorCallback
     ];
     [object loadGetData];
 }

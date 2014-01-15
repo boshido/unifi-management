@@ -68,18 +68,18 @@
     }
     else{
         
-        [unifiGoogleResource
-            getUserData:^(NSJSONSerialization *responseJSON,NSString *responseNSString) {
-                NSLog(@"%@",responseJSON);
-                [unifiGlobalVariable sharedGlobalData].name = [responseJSON valueForKey:@"given_name"];
-                [unifiGlobalVariable sharedGlobalData].surname = [responseJSON valueForKey:@"family_name"];
-                [unifiGlobalVariable sharedGlobalData].email = [responseJSON valueForKey:@"email"];
-                [unifiGlobalVariable sharedGlobalData].profilePicture = [responseJSON valueForKey:@"picture"];
-                [self dismissViewControllerAnimated:NO completion:nil];
-                [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiTabViewController"] animated:NO completion:nil];
-            }
-            withRefreshToken:[unifiGlobalVariable sharedGlobalData].refreshToken
-        ];
+//        [unifiGoogleResource
+//            getUserData:^(NSJSONSerialization *responseJSON,NSString *responseNSString) {
+//                NSLog(@"%@",responseJSON);
+//                [unifiGlobalVariable sharedGlobalData].name = [responseJSON valueForKey:@"given_name"];
+//                [unifiGlobalVariable sharedGlobalData].surname = [responseJSON valueForKey:@"family_name"];
+//                [unifiGlobalVariable sharedGlobalData].email = [responseJSON valueForKey:@"email"];
+//                [unifiGlobalVariable sharedGlobalData].profilePicture = [responseJSON valueForKey:@"picture"];
+//                [self dismissViewControllerAnimated:NO completion:nil];
+//                [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiTabViewController"] animated:NO completion:nil];
+//            }
+//            withRefreshToken:[unifiGlobalVariable sharedGlobalData].refreshToken
+//        ];
         
         
     }

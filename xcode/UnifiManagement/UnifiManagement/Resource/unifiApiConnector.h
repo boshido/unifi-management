@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef void(^ApiCallbackComplete)(NSJSONSerialization *responseJSON,NSString *responseNSString);
+typedef void(^ApiCompleteCallback)(NSJSONSerialization *responseJSON,NSString *responseNSString);
+typedef void(^ApiErrorCallback)(NSError *error);
 
 static NSString *ApiServerAddress = @"202.44.47.47";
+//static NSString *ApiServerAddress = @"192.168.0.2";
 
 @interface unifiApiConnector : NSObject{
     NSURLConnection *theConnection;
@@ -17,10 +19,11 @@ static NSString *ApiServerAddress = @"202.44.47.47";
 @property(nonatomic, retain) NSString * url;
 @property(nonatomic, retain) NSString * parameter;
 @property(nonatomic, strong) NSMutableData *receivedData;
-@property(nonatomic, copy) ApiCallbackComplete onComplete;
+@property(nonatomic, copy) ApiCompleteCallback onComplete;
+@property(nonatomic, copy) ApiErrorCallback onError;
 
-- (id)initWithUrl:(NSString *)initUrl andData:(NSString *)initParameter andCallback:(ApiCallbackComplete)callbackBlock;
-- (id)initWithUrl:(NSString *)url andCallback:(ApiCallbackComplete)callbackBlock;
+-(id)initWithUrl:(NSString *)initUrl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback andData:(NSString *)initParameter;
+- (id)initWithUrl:(NSString *)initurl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback;
 - (void)loadGetData ;
 - (void)loadPostData;
 @end

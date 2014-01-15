@@ -14,11 +14,11 @@
 }
 @property(retain,nonatomic)IBOutlet UITableView *userTable;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property(retain,nonatomic) IBOutlet UIView *filterView;
 @property(retain,nonatomic) NSMutableArray *userOnline,*userOffline,*userSearch;
 @property NSInteger filterState;
 @property bool isSearched;
 
 -(IBAction)backToParent:(id)sender;
 -(IBAction)backToHome:(id)sender;
+-(IBAction)filter:(id)sender;
 @end

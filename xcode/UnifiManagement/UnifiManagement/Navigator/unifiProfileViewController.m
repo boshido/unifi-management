@@ -8,6 +8,7 @@
 
 #import "unifiProfileViewController.h"
 #import "unifiDeviceResource.h"
+#import "DejalActivityView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface unifiProfileViewController ()
@@ -72,13 +73,19 @@
     }
     else [profilePicture setImage:[UIImage imageNamed:@"profile.jpg"]];
     
-    [unifiDeviceResource getAuthorizedDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-        onlineDevice  = [[responseJSON valueForKey:@"data"] valueForKey:@"online"];
-        offlineDevice = [[responseJSON valueForKey:@"data"] valueForKey:@"offline"];
-        [deviceCount setText:[NSString stringWithFormat:@"%i",[onlineDevice count]+[offlineDevice count]]];
+    [unifiDeviceResource
+        getAuthorizedDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+            onlineDevice  = [[responseJSON valueForKey:@"data"] valueForKey:@"online"];
+            offlineDevice = [[responseJSON valueForKey:@"data"] valueForKey:@"offline"];
+            [deviceCount setText:[NSString stringWithFormat:@"%i",[onlineDevice count]+[offlineDevice count]]];
         
-        [self loadDevice];
-    } withGoogleId:[userData valueForKey:@"google_id"]];
+            [self loadDevice];
+        }
+        withHandleError:^(NSError *error) {
+            [DejalBezelActivityView removeViewAnimated:YES];
+        }
+        fromGoogleId:[userData valueForKey:@"google_id"]
+     ];
     
     [profilePicture.layer setCornerRadius:45.0f];
     [profilePicture.layer setMasksToBounds: YES];
@@ -112,7 +119,11 @@
         if(index>0)contentSize+=21;
         
         UILabel *hostname,*dateStart;
-        hostname = [[UILabel alloc] initWithFrame:CGRectMake(20, contentSize, 125, 21)];
+        UIImageView *status;
+        status = [[UIImageView alloc] initWithFrame:CGRectMake(10, contentSize+7, 8, 8)];
+        status.image =[UIImage imageNamed:@"Dotted.png"];
+        
+        hostname = [[UILabel alloc] initWithFrame:CGRectMake(24, contentSize, 121, 21)];
         
         [hostname setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
         [hostname setTextAlignment:NSTextAlignmentLeft];
@@ -137,12 +148,12 @@
         [dateStart setText:[formatter stringFromDate:date]];
         
     
-      
+        [scrollView addSubview:status];
         [scrollView addSubview:hostname];
         [scrollView addSubview:dateStart];
 
         
-        [scrollView setContentSize:CGSizeMake(68, contentSize)];
+        [scrollView setContentSize:CGSizeMake(320, contentSize)];
         index++;
     }
     for(NSJSONSerialization *json in offlineDevice){
@@ -150,7 +161,11 @@
         if(index>0)contentSize+=21;
         
         UILabel *hostname,*dateStart;
-        hostname = [[UILabel alloc] initWithFrame:CGRectMake(20, contentSize, 125, 21)];
+        UIImageView *status;
+        status = [[UIImageView alloc] initWithFrame:CGRectMake(10, contentSize+7, 8, 8)];
+        status.image =[UIImage imageNamed:@"DottedSelected.png"];
+        
+        hostname = [[UILabel alloc] initWithFrame:CGRectMake(24, contentSize, 121, 21)];
         
         [hostname setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
         [hostname setTextAlignment:NSTextAlignmentLeft];
@@ -174,8 +189,7 @@
         
         [dateStart setText:[formatter stringFromDate:date]];
         
-        
-        
+        [scrollView addSubview:status];
         [scrollView addSubview:hostname];
         [scrollView addSubview:dateStart];
         

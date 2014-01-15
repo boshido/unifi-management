@@ -10,6 +10,6 @@
 #import "unifiApiConnector.h"
 
 @interface unifiGoogleResource : NSObject
-    +(void)getAccessToken:(ApiCallbackComplete)callback withRefreshToken:(NSString *)refreshToken;
-    +(void)getUserData:(ApiCallbackComplete)callback withRefreshToken:(NSString *)refreshToken;
++(void)getAccessToken:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromRefreshToken:(NSString *)refreshToken;
++(void)getUserData:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromRefreshToken:(NSString *)refreshToken;
 @end

@@ -108,7 +108,7 @@
 
 // Animates the view out from the superview and releases it, or simply removes and releases it immediately if not animating:
 + (void)removeViewAnimated:(BOOL)animated;
-
++ (void)removeViewAnimated:(BOOL)animated withDelay:(float)delaytime;
 @end
 
 

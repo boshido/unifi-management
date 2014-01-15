@@ -21,12 +21,13 @@
                 height:100%;
                 padding:0px;
                 margin:0px;
-                background-color:rgb(31, 171, 149);
+                background-color:rgb(74, 74, 74);
+                /*background-color:rgb(31, 171, 149);*/
             }
         </style>
         <script src="jquery-1.9.1.min.js"></script>
         <script src="jquery.mobile-1.3.2.min.js"></script>
-        <script src="knockout-2.2.1.js"></script>
+        <script src="knockout-3.0.0.js"></script>
         <script src="globalize.min.js"></script>
         <script src="dx.chartjs.js"></script>
 	</head>
@@ -71,8 +72,8 @@
                             connector: { visible: true },  
                             format: 'fixedPoint',
                             precision: 2,
+                            backgroundColor:'rgb(47, 47, 47)',
                             customizeText: function(value){
-
                                 return parseUnitWithLabel(value.value);
                             }
                         }
@@ -89,7 +90,7 @@
                         iframe = null;
                     },
                     argumentAxis:{
-                       argumentType: 'discrete',
+                       type: 'discrete',
                        label:{
                             alignment:'center'/*,
                             customizeText: function () {
@@ -109,8 +110,10 @@
                         },
                         grid: {
                             visible: true,
-                            color: 'rgba(62,62,62,1)',
-                                             size:2
+                            // color: 'rgba(62,62,62,1)',
+                            // size:2
+                            color: 'rgba(144,144,144,1)',
+                            size:2
                         },
                         title:{
                             text: label,

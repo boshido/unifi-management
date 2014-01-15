@@ -10,27 +10,19 @@
 
 @implementation unifiUserResource
 
-+(void)getUserList:(ApiCallbackComplete)callback{
-    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/user-list",ApiServerAddress] andCallback:callback];
++(void)getUserList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/user-list",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
-+(void)getUserCount:(ApiCallbackComplete)callback{
-    
-    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-count",ApiServerAddress] andCallback:callback];
-    [object loadGetData];
-    
-}
-+(void)getUser:(ApiCallbackComplete)callback FromMac:(NSArray *)userArray{
-    if([userArray count]>0){
++(void)getUser:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback  fromMac:(NSArray *)userArray{
+
         NSMutableString *parameter = [NSMutableString stringWithString:@""];
         for(NSString * user in userArray){
             [parameter appendFormat:@"&mac[]=%@",user];
         }
-        unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/user?%@",ApiServerAddress,[parameter substringFromIndex:1]] andCallback:callback];
+    NSLog(@"%@",parameter);
+        unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/user?%@",ApiServerAddress,[parameter substringFromIndex:1]] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
         [object loadGetData];
-    }
-    else{
-        callback(nil,nil);
-    }
+  
 }
 @end
