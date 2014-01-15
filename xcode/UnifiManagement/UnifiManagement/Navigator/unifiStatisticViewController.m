@@ -16,6 +16,7 @@
 @end
 
 @implementation unifiStatisticViewController
+@synthesize chart,statusView,coverView,scrollView,hourlyButton,dateButton,average,date,statistic,time;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,26 +34,21 @@
     
     
     
-    CALayer *bottomBorder = [CALayer layer];
+//    CALayer *bottomBorder = [CALayer layer];
 //    CALayer *topBorder = [CALayer layer];
 //    topBorder.frame = CGRectMake(0.0f, 0.0f, summaryView.frame.size.width, 1.0f);
 //    topBorder.backgroundColor = [UIColor colorWithRed:0.867 green:0.867 blue:0.867 alpha:1.0].CGColor;
 //    [summaryView.layer addSublayer:topBorder];
     
-    bottomBorder.frame = CGRectMake(0.0f, statusView.frame.size.height, statusView.frame.size.width, 1.0f);
-    bottomBorder.backgroundColor = [UIColor colorWithRed:0.867 green:0.867 blue:0.867 alpha:1.0].CGColor;
-    [statusView.layer addSublayer:bottomBorder ];
+//    bottomBorder.frame = CGRectMake(0.0f, statusView.frame.size.height, statusView.frame.size.width, 1.0f);
+//    bottomBorder.backgroundColor = [UIColor colorWithRed:0.867 green:0.867 blue:0.867 alpha:1.0].CGColor;
+//    [statusView.layer addSublayer:bottomBorder ];
     
     [hourlyButton setSelected:YES];
     [dateButton setSelected:NO];
     timeType = @"hourly";
     time = 0.0f;
-    
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"trafficchart" ofType:@"html"]]];
-    chart.delegate = self;
-    chart.scrollView.scrollEnabled = NO;
-    chart.scrollView.bounces = NO;
-    [chart loadRequest:urlRequest];
+    isWebloaded = NO;
     
     UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
     swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -64,8 +60,19 @@
     [chart addGestureRecognizer:swipeRight];
     swipeRight.delegate = self;
     
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"trafficchart" ofType:@"html"]]];
+    chart.delegate = self;
+    chart.scrollView.scrollEnabled = NO;
+    chart.scrollView.bounces = NO;
+    [chart loadRequest:urlRequest];
+    
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+//   if(isWebloaded)[self showGraph];
+    
+    NSLog(@"View loaded");
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -74,6 +81,8 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    NSLog(@"Web loaded");
+    chart.alpha=1;
     [self showGraph];
 }
 
@@ -99,7 +108,7 @@
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     ApiCompleteCallback completeCallback = ^(NSJSONSerialization *responseJSON,NSString *responseNSString){
         statistic = responseJSON;
-        [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"showLineChart(%@,\"%@\")", responseNSString,timeType]];
+        [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,\"%@\")", responseNSString,timeType]];
         [DejalBezelActivityView removeViewAnimated:YES];
         NSInteger plotCount=0;
         float averageTraffic=0.0f;
@@ -120,13 +129,25 @@
         else{
             average.text = [NSString stringWithFormat:@"%1.2f %@",averageTraffic,@"Bytes"];
         }
-       
+        
     };
     ApiErrorCallback errorCallback =^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:YES];
     };
     
     [unifiSystemResource getTrafficReport:completeCallback withHandleError:errorCallback fromStartTime:[[NSDate date] timeIntervalSince1970]+time andType:timeType];
+    
+    NSDate *today = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] timeIntervalSince1970]+time];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSBuddhistCalendar];
+    dateFormat.calendar = calendar;
+    if([timeType isEqualToString:@"hourly"])[dateFormat setDateFormat:@"dd/MM/yyyy"];
+    else [dateFormat setDateFormat:@"MM/yyyy"];
+    
+    NSString *dateString = [dateFormat stringFromDate:today];
+    date.text = dateString;
+    
 }
 
 -(void)showUser:(NSString *)id{

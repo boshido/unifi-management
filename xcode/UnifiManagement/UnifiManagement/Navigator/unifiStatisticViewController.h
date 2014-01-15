@@ -9,18 +9,18 @@
 #import <UIKit/UIKit.h>
 
 @interface unifiStatisticViewController : UIViewController<UIWebViewDelegate,UIGestureRecognizerDelegate>{
-    IBOutlet UIWebView *chart;
-    IBOutlet UIView *statusView,*coverView;
-    IBOutlet UIScrollView *scrollView;
-    IBOutlet UIButton *hourlyButton,*dateButton;
-    IBOutlet UILabel *average;
+    bool isWebloaded;
     NSString *timeType;
-    double time;
-    
-    NSJSONSerialization *statistic;
     NSInteger contentSize;
-    
 }
+
+@property(retain,nonatomic) IBOutlet UIWebView *chart;
+@property(retain,nonatomic) IBOutlet UIView *statusView,*coverView;
+@property(retain,nonatomic) IBOutlet UIScrollView *scrollView;
+@property(retain,nonatomic) IBOutlet UIButton *hourlyButton,*dateButton;
+@property(retain,nonatomic) IBOutlet UILabel *average,*date;
+@property(retain,nonatomic) NSJSONSerialization *statistic;
+@property double time;
 
 -(IBAction)backToParent:(id)sender;
 -(IBAction)backToHome:(id)sender;

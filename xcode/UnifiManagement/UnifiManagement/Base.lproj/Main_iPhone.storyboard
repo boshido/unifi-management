@@ -467,7 +467,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3xb-SW-FME">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UBU-UN-qPm" userLabel="Background">
+                                <rect key="frame" x="0.0" y="239" width="320" height="197"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <webView alpha="0.0" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3xb-SW-FME">
                                 <rect key="frame" x="0.0" y="10" width="320" height="193"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.10588236149999999" green="0.71764707569999997" blue="0.65098041299999998" alpha="1" colorSpace="deviceRGB"/>
@@ -514,7 +519,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adb-td-6dH" userLabel="StatusBar">
-                                <rect key="frame" x="0.0" y="201" width="320" height="35"/>
+                                <rect key="frame" x="0.0" y="203" width="320" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Average Traffic :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bse-fY-l5I">
@@ -618,7 +623,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.36078432199999999" green="0.35686275360000003" blue="0.36862745879999997" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstItem="bd9-lx-9Bd" firstAttribute="leading" secondItem="iC9-uu-Z2d" secondAttribute="leading" id="22p-58-svl"/>
                             <constraint firstAttribute="trailing" secondItem="BQv-nd-qo0" secondAttribute="trailing" id="5ms-se-tma"/>
@@ -628,24 +633,28 @@
                             <constraint firstItem="ZT4-Mo-597" firstAttribute="top" secondItem="gIX-hW-WxV" secondAttribute="bottom" id="CDu-Ic-26l"/>
                             <constraint firstItem="IjZ-bm-e6M" firstAttribute="leading" secondItem="SMm-Oi-WkJ" secondAttribute="trailing" constant="75" id="Dvt-II-U7l"/>
                             <constraint firstItem="3xb-SW-FME" firstAttribute="leading" secondItem="iC9-uu-Z2d" secondAttribute="leading" id="FbX-7e-arW"/>
+                            <constraint firstItem="UBU-UN-qPm" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="1" id="FhR-PY-Tj0"/>
                             <constraint firstAttribute="trailing" secondItem="bd9-lx-9Bd" secondAttribute="trailing" id="GuB-Hp-pM6"/>
                             <constraint firstAttribute="trailing" secondItem="IjZ-bm-e6M" secondAttribute="trailing" constant="36" id="JB3-mZ-tdL"/>
                             <constraint firstItem="SMm-Oi-WkJ" firstAttribute="leading" secondItem="iC9-uu-Z2d" secondAttribute="leading" constant="68" id="JEu-mz-fE8"/>
                             <constraint firstItem="IjZ-bm-e6M" firstAttribute="leading" secondItem="SMm-Oi-WkJ" secondAttribute="trailing" constant="75" id="JFh-UE-m1u"/>
-                            <constraint firstItem="bd9-lx-9Bd" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="3" id="OAG-UZ-bVd"/>
+                            <constraint firstItem="bd9-lx-9Bd" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="1" id="OAG-UZ-bVd"/>
+                            <constraint firstItem="ZT4-Mo-597" firstAttribute="top" secondItem="UBU-UN-qPm" secondAttribute="bottom" id="Om3-8g-8d7"/>
                             <constraint firstItem="Lm5-n3-9Xy" firstAttribute="leading" secondItem="iC9-uu-Z2d" secondAttribute="leading" constant="10" id="Pau-JD-vay"/>
                             <constraint firstAttribute="trailing" secondItem="3xb-SW-FME" secondAttribute="trailing" id="QMV-uO-L05"/>
                             <constraint firstAttribute="trailing" secondItem="Lm5-n3-9Xy" secondAttribute="trailing" constant="10" id="S2G-g5-ubJ"/>
                             <constraint firstItem="adb-td-6dH" firstAttribute="leading" secondItem="iC9-uu-Z2d" secondAttribute="leading" id="gN0-B7-wvV"/>
                             <constraint firstAttribute="trailing" secondItem="adb-td-6dH" secondAttribute="trailing" id="hAT-ml-bZs"/>
                             <constraint firstItem="BQv-nd-qo0" firstAttribute="leading" secondItem="iC9-uu-Z2d" secondAttribute="leading" id="j3q-gU-iR5"/>
-                            <constraint firstItem="adb-td-6dH" firstAttribute="top" secondItem="BQv-nd-qo0" secondAttribute="bottom" constant="130" id="jf7-x8-D09"/>
+                            <constraint firstItem="adb-td-6dH" firstAttribute="top" secondItem="BQv-nd-qo0" secondAttribute="bottom" constant="132" id="jf7-x8-D09"/>
                             <constraint firstItem="ZT4-Mo-597" firstAttribute="top" secondItem="bd9-lx-9Bd" secondAttribute="bottom" id="kAP-wl-Eee"/>
-                            <constraint firstItem="Lm5-n3-9Xy" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="22" id="lXB-0F-4vl"/>
+                            <constraint firstItem="Lm5-n3-9Xy" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="20" id="lXB-0F-4vl"/>
                             <constraint firstAttribute="trailing" secondItem="gIX-hW-WxV" secondAttribute="trailing" id="lqs-rG-gfe"/>
                             <constraint firstItem="gIX-hW-WxV" firstAttribute="top" secondItem="4E8-GY-hhH" secondAttribute="bottom" constant="238" id="myC-R4-WYt"/>
-                            <constraint firstItem="SMm-Oi-WkJ" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="3" id="oEP-i7-EgE"/>
-                            <constraint firstItem="IjZ-bm-e6M" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="3" id="xcq-YP-DHf"/>
+                            <constraint firstItem="SMm-Oi-WkJ" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="1" id="oEP-i7-EgE"/>
+                            <constraint firstAttribute="trailing" secondItem="UBU-UN-qPm" secondAttribute="trailing" id="qXb-Td-nji"/>
+                            <constraint firstItem="UBU-UN-qPm" firstAttribute="leading" secondItem="iC9-uu-Z2d" secondAttribute="leading" id="vAw-dP-3Xv"/>
+                            <constraint firstItem="IjZ-bm-e6M" firstAttribute="top" secondItem="adb-td-6dH" secondAttribute="bottom" constant="1" id="xcq-YP-DHf"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -656,6 +665,7 @@
                         <outlet property="average" destination="N3U-Tk-0bG" id="EOf-27-ee8"/>
                         <outlet property="chart" destination="3xb-SW-FME" id="mKd-0t-94m"/>
                         <outlet property="coverView" destination="bd9-lx-9Bd" id="bVo-Nc-fYW"/>
+                        <outlet property="date" destination="y79-qV-FHZ" id="BKq-Zf-1HP"/>
                         <outlet property="dateButton" destination="QhL-X0-lOz" id="lfK-15-hfz"/>
                         <outlet property="hourlyButton" destination="Q0o-Mx-4XU" id="Dhk-LX-m7A"/>
                         <outlet property="scrollView" destination="gIX-hW-WxV" id="9Pu-Tv-dzx"/>
@@ -1339,6 +1349,23 @@ EFNpZ25vdXQ
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qNS-ry-aEq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="obN-BH-d8c">
+            <objects>
+                <viewController id="9OZ-Bi-CVn" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zNp-AX-ZTd"/>
+                        <viewControllerLayoutGuide type="bottom" id="xuc-b4-aJV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gwb-UA-OHw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DNh-c2-2ij" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>

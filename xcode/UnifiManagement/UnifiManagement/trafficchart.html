@@ -21,7 +21,7 @@
                 height:100%;
                 padding:0px;
                 margin:0px;
-                background-color:rgb(74, 74, 74);
+                background-color:rgb(74, 73, 76);
                 /*background-color:rgb(31, 171, 149);*/
             }
         </style>
@@ -35,35 +35,19 @@
 		
         <div id="chartContainer" style="width: 100%; height: 260px;"></div>
         <script type="text/javascript">
+            var c1;
             $(document).on('touchstart','*', function(e) {
                 //this will prevent all elements below the clicked item from firing as well.  
                 event.stopPropagation();
                 //display element text if available
                 //alert($(this).text());
             });
-
+            showLineChart();
             function showLineChart(source,type)
             {
-
-                source = source.data;
-                var dataSource = [];
-                var categories = [];       
-                var max = Math.max.apply(Math,source.map(function(o){return o.bytes;}));
-                var label = getUnit(max);
-
-                for(var y in source){
-                    dataSource.unshift({
-                        date:getDateForChart(type,new Date(source[y].datetime.sec*1000)),
-                        traffic:source[y].bytes,
-                        tag:source[y]._id
-                    });  
-
-                   // categories.push(source[y].datetime.sec*1000);
-                }
               
-                $("#chartContainer").dxChart(
+                c1 = $("#chartContainer").dxChart(
                 {
-                    dataSource: dataSource,
                     commonSeriesSettings: {
                         argumentField: "date",
                         tagField:"tag",
@@ -116,7 +100,6 @@
                             size:2
                         },
                         title:{
-                            text: label,
                             font: {
                                 color: 'rgba(255,255,255,1)',
                                 opacity: 1,
@@ -175,6 +158,47 @@
                         right:10,
                         left:10
                     }
+                });
+            }
+            function setValue(source,type){
+                source = source.data;
+                var dataSource = [];
+                var categories = [];       
+                var max = Math.max.apply(Math,source.map(function(o){return o.bytes;}));
+                var label = getUnit(max);
+
+                for(var y in source){
+                    dataSource.unshift({
+                        date:getDateForChart(type,new Date(source[y].datetime.sec*1000)),
+                        traffic:source[y].bytes,
+                        tag:source[y]._id
+                    });  
+
+                   // categories.push(source[y].datetime.sec*1000);
+                }
+                c1.dxChart('instance').option('dataSource',dataSource);
+                c1.dxChart('instance').option('valueAxis',{
+                        label:{
+                            customizeText: function () {
+                                return parseUnit(this.value,label);
+                            }
+                        },
+                        grid: {
+                            visible: true,
+                            // color: 'rgba(62,62,62,1)',
+                            // size:2
+                            color: 'rgba(144,144,144,1)',
+                            size:2
+                        },
+                        title:{
+                            text: label,
+                            font: {
+                                color: 'rgba(255,255,255,1)',
+                                opacity: 1,
+                                size: 14,
+                                weight: 800
+                            }
+                        }
                 });
             }
 
