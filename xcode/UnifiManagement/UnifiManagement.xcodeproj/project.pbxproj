@@ -53,6 +53,8 @@
 		0EAEE09A1879A074002D3FB6 /* unifiDashboard2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EAEE0991879A074002D3FB6 /* unifiDashboard2ViewController.m */; };
 		0EAEE09C1879B008002D3FB6 /* knockout-3.0.0.js in Resources */ = {isa = PBXBuildFile; fileRef = 0EAEE09B1879B008002D3FB6 /* knockout-3.0.0.js */; };
 		0EB03D6B184D0CCA00879698 /* unifiSystemResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EB03D6A184D0CCA00879698 /* unifiSystemResource.m */; };
+		0EB0770C1887C92400521834 /* unifiSelectDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EB0770B1887C92400521834 /* unifiSelectDeviceViewController.m */; };
+		0EB077111888F3F300521834 /* unifiUserViewController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EB077101888F3F300521834 /* unifiUserViewController2.m */; };
 		0EB41FF7188526580013D6B5 /* APIcon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EB41FF5188526580013D6B5 /* APIcon3.png */; };
 		0EB41FF8188526580013D6B5 /* APIcon3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EB41FF6188526580013D6B5 /* APIcon3@2x.png */; };
 		0EB41FFB188528F70013D6B5 /* Backward2Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EB41FF9188528F70013D6B5 /* Backward2Icon.png */; };
@@ -208,6 +210,10 @@
 		0EAEE09B1879B008002D3FB6 /* knockout-3.0.0.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "knockout-3.0.0.js"; sourceTree = "<group>"; };
 		0EB03D69184D0CCA00879698 /* unifiSystemResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiSystemResource.h; path = Resource/unifiSystemResource.h; sourceTree = "<group>"; };
 		0EB03D6A184D0CCA00879698 /* unifiSystemResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiSystemResource.m; path = Resource/unifiSystemResource.m; sourceTree = "<group>"; };
+		0EB0770A1887C92400521834 /* unifiSelectDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiSelectDeviceViewController.h; path = Navigator/unifiSelectDeviceViewController.h; sourceTree = "<group>"; };
+		0EB0770B1887C92400521834 /* unifiSelectDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiSelectDeviceViewController.m; path = Navigator/unifiSelectDeviceViewController.m; sourceTree = "<group>"; };
+		0EB0770F1888F3F300521834 /* unifiUserViewController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiUserViewController2.h; path = Navigator/unifiUserViewController2.h; sourceTree = "<group>"; };
+		0EB077101888F3F300521834 /* unifiUserViewController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiUserViewController2.m; path = Navigator/unifiUserViewController2.m; sourceTree = "<group>"; };
 		0EB41FF5188526580013D6B5 /* APIcon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = APIcon3.png; sourceTree = "<group>"; };
 		0EB41FF6188526580013D6B5 /* APIcon3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "APIcon3@2x.png"; sourceTree = "<group>"; };
 		0EB41FF9188528F70013D6B5 /* Backward2Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Backward2Icon.png; sourceTree = "<group>"; };
@@ -568,6 +574,30 @@
 			name = InterfaceBuilder;
 			sourceTree = "<group>";
 		};
+		0EB0770D1887C94100521834 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				0E17314D185F1309004CD0A1 /* unifiUserViewController.h */,
+				0E17314E185F1309004CD0A1 /* unifiUserViewController.m */,
+				0EB0770F1888F3F300521834 /* unifiUserViewController2.h */,
+				0EB077101888F3F300521834 /* unifiUserViewController2.m */,
+				0EBF867D1872B93600F2B49D /* unifiProfileViewController.h */,
+				0EBF867E1872B93600F2B49D /* unifiProfileViewController.m */,
+				0EB0770A1887C92400521834 /* unifiSelectDeviceViewController.h */,
+				0EB0770B1887C92400521834 /* unifiSelectDeviceViewController.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		0EB0770E1887C94B00521834 /* Statistic */ = {
+			isa = PBXGroup;
+			children = (
+				0EE341DC184C7CA700C8814A /* unifiStatisticViewController.h */,
+				0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */,
+			);
+			name = Statistic;
+			sourceTree = "<group>";
+		};
 		0ED0FF3E18466AC300349D39 /* Google */ = {
 			isa = PBXGroup;
 			children = (
@@ -582,12 +612,8 @@
 		0EE341DB184C7C5B00C8814A /* NavigationManagement */ = {
 			isa = PBXGroup;
 			children = (
-				0EE341DC184C7CA700C8814A /* unifiStatisticViewController.h */,
-				0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */,
-				0E17314D185F1309004CD0A1 /* unifiUserViewController.h */,
-				0E17314E185F1309004CD0A1 /* unifiUserViewController.m */,
-				0EBF867D1872B93600F2B49D /* unifiProfileViewController.h */,
-				0EBF867E1872B93600F2B49D /* unifiProfileViewController.m */,
+				0EB0770E1887C94B00521834 /* Statistic */,
+				0EB0770D1887C94100521834 /* User */,
 			);
 			name = NavigationManagement;
 			sourceTree = "<group>";
@@ -794,6 +820,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EB077111888F3F300521834 /* unifiUserViewController2.m in Sources */,
 				0E488D9E183C4FE5004FF995 /* unifiViewController.m in Sources */,
 				0EE341DA184C325A00C8814A /* unifiSettingViewController.m in Sources */,
 				0ED0FEDD1845A17300349D39 /* MHTabBarSegue.m in Sources */,
@@ -808,6 +835,7 @@
 				0E488D95183C4FE4004FF995 /* unifiAppDelegate.m in Sources */,
 				0EB9E9CF185E162C002FB1B3 /* DejalActivityView.m in Sources */,
 				0E66899F183DF1A400434A2F /* unifiUserResource.m in Sources */,
+				0EB0770C1887C92400521834 /* unifiSelectDeviceViewController.m in Sources */,
 				0EAEE09A1879A074002D3FB6 /* unifiDashboard2ViewController.m in Sources */,
 				0E1E4659183CE74000624634 /* unifiApiConnector.m in Sources */,
 				0E488D91183C4FE4004FF995 /* main.m in Sources */,

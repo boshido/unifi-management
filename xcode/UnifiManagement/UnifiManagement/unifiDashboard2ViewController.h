@@ -10,6 +10,7 @@
 
 @interface unifiDashboard2ViewController : UIViewController<UIWebViewDelegate>{
     bool webFlag;
+    NSTimer *autoLoad;
 }
 
 @property(retain,nonatomic) IBOutlet UIWebView *dashboardChart,*apMapChart;

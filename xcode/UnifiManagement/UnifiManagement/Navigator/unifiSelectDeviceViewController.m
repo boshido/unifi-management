@@ -6,18 +6,18 @@
 //  Copyright (c) 2556 KMUTNB. All rights reserved.
 //
 
-#import "unifiUserViewController.h"
+#import "unifiSelectDeviceViewController.h"
 #import "unifiUserResource.h"
 #import "unifiProfileViewController.h"
 #import "unifiTableViewCell.h"
 #import "DejalActivityView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
-@interface unifiUserViewController ()
+@interface unifiSelectDeviceViewController ()
 
 @end
 
-@implementation unifiUserViewController
+@implementation unifiSelectDeviceViewController
 @synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterState,isSearched;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-
+    
     CALayer *bottomBorder = [CALayer layer];
     bottomBorder.frame = CGRectMake(0.0f, searchBar.frame.size.height, searchBar.frame.size.width, 1.0f);
     bottomBorder.backgroundColor = [UIColor colorWithRed:0.867 green:0.867 blue:0.867 alpha:1.0].CGColor;
@@ -53,33 +53,33 @@
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     
     [unifiUserResource
-        getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
-            NSString *image;
-            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-                if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
-                    image = @"profile.jpg";
-                }
-                else{
-                    image = [json valueForKey:@"picture"];
-                }
-                NSDictionary *dictionary = @{ @"json"  : json,
-                                              @"image" : image
-                                              };
-            
-                if([[json valueForKey:@"online"] intValue]>0){
-                    [userOnline addObject:dictionary];
-                }
-                else{
-                    [userOffline addObject:dictionary];
-                }
-            }
-            [DejalBezelActivityView removeViewAnimated:YES];
-            [userTable reloadData];
-        }
-        withHandleError:^(NSError *error) {
-            [DejalBezelActivityView removeViewAnimated:YES];
-        }
-    ];
+     getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+         NSString *image;
+         for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+             if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
+                 image = @"profile.jpg";
+             }
+             else{
+                 image = [json valueForKey:@"picture"];
+             }
+             NSDictionary *dictionary = @{ @"json"  : json,
+                                           @"image" : image
+                                           };
+             
+             if([[json valueForKey:@"online"] intValue]>0){
+                 [userOnline addObject:dictionary];
+             }
+             else{
+                 [userOffline addObject:dictionary];
+             }
+         }
+         [DejalBezelActivityView removeViewAnimated:YES];
+         [userTable reloadData];
+     }
+     withHandleError:^(NSError *error) {
+         [DejalBezelActivityView removeViewAnimated:YES];
+     }
+     ];
     
 }
 - (void)didReceiveMemoryWarning
@@ -89,7 +89,8 @@
 }
 
 -(IBAction)backToParent:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(IBAction)backToHome:(id)sender{
@@ -98,15 +99,15 @@
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)bar {
     dismissKeybaordTap = [[UITapGestureRecognizer alloc]
-                                                  initWithTarget:self
-                                                  action:@selector(dismissKeyboard)];
+                          initWithTarget:self
+                          action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:dismissKeybaordTap];
 }
 
 -(void)searchBar:(UISearchBar*)searchBar textDidChange:(NSString*)text
 {
-   
+    
     if(text.length == 0)
     {
         isSearched = NO;
@@ -163,13 +164,13 @@
         cell.textLabel.text = [[[userOnline objectAtIndex:indexPath.row] objectForKey:@"json"] objectForKey:@"name"];
         [cell.imageView setImageWithURL:[NSURL URLWithString:[[userOnline objectAtIndex:indexPath.row] objectForKey:@"image"]]
                        placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
-
+        
     }
     else{
         cell.textLabel.text = [[[userOffline objectAtIndex:indexPath.row] objectForKey:@"json"] objectForKey:@"name"];
         [cell.imageView setImageWithURL:[NSURL URLWithString:[[userOffline objectAtIndex:indexPath.row] objectForKey:@"image"]]
                        placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
-
+        
     }
     
     return cell;
@@ -178,7 +179,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     unifiProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiProfileViewController"];
-
+    
     if(isSearched){
         [profile setUserData:[[userSearch objectAtIndex:indexPath.row] objectForKey:@"json"]];
     }
@@ -192,7 +193,6 @@
     [[self navigationController] pushViewController:profile animated:YES];
 }
 
-
 - (void) dismissKeyboard
 {
     [self.view removeGestureRecognizer:dismissKeybaordTap];
@@ -202,7 +202,7 @@
 
 -(IBAction)filter:(id)sender
 {
-
+    
     
     if(filterState==1)
     {
@@ -213,7 +213,7 @@
         [sender setSelected:NO];
         filterState=1;
     }
-        
+    
     [self.userTable reloadData];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{

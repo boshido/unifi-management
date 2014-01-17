@@ -27,6 +27,10 @@
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.imageView.frame = CGRectMake(20.0f , 5.0f, 35.0f, 35.0f);
+    self.imageView.frame = CGRectMake(20.0f , 4.0f, 35.0f, 35.0f);
+    self.textLabel.frame = CGRectMake(75.0f, 4.0f, 200, 40);
+    self.textLabel.font = [UIFont systemFontOfSize:13];
+    self.textLabel.textColor = [UIColor colorWithRed:0.435 green:0.443 blue:0.475 alpha:1.0];
+    
 }
 @end

@@ -13,9 +13,8 @@ typedef void(^ApiErrorCallback)(NSError *error);
 static NSString *ApiServerAddress = @"202.44.47.47";
 //static NSString *ApiServerAddress = @"192.168.0.2";
 
-@interface unifiApiConnector : NSObject{
-    NSURLConnection *theConnection;
-}
+@interface unifiApiConnector : NSObject
+@property(nonatomic, retain) NSURLConnection *theConnection;
 @property(nonatomic, retain) NSString * url;
 @property(nonatomic, retain) NSString * parameter;
 @property(nonatomic, strong) NSMutableData *receivedData;
@@ -26,4 +25,5 @@ static NSString *ApiServerAddress = @"202.44.47.47";
 - (id)initWithUrl:(NSString *)initurl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback;
 - (void)loadGetData ;
 - (void)loadPostData;
+- (void)cancel;
 @end

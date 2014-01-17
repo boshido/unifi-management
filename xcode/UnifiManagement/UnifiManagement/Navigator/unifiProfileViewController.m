@@ -10,7 +10,7 @@
 #import "unifiDeviceResource.h"
 #import "DejalActivityView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-
+#import "unifiSelectDeviceViewController.h"
 @interface unifiProfileViewController ()
 
 @end
@@ -53,23 +53,8 @@
     [profilePicture.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [profilePicture.layer setBorderWidth:0.3f];
     
-//    dispatch_queue_t concurrentQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//    dispatch_async(concurrentQueue, ^{
-//        if([userData valueForKey:@"picture"] != NULL){
-//            NSData *data;
-//            data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[userData valueForKey:@"picture"]]];
-//            profilePicture.image = [[UIImage alloc]initWithData:data ];
-//            
-//        }
-//        else{
-//            profilePicture.image = [UIImage imageNamed:@"profile.jpg"];
-//        }
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//           
-//        });
-//    });
     if([userData valueForKey:@"picture"] != [NSNull null]){
-        [profilePicture setImageWithURL:[NSURL URLWithString:[userData valueForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"profile.jpg"]];
+        [profilePicture setImageWithURL:[NSURL URLWithString:[userData valueForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
     }
     else [profilePicture setImage:[UIImage imageNamed:@"profile.jpg"]];
     
@@ -198,5 +183,23 @@
         index++;
     }
    
+}
+-(IBAction)addDevice:(id)sender{
+   
+//    CATransition* transition = [CATransition animation];
+//    transition.duration = .25;
+//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    transition.type = kCATransitionPush; //kCATransitionMoveIn; //, kCATransitionPush, kCATransitionReveal, kCATransitionFade
+//    transition.subtype = kCATransitionFromTop; //kCATransitionFromLeft, kCATransitionFromRight, kCATransitionFromTop, kCATransitionFromBottom
+//    
+//    
+//    
+//    [self.navigationController.view.layer addAnimation:transition
+//                                                                forKey:kCATransition];
+    self.navigationController.modalPresentationStyle = UIModalPresentationPageSheet;
+    [[self navigationController] presentViewController:[[self storyboard] instantiateViewControllerWithIdentifier:@"unifiSelectDeviceViewController"] animated:YES completion:nil];
+    //]
+  //  self.modalPresentationStyle=
+
 }
 @end

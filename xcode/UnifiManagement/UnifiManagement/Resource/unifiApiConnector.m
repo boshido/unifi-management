@@ -9,7 +9,7 @@
 #import "unifiApiConnector.h"
 
 @implementation unifiApiConnector
-@synthesize url,parameter,receivedData,onComplete;
+@synthesize url,parameter,receivedData,onComplete,theConnection;
 
 -(id)initWithUrl:(NSString *)initUrl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback andData:(NSString *)initParameter {
     
@@ -65,6 +65,9 @@
         // Inform the user that the connection failed.
     }
 }
+-(void)cancel {
+    [theConnection cancel];
+}
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
@@ -90,7 +93,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    self.onComplete([NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:nil],[[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
+    self.onComplete([NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableContainers error:nil],[[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding]);
     
     theConnection = nil;
     receivedData = nil;

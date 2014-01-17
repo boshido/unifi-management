@@ -45,6 +45,15 @@
     
     
 }
+-(void)viewDidAppear:(BOOL)animated{
+    [self loadDashBoardInfo];
+     autoLoad = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadDashBoardInfo) userInfo:nil repeats:YES];
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    NSLog(@"View Dissapear");
+    [autoLoad invalidate];
+    autoLoad = Nil;
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -54,14 +63,18 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if(webFlag==TRUE)[self loadDashBoardInfo];
+    if(webFlag==TRUE){
+        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+        [self loadDashBoardInfo];
+    };
     webFlag=TRUE;
 }
 
 -(void)loadDashBoardInfo{
+    NSLog(@"Still Here");
     __block bool flag1 = NO,flag2 = NO,flag3 = NO;
-    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+    
     __block float devicePercentage,apPercentage,connected,disconnected,authorized,non_authorized;
     __block NSString *apMaplist;
     

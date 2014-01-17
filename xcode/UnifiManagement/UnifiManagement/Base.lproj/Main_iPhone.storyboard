@@ -166,10 +166,10 @@
             </objects>
             <point key="canvasLocation" x="1109" y="-96"/>
         </scene>
-        <!--Unifi User View Controller-->
+        <!--Unifi User View Controller2-->
         <scene sceneID="ufA-Tp-DM9">
             <objects>
-                <viewController id="BTy-xb-bem" customClass="unifiUserViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="unifiUserViewController2" id="BTy-xb-bem" customClass="unifiUserViewController2" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="P3q-Y6-GTq"/>
                         <viewControllerLayoutGuide type="bottom" id="fCW-SC-t5V"/>
@@ -339,8 +339,7 @@
                                             <color key="titleShadowColor" red="0.62755102039999999" green="0.61746589350000003" blue="0.6250297387" alpha="0.0" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="backToParent:" destination="09w-N3-c5S" eventType="touchUpInside" id="2ih-0x-h2R"/>
-                                            <action selector="backToParent:" destination="uQS-PH-bmT" eventType="touchUpInside" id="6oz-q0-q5z"/>
+                                            <action selector="addDevice:" destination="uQS-PH-bmT" eventType="touchUpInside" id="gMX-aH-U85"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -373,8 +372,7 @@
                                             <color key="titleShadowColor" red="0.62755102039999999" green="0.61746589350000003" blue="0.6250297387" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="backToParent:" destination="09w-N3-c5S" eventType="touchUpInside" id="6jV-ej-N8o"/>
-                                            <action selector="backToParent:" destination="uQS-PH-bmT" eventType="touchUpInside" id="HIc-UI-59K"/>
+                                            <action selector="backToParent:" destination="uQS-PH-bmT" eventType="touchUpInside" id="5mx-Uh-5x8"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1368,6 +1366,124 @@ EFNpZ25vdXQ
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DNh-c2-2ij" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--Unifi Select Device View Controller-->
+        <scene sceneID="Bqc-7n-bVa">
+            <objects>
+                <viewController storyboardIdentifier="unifiSelectDeviceViewController" id="vfx-Hb-lFW" customClass="unifiSelectDeviceViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="R2H-VW-KrL"/>
+                        <viewControllerLayoutGuide type="bottom" id="W68-h6-dvb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5dj-9s-fEn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" barStyle="black" searchBarStyle="prominent" text="" placeholder="Search User Name" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyC-G1-TGz">
+                                <rect key="frame" x="0.0" y="71" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.36078432199999999" green="0.35686275360000003" blue="0.36862745879999997" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="barTintColor" red="0.17498767909999999" green="0.1727286062" blue="0.1812193627" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Online</string>
+                                    <string>Offline</string>
+                                </scopeButtonTitles>
+                            </searchBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="knr-dN-97r">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="71"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device List" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HsI-Ei-zfV" userLabel="Header">
+                                        <rect key="frame" x="90" y="30" width="141" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Bd-pR-Ok0" userLabel="Back">
+                                        <rect key="frame" x="0.0" y="30" width="70" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <inset key="titleEdgeInsets" minX="-9" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title=" Back" image="Backward2Icon.png">
+                                            <color key="titleShadowColor" red="0.62755102039999999" green="0.61746589350000003" blue="0.6250297387" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backToParent:" destination="vfx-Hb-lFW" eventType="touchUpInside" id="XG6-BX-Knc"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4p-XA-aw8" userLabel="Back">
+                                        <rect key="frame" x="247" y="30" width="70" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Online" image="Dotted.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.62755102039999999" green="0.61746589350000003" blue="0.6250297387" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <state key="selected" title="Offline" image="DottedSelected.png"/>
+                                        <connections>
+                                            <action selector="filter:" destination="vfx-Hb-lFW" eventType="touchUpInside" id="6C2-OR-QBf"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.16078431900000001" green="0.16078431900000001" blue="0.16078431900000001" alpha="1" colorSpace="deviceRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="5Bd-pR-Ok0" secondAttribute="bottom" constant="16" id="7Zh-yt-cAd"/>
+                                    <constraint firstItem="5Bd-pR-Ok0" firstAttribute="bottom" secondItem="L4p-XA-aw8" secondAttribute="bottom" id="KLI-0g-9Yl"/>
+                                    <constraint firstAttribute="bottom" secondItem="HsI-Ei-zfV" secondAttribute="bottom" constant="20" symbolic="YES" id="M4b-0l-h9S"/>
+                                    <constraint firstItem="5Bd-pR-Ok0" firstAttribute="leading" secondItem="knr-dN-97r" secondAttribute="leading" id="N0g-HQ-CRR"/>
+                                    <constraint firstItem="HsI-Ei-zfV" firstAttribute="leading" secondItem="knr-dN-97r" secondAttribute="leading" constant="90" id="QON-6I-dH7"/>
+                                    <constraint firstItem="HsI-Ei-zfV" firstAttribute="centerX" secondItem="knr-dN-97r" secondAttribute="centerX" id="Sja-et-gck"/>
+                                    <constraint firstItem="5Bd-pR-Ok0" firstAttribute="top" secondItem="knr-dN-97r" secondAttribute="top" constant="30" id="Y5a-tE-FR4"/>
+                                    <constraint firstItem="L4p-XA-aw8" firstAttribute="leading" secondItem="knr-dN-97r" secondAttribute="leading" constant="247" id="YSw-D5-LuZ"/>
+                                    <constraint firstItem="5Bd-pR-Ok0" firstAttribute="top" secondItem="HsI-Ei-zfV" secondAttribute="top" id="YZ1-NR-B57"/>
+                                    <constraint firstItem="HsI-Ei-zfV" firstAttribute="top" secondItem="L4p-XA-aw8" secondAttribute="top" id="db3-qP-46f"/>
+                                    <constraint firstItem="HsI-Ei-zfV" firstAttribute="leading" secondItem="5Bd-pR-Ok0" secondAttribute="trailing" constant="20" id="oLU-nT-6id"/>
+                                    <constraint firstAttribute="trailing" secondItem="L4p-XA-aw8" secondAttribute="trailing" constant="3" id="wjf-WU-WAG"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4ay-hn-Exb">
+                                <rect key="frame" x="0.0" y="115" width="320" height="365"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="knr-dN-97r" firstAttribute="bottom" secondItem="jyC-G1-TGz" secondAttribute="top" id="0U3-UZ-s4d"/>
+                            <constraint firstItem="knr-dN-97r" firstAttribute="top" secondItem="5dj-9s-fEn" secondAttribute="top" id="0ZP-R1-hEF"/>
+                            <constraint firstAttribute="trailing" secondItem="jyC-G1-TGz" secondAttribute="trailing" id="8BE-Sp-eae"/>
+                            <constraint firstItem="4ay-hn-Exb" firstAttribute="top" secondItem="jyC-G1-TGz" secondAttribute="bottom" id="9TW-9X-j2V"/>
+                            <constraint firstItem="jyC-G1-TGz" firstAttribute="top" secondItem="5dj-9s-fEn" secondAttribute="top" constant="71" id="B54-3P-jsU"/>
+                            <constraint firstItem="knr-dN-97r" firstAttribute="trailing" secondItem="jyC-G1-TGz" secondAttribute="trailing" id="ChD-UR-8Ry"/>
+                            <constraint firstItem="4ay-hn-Exb" firstAttribute="leading" secondItem="jyC-G1-TGz" secondAttribute="leading" id="Z8f-T5-dPk"/>
+                            <constraint firstItem="knr-dN-97r" firstAttribute="leading" secondItem="jyC-G1-TGz" secondAttribute="leading" id="Zti-mn-uad"/>
+                            <constraint firstItem="jyC-G1-TGz" firstAttribute="leading" secondItem="5dj-9s-fEn" secondAttribute="leading" id="dqC-69-WQ0"/>
+                            <constraint firstItem="4ay-hn-Exb" firstAttribute="trailing" secondItem="jyC-G1-TGz" secondAttribute="trailing" id="iAH-wR-nsS"/>
+                            <constraint firstAttribute="bottom" secondItem="4ay-hn-Exb" secondAttribute="bottom" id="l2V-mR-PWu"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="P3m-hn-bXt"/>
+                    <connections>
+                        <outlet property="searchBar" destination="jyC-G1-TGz" id="iVU-Xf-WYa"/>
+                        <outlet property="searchDisplayController" destination="VF3-Rx-OkM" id="qCR-Kp-nub"/>
+                        <outlet property="userTable" destination="4ay-hn-Exb" id="5fT-SL-PIk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E33-g0-nos" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="1gT-7k-Yam">
+                    <connections>
+                        <outlet property="delegate" destination="vfx-Hb-lFW" id="3rs-wW-LoQ"/>
+                        <outlet property="searchContentsController" destination="vfx-Hb-lFW" id="lD5-Jh-Mga"/>
+                        <outlet property="searchResultsDataSource" destination="vfx-Hb-lFW" id="bz7-u7-ttt"/>
+                        <outlet property="searchResultsDelegate" destination="vfx-Hb-lFW" id="waf-IX-TsK"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="3004" y="-1410"/>
+        </scene>
     </scenes>
     <resources>
         <image name="APIcon.png" width="20" height="20"/>
@@ -1409,7 +1525,7 @@ EFNpZ25vdXQ
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="iul-Kz-xYx"/>
         <segue reference="V13-Oi-MQy"/>
+        <segue reference="iul-Kz-xYx"/>
     </inferredMetricsTieBreakers>
 </document>

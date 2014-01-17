@@ -18,6 +18,5 @@
 @property(retain,nonatomic) IBOutlet UILabel *profileName,*profileEmail,*deviceCount;
 @property(retain,nonatomic) NSMutableArray *onlineDevice,*offlineDevice;
 
-
-
+-(IBAction)addDevice:(id)sender;
 @end
