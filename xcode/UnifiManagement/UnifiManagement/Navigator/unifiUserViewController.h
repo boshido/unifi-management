@@ -1,17 +1,15 @@
 //
-//  unifiUserViewController.h
+//  unifiUserViewController2.h
 //  UnifiManagement
 //
-//  Created by Watchrapong Agsonchu on 12/16/2556 BE.
-//  Copyright (c) 2556 KMUTNB. All rights reserved.
+//  Created by Watchrapong Agsonchu on 1/17/2557 BE.
+//  Copyright (c) 2557 KMUTNB. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface unifiUserViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
-{
-    UITapGestureRecognizer *dismissKeybaordTap;
-}
+@interface unifiUserViewController: UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+
 @property(retain,nonatomic)IBOutlet UITableView *userTable;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property(retain,nonatomic) NSMutableArray *userOnline,*userOffline,*userSearch;

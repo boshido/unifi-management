@@ -8,17 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
-@interface unifiSelectDeviceViewController  : UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
-{
-    UITapGestureRecognizer *dismissKeybaordTap;
-}
-@property(retain,nonatomic)IBOutlet UITableView *userTable;
+@protocol unifiSelectDeviceViewControllerDelegate;
+
+@interface unifiSelectDeviceViewController: UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@property(retain,nonatomic) NSJSONSerialization *userData;
+@property(retain,nonatomic) IBOutlet UITableView *deviceTable;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
-@property(retain,nonatomic) NSMutableArray *userOnline,*userOffline,*userSearch;
+@property(retain,nonatomic) NSMutableArray *deviceOnline,*deviceOffline,*deviceSearch;
 @property NSInteger filterState;
 @property bool isSearched;
 
 -(IBAction)backToParent:(id)sender;
 -(IBAction)backToHome:(id)sender;
 -(IBAction)filter:(id)sender;
+
+@property(weak,nonatomic) id<unifiSelectDeviceViewControllerDelegate> delegate;
+
+@end
+
+
+@protocol unifiSelectDeviceViewControllerDelegate<NSObject>
+- (void)unifiSelectDeviceView:(unifiSelectDeviceViewController *)viewController
+     finishAddDevice:(BOOL)sign;
 @end

@@ -77,7 +77,7 @@
                         color: 'rgb(31, 171, 149)'
                     }
                 };
-
+                $('#chartContainer').html('');
                 for(var y in parameter){
                     var c = $('<div style="height:100%;float:left" />').appendTo('#chartContainer');
                     c.dxLinearGauge($.extend(true, {}, options, {

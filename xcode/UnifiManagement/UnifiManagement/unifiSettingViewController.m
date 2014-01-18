@@ -125,19 +125,14 @@
               tabBarController:self.tabBarController
               shouldSelectViewController:[self.tabBarController.viewControllers objectAtIndex:0]];  // send didSelectViewController to the tabBarController delegate
          };
-        
          unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"https://accounts.google.com/Logout" withCompleteCallback:completeCallback withErrorCallback:nil];
          [object loadGetData];
-
-        
     }
 }
 
 -(void)downloadAndLoadImage{
     NSURL *connector = [NSURL URLWithString:url];
     NSData *data = [[NSData alloc] initWithContentsOfURL:connector];
-    
-    
     
     profilePicture.image = [[UIImage alloc] initWithData:data];
     [spinner stopAnimating];

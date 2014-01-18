@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#define isiPhone5  ([[UIScreen mainScreen] bounds].size.height == 568)?TRUE:FALSE
+NS_ENUM(NSInteger, CellStyle) {
+        ImageWithTextStyle,
+        TextWithDetailStyle,
+};
 
-@interface unifiTableViewCell : UITableViewCell
+@interface unifiTableViewCell : UITableViewCell{
+    enum CellStyle cellStyle;
+}
 
+-(void)setCellStyle:(enum CellStyle)style;
 @end

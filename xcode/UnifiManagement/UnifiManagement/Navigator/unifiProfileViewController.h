@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "unifiSelectDeviceViewController.h"
 
-@interface unifiProfileViewController : UIViewController{
+@interface unifiProfileViewController : UIViewController<unifiSelectDeviceViewControllerDelegate>{
     NSInteger contentSize;
 }
 @property(retain,nonatomic) NSJSONSerialization *userData;

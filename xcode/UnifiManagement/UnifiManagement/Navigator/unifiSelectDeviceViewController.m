@@ -1,24 +1,33 @@
 //
-//  unifiUserViewController.m
+//  unifiUserViewController2.m
 //  UnifiManagement
 //
-//  Created by Watchrapong Agsonchu on 12/16/2556 BE.
-//  Copyright (c) 2556 KMUTNB. All rights reserved.
+//  Created by Watchrapong Agsonchu on 1/17/2557 BE.
+//  Copyright (c) 2557 KMUTNB. All rights reserved.
 //
 
 #import "unifiSelectDeviceViewController.h"
 #import "unifiUserResource.h"
+#import "unifiDeviceResource.h"
 #import "unifiProfileViewController.h"
 #import "unifiTableViewCell.h"
 #import "DejalActivityView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "unifiSwitch.h"
 
 @interface unifiSelectDeviceViewController ()
 
 @end
 
-@implementation unifiSelectDeviceViewController
-@synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterState,isSearched;
+#define LoadLength 15
+
+@implementation unifiSelectDeviceViewController{
+    bool firstLoad;
+    unifiApiConnector *searchAPI;
+    UITapGestureRecognizer *dismissKeybaordTap;
+    NSInteger onlineStart,offlineStart,onlineLength,offlineLength,searchStart,searchLength;
+}
+@synthesize deviceOnline,deviceOffline,deviceSearch,deviceTable,searchBar,filterState,isSearched,userData,delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,44 +51,39 @@
     [searchBar setBackgroundImage:[UIImage imageNamed:@"BlackBG2.png"]];
     [searchBar setTranslucent:YES];
     
-    userTable.delegate = self;
-    userTable.dataSource = self;
+    deviceTable.delegate = self;
+    deviceTable.dataSource = self;
     searchBar.delegate = self;
     filterState=1;
     isSearched=NO;
-    userOnline = [[NSMutableArray alloc] init];
-    userOffline = [[NSMutableArray alloc] init];
+    deviceOnline = [[NSMutableArray alloc] init];
+    deviceOffline = [[NSMutableArray alloc] init];
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     
-    [unifiUserResource
-     getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
-         NSString *image;
-         for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-             if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
-                 image = @"profile.jpg";
-             }
-             else{
-                 image = [json valueForKey:@"picture"];
-             }
-             NSDictionary *dictionary = @{ @"json"  : json,
-                                           @"image" : image
-                                           };
-             
-             if([[json valueForKey:@"online"] intValue]>0){
-                 [userOnline addObject:dictionary];
-             }
-             else{
-                 [userOffline addObject:dictionary];
-             }
-         }
-         [DejalBezelActivityView removeViewAnimated:YES];
-         [userTable reloadData];
-     }
-     withHandleError:^(NSError *error) {
-         [DejalBezelActivityView removeViewAnimated:YES];
-     }
-     ];
+    searchStart    = 0;
+    onlineStart   = 0;
+    offlineStart  = 0;
+    
+    searchLength  = LoadLength;
+    onlineLength  = LoadLength;
+    offlineLength = LoadLength;
+    
+    searchAPI = [[unifiApiConnector alloc] initWithUrl:@""
+                                  withCompleteCallback:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+                                      for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+                                          [json setValue:[NSNumber numberWithInteger: 0] forKey:@"switch"];
+                                          [deviceSearch addObject:json];
+                                      }
+                                      [DejalBezelActivityView removeViewAnimated:YES];
+                                      [deviceTable reloadData];
+                                  }
+                                     withErrorCallback:nil
+                 ];
+    
+    firstLoad=YES;
+    [self loadOnlineDeviceWithLoadmore:NO];
+    [self loadOfflineDeviceWithLoadmore:NO];
     
 }
 - (void)didReceiveMemoryWarning
@@ -89,7 +93,9 @@
 }
 
 -(IBAction)backToParent:(id)sender{
-//    [self.navigationController popViewControllerAnimated:YES];
+    if ([self.delegate respondsToSelector:@selector(unifiSelectDeviceView:finishAddDevice:)]) {
+        [self.delegate unifiSelectDeviceView:self finishAddDevice:true];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -114,64 +120,100 @@
     }
     else
     {
-        isSearched = YES;
-        userSearch = [[NSMutableArray alloc] init];
-        __weak NSArray *tmp;
-        if(filterState==1) tmp = userOnline;
-        else tmp = userOffline;
-        
-        for (NSJSONSerialization* json in tmp)
-        {
-            NSRange nameRange = [[[json valueForKey:@"json"] valueForKey:@"name"] rangeOfString:text options:NSCaseInsensitiveSearch];
-            if(nameRange.location != NSNotFound)
-            {
-                [userSearch addObject:json];
-            }
-        }
+        isSearched      = YES;
+        searchStart     = 0;
+        searchLength    = LoadLength;
+        deviceSearch      = [[NSMutableArray alloc] init];
+        [self loadSearchDeviceWithLoadmore:NO];
     }
     
-    [self.userTable reloadData];
+    [self.deviceTable reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(isSearched)return [userSearch count];
-    else if(filterState==1)return [userOnline count];
-    else return [userOffline count];
+    if(isSearched)return [deviceSearch count];
+    else if(filterState==1)return [deviceOnline count];
+    else return [deviceOffline count];
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"SimpleTableItem";
     unifiTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
     if (cell == nil) {
-        cell = [[unifiTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+        cell = [[unifiTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
     }
     
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    [cell.imageView.layer setCornerRadius:17.5f];
-    [cell.imageView.layer setMasksToBounds: YES];
-    // border
-    [cell.imageView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [cell.imageView.layer setBorderWidth:0.3f];
     
+    [cell setCellStyle:TextWithDetailStyle];
+    
+    NSJSONSerialization *json;
+    unifiSwitch *switchView = [[unifiSwitch alloc] initWithFrame:CGRectZero];
     if(isSearched){
-        cell.textLabel.text = [[[userSearch objectAtIndex:indexPath.row] objectForKey:@"json"] objectForKey:@"name"];
-        [cell.imageView setImageWithURL:[NSURL URLWithString:[[userSearch objectAtIndex:indexPath.row] objectForKey:@"image"]]
-                       placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
+        json = [deviceSearch objectAtIndex:indexPath.row];
+        if ([self.deviceSearch count] >= searchLength && indexPath.row == [self.deviceSearch count] - 2)
+            [self loadSearchDeviceWithLoadmore:YES];
+        [switchView setOn:[[[deviceSearch objectAtIndex:indexPath.row] valueForKey:@"switch"] boolValue] animated:NO];
     }
     else if(filterState==1){
-        cell.textLabel.text = [[[userOnline objectAtIndex:indexPath.row] objectForKey:@"json"] objectForKey:@"name"];
-        [cell.imageView setImageWithURL:[NSURL URLWithString:[[userOnline objectAtIndex:indexPath.row] objectForKey:@"image"]]
-                       placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
-        
+        json = [deviceOnline objectAtIndex:indexPath.row];
+        if ([self.deviceOnline count] >= onlineLength && indexPath.row == [self.deviceOnline count] - 2)
+            [self loadOnlineDeviceWithLoadmore:YES];
+         cell.detailTextLabel.text = [json valueForKey:@"ip"];
+        [switchView setOn:[[[deviceOnline objectAtIndex:indexPath.row] valueForKey:@"switch"] boolValue] animated:NO];
     }
     else{
-        cell.textLabel.text = [[[userOffline objectAtIndex:indexPath.row] objectForKey:@"json"] objectForKey:@"name"];
-        [cell.imageView setImageWithURL:[NSURL URLWithString:[[userOffline objectAtIndex:indexPath.row] objectForKey:@"image"]]
-                       placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
-        
+        json = [deviceOffline objectAtIndex:indexPath.row];
+        if ([self.deviceOffline count] >= offlineLength && indexPath.row == [self.deviceOffline count] - 2)
+            [self loadOfflineDeviceWithLoadmore:YES];
+         cell.detailTextLabel.text = [json valueForKey:@"mac"];
+        [switchView setOn:[[[deviceOffline objectAtIndex:indexPath.row] valueForKey:@"switch"] boolValue] animated:NO];
+       // NSLog(@"%@",[[[deviceOffline objectAtIndex:indexPath.row] valueForKey:@"switch"] boolValue] ? @"true" : @"false");
     }
+
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    [switchView initParameter];
+    [switchView addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
+    [switchView setParameter:[json valueForKey:@"hostname"] withKey:@"hostname"];
+    [switchView setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
+    [switchView setParameter:[NSNumber numberWithInteger: indexPath.row] withKey:@"index"];
+    cell.accessoryView = switchView;
+    
+    if([json valueForKey:@"hostname"] == NULL || [json valueForKey:@"hostname"] == [NSNull null]){
+        cell.textLabel.text = @"No Hostname";
+        [cell.imageView setImage:[UIImage imageNamed:@"Unknow.png"]];
+    }
+    else{
+        
+        cell.textLabel.text = [json valueForKey:@"hostname"];
+        NSRange search = [[json valueForKey:@"hostname"] rangeOfString:@"iphone" options:NSCaseInsensitiveSearch];
+        if(search.location != NSNotFound)
+            [cell.imageView setImage:[UIImage imageNamed:@"Apple.png"]];
+        else{
+            search = [[json valueForKey:@"hostname"] rangeOfString:@"ipad" options:NSCaseInsensitiveSearch];
+            if(search.location != NSNotFound)
+                [cell.imageView setImage:[UIImage imageNamed:@"Apple.png"]];
+            else{
+                search = [[json valueForKey:@"hostname"]  rangeOfString:@"android" options:NSCaseInsensitiveSearch];
+                if(search.location != NSNotFound)
+                    [cell.imageView setImage:[UIImage imageNamed:@"Android.png"]];
+                else{
+                    search = [[json valueForKey:@"hostname"]  rangeOfString:@"windows" options:NSCaseInsensitiveSearch];
+                    if(search.location != NSNotFound)
+                        [cell.imageView setImage:[UIImage imageNamed:@"Windows.png"]];
+                    else
+                        [cell.imageView setImage:[UIImage imageNamed:@"PC.png"]];
+                }
+            }
+        }
+    }
+
+   
+
+    
     
     return cell;
 }
@@ -181,13 +223,13 @@
     unifiProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiProfileViewController"];
     
     if(isSearched){
-        [profile setUserData:[[userSearch objectAtIndex:indexPath.row] objectForKey:@"json"]];
+        [profile setUserData:[deviceSearch objectAtIndex:indexPath.row]];
     }
     else if(filterState==1){
-        [profile setUserData:[[userOnline objectAtIndex:indexPath.row] objectForKey:@"json"]];
+        [profile setUserData:[deviceOnline objectAtIndex:indexPath.row]];
     }
     else{
-        [profile setUserData:[[userOffline objectAtIndex:indexPath.row] objectForKey:@"json"]];
+        [profile setUserData:[deviceOffline objectAtIndex:indexPath.row]];
     }
     
     [[self navigationController] pushViewController:profile animated:YES];
@@ -203,7 +245,22 @@
 -(IBAction)filter:(id)sender
 {
     
-    
+    if(isSearched){
+        searchStart     = 0;
+        searchLength    = LoadLength;
+        deviceSearch      = [[NSMutableArray alloc] init];
+        if(filterState !=1 )
+        {
+            [searchAPI cancel];
+            [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/online-user-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
+            [searchAPI loadGetData];
+        }
+        else{
+            [searchAPI cancel];
+            [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/offline-user-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
+            [searchAPI loadGetData];
+        }
+    }
     if(filterState==1)
     {
         [sender setSelected:YES];
@@ -214,7 +271,139 @@
         filterState=1;
     }
     
-    [self.userTable reloadData];
+    if(isSearched){
+        searchStart     = 0;
+        searchLength    = LoadLength;
+        deviceSearch      = [[NSMutableArray alloc] init];
+        [self loadSearchDeviceWithLoadmore:NO];
+    }
+    
+    [self.deviceTable reloadData];
+}
+
+-(void)switchChanged:(id)sender{
+    unifiSwitch *switchView = (unifiSwitch*)sender;
+    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+
+    if([switchView isOn]){
+        [unifiDeviceResource
+            authorizeDevice:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+                if(isSearched){
+                    [[deviceSearch objectAtIndex:[[switchView getParameterByKey:@"index"] intValue]] setValue:[NSNumber numberWithInteger: 1] forKey:@"switch"];
+                }
+                else if(filterState==1)
+                {
+                    [[deviceOnline objectAtIndex:[[switchView getParameterByKey:@"index"] intValue]] setValue:[NSNumber numberWithInteger: 1] forKey:@"switch"];
+                }
+                else {
+                    [[deviceOffline objectAtIndex:[[switchView getParameterByKey:@"index"] intValue]] setValue:[NSNumber numberWithInteger: 1] forKey:@"switch"];
+                }
+
+                [DejalBezelActivityView removeViewAnimated:YES];
+            }
+            withHandleError:^(NSError *error) {
+                [switchView setOn:NO animated:YES];
+//                [DejalBezelActivityView removeViewAnimated:YES];
+            }
+            fromGoogleId:[userData valueForKey:@"google_id"]
+            andHostname:[switchView getParameterByKey:@"hostname"]
+            andMac:[switchView getParameterByKey:@"mac"]
+            andFirstName:[userData valueForKey:@"fname"]
+            andLastName:[userData valueForKey:@"lname"]
+            andEmail:[userData valueForKey:@"email"]
+         ];
+    }
+    else{
+        [unifiDeviceResource
+            unAuthorizeDevice:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+                if(isSearched){
+                    [[deviceSearch objectAtIndex:[[switchView getParameterByKey:@"index"] intValue]] setValue:[NSNumber numberWithInteger: 0] forKey:@"switch"];
+                }
+                else if(filterState==1)
+                {
+                    [[deviceOnline objectAtIndex:[[switchView getParameterByKey:@"index"] intValue]] setValue:[NSNumber numberWithInteger: 0] forKey:@"switch"];
+                }
+                else {
+                    [[deviceOffline objectAtIndex:[[switchView getParameterByKey:@"index"] intValue]] setValue:[NSNumber numberWithInteger: 0] forKey:@"switch"];
+                }
+                [DejalBezelActivityView removeViewAnimated:YES];
+            }
+            withHandleError:^(NSError *error) {
+                [switchView setOn:YES animated:YES];
+//                 [DejalBezelActivityView removeViewAnimated:YES];
+            }
+            fromMac:[switchView getParameterByKey:@"mac"]
+        ];
+    }
+}
+
+-(void)loadOnlineDeviceWithLoadmore:(bool)flag{
+    if(flag){
+        onlineStart  = onlineLength;
+        onlineLength = onlineLength+LoadLength;
+    }
+    
+    [unifiDeviceResource
+     getPendingDeviceList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+         for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+             [json setValue:[NSNumber numberWithInteger: 0] forKey:@"switch"];
+             [deviceOnline addObject:json];
+         }
+         if(!firstLoad){
+             [DejalBezelActivityView removeViewAnimated:YES];
+             [deviceTable reloadData];
+         }
+         firstLoad=false;
+     }
+     withHandleError:^(NSError *error) {
+         [DejalBezelActivityView removeViewAnimated:YES];
+     }
+     fromStart:onlineStart toLength:onlineLength
+     ];
+}
+
+-(void)loadOfflineDeviceWithLoadmore:(bool)flag{
+    if(flag){
+        offlineStart  = offlineLength;
+        offlineLength = offlineLength+LoadLength;
+    }
+    
+    [unifiDeviceResource
+     getUnAuthorizedDeviceList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+         for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+             [json setValue:[NSNumber numberWithInteger: 0] forKey:@"switch"];
+             [deviceOffline addObject:json];
+         }
+         if(!firstLoad){
+             [DejalBezelActivityView removeViewAnimated:YES];
+             [deviceTable reloadData];
+         }
+         firstLoad=false;
+     }
+     withHandleError:^(NSError *error) {
+         [DejalBezelActivityView removeViewAnimated:YES];
+     }
+     fromStart:offlineStart toLength:offlineLength
+     ];
+}
+
+-(void)loadSearchDeviceWithLoadmore:(bool)flag{
+    if(flag){
+        searchStart  = searchLength;
+        searchLength = searchLength+LoadLength;
+    }
+    if(filterState==1)
+    {
+        [searchAPI cancel];
+        [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/pending-device-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
+        [searchAPI loadGetData];
+    }
+    else{
+        [searchAPI cancel];
+        [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/unauthorized-device-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
+        [searchAPI loadGetData];
+    }
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;
