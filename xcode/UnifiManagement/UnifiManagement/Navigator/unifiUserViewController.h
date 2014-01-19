@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "unifiFailureViewController.h"
 
-@interface unifiUserViewController: UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@interface unifiUserViewController: UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,unifiFailureViewControllerDelegate>
 
 @property(retain,nonatomic)IBOutlet UITableView *userTable;
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property(weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property(retain,nonatomic) IBOutlet UIButton *filterBtn;
 @property(retain,nonatomic) NSMutableArray *userOnline,*userOffline,*userSearch;
 @property NSInteger filterState;
 @property bool isSearched;

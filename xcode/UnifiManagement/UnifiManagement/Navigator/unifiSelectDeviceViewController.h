@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "unifiFailureViewController.h"
 
 @protocol unifiSelectDeviceViewControllerDelegate;
 
-@interface unifiSelectDeviceViewController: UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
+@interface unifiSelectDeviceViewController: UIViewController<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate,unifiFailureViewControllerDelegate>
 @property(retain,nonatomic) NSJSONSerialization *userData;
 @property(retain,nonatomic) IBOutlet UITableView *deviceTable;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
+@property(retain,nonatomic) IBOutlet UIButton *filterBtn;
 @property(retain,nonatomic) NSMutableArray *deviceOnline,*deviceOffline,*deviceSearch;
 @property NSInteger filterState;
 @property bool isSearched;

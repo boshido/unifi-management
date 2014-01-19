@@ -15,18 +15,25 @@
     
     self.onComplete = completeCallback;
     self.onError = errorCallback;
-    self.url = initUrl;
+    self.url = [initUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     self.parameter = initParameter;
     return self;
 }
 
--(id)initWithUrl:(NSString *)initurl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback{
+-(id)initWithUrl:(NSString *)initUrl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback{
 
     self.onComplete = completeCallback;
     self.onError = errorCallback;
-    self.url = initurl;
+    self.url = [initUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     self.parameter = @"";
     return self;
+}
+
+-(void)setUrl:(NSString *)newUrl{
+    url = [newUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
+-(NSString*)getUrl{
+    return url;
 }
 
 -(void)loadGetData {

@@ -135,6 +135,7 @@
 		0EEAB779188A667400DF66A5 /* Unknow.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAB778188A667400DF66A5 /* Unknow.png */; };
 		0EEAB77C188ABD5F00DF66A5 /* MiniCloseIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAB77A188ABD5F00DF66A5 /* MiniCloseIcon.png */; };
 		0EEAB77D188ABD5F00DF66A5 /* MiniCloseIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EEAB77B188ABD5F00DF66A5 /* MiniCloseIcon@2x.png */; };
+		0EEAB780188AD79D00DF66A5 /* unifiFailureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EEAB77F188AD79D00DF66A5 /* unifiFailureViewController.m */; };
 		0EF176651856CF7700F5CCF5 /* unifiNavigationManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF176641856CF7700F5CCF5 /* unifiNavigationManagementViewController.m */; };
 		0EF4E93B1854C04E0097FACB /* TransparentBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E93A1854C04E0097FACB /* TransparentBG.png */; };
 		0EF4E93F1854C1360097FACB /* WhiteBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EF4E93D1854C1360097FACB /* WhiteBG.png */; };
@@ -318,6 +319,8 @@
 		0EEAB778188A667400DF66A5 /* Unknow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Unknow.png; sourceTree = "<group>"; };
 		0EEAB77A188ABD5F00DF66A5 /* MiniCloseIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MiniCloseIcon.png; sourceTree = "<group>"; };
 		0EEAB77B188ABD5F00DF66A5 /* MiniCloseIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MiniCloseIcon@2x.png"; sourceTree = "<group>"; };
+		0EEAB77E188AD79D00DF66A5 /* unifiFailureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiFailureViewController.h; sourceTree = "<group>"; };
+		0EEAB77F188AD79D00DF66A5 /* unifiFailureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiFailureViewController.m; sourceTree = "<group>"; };
 		0EF176631856CF7700F5CCF5 /* unifiNavigationManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiNavigationManagementViewController.h; sourceTree = "<group>"; };
 		0EF176641856CF7700F5CCF5 /* unifiNavigationManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiNavigationManagementViewController.m; sourceTree = "<group>"; };
 		0EF4E93A1854C04E0097FACB /* TransparentBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TransparentBG.png; sourceTree = "<group>"; };
@@ -508,10 +511,12 @@
 				0E4FD6941847BA30009383C6 /* unifiTabViewController.m */,
 				0EF176631856CF7700F5CCF5 /* unifiNavigationManagementViewController.h */,
 				0EF176641856CF7700F5CCF5 /* unifiNavigationManagementViewController.m */,
-				0EE341D8184C325A00C8814A /* unifiSettingViewController.h */,
-				0EE341D9184C325A00C8814A /* unifiSettingViewController.m */,
 				0EAEE0981879A074002D3FB6 /* unifiDashboardViewController.h */,
 				0EAEE0991879A074002D3FB6 /* unifiDashboardViewController.m */,
+				0EE341D8184C325A00C8814A /* unifiSettingViewController.h */,
+				0EE341D9184C325A00C8814A /* unifiSettingViewController.m */,
+				0EEAB77E188AD79D00DF66A5 /* unifiFailureViewController.h */,
+				0EEAB77F188AD79D00DF66A5 /* unifiFailureViewController.m */,
 				0EF4E95F185501D30097FACB /* Deprecated */,
 				0E488D9F183C4FE5004FF995 /* Images.xcassets */,
 				0E488D8B183C4FE4004FF995 /* Supporting Files */,
@@ -886,6 +891,7 @@
 				0EBF867F1872B93600F2B49D /* unifiProfileViewController.m in Sources */,
 				0ED0FED71844AB4A00349D39 /* unifiGlobalVariable.m in Sources */,
 				0EB9E9D2185EC7A7002FB1B3 /* unifiUITapGestureRecognizer.m in Sources */,
+				0EEAB780188AD79D00DF66A5 /* unifiFailureViewController.m in Sources */,
 				0E4FD692184732E8009383C6 /* unifiGoogleResource.m in Sources */,
 				0EE341DE184C7CA700C8814A /* unifiStatisticViewController.m in Sources */,
 				0EBCF1121843763400D11BFD /* TJSpinner.m in Sources */,

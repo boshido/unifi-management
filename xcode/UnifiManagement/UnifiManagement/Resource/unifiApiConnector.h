@@ -15,14 +15,14 @@ static NSString *ApiServerAddress = @"192.168.0.2";
 
 @interface unifiApiConnector : NSObject
 @property(nonatomic, retain) NSURLConnection *theConnection;
-@property(nonatomic, retain) NSString * url;
+@property(nonatomic, retain,getter = getUrl,setter = setUrl:) NSString * url;
 @property(nonatomic, retain) NSString * parameter;
 @property(nonatomic, strong) NSMutableData *receivedData;
 @property(nonatomic, copy) ApiCompleteCallback onComplete;
 @property(nonatomic, copy) ApiErrorCallback onError;
 
 -(id)initWithUrl:(NSString *)initUrl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback andData:(NSString *)initParameter;
-- (id)initWithUrl:(NSString *)initurl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback;
+-(id)initWithUrl:(NSString *)initUrl withCompleteCallback:(ApiCompleteCallback)completeCallback withErrorCallback:(ApiErrorCallback)errorCallback;
 - (void)loadGetData ;
 - (void)loadPostData;
 - (void)cancel;

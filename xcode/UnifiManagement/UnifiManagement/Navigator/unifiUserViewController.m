@@ -25,8 +25,9 @@
     unifiApiConnector *searchAPI;
     UITapGestureRecognizer *dismissKeybaordTap;
     NSInteger onlineStart,offlineStart,onlineLength,offlineLength,searchStart,searchLength;
+    ApiErrorCallback handleError;
 }
-@synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterState,isSearched;
+@synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterBtn,filterState,isSearched;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,6 +54,22 @@
     userTable.delegate = self;
     userTable.dataSource = self;
     searchBar.delegate = self;
+    __weak typeof(self) weakSelf=self;
+    
+    handleError= ^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:YES];
+        unifiFailureViewController *failureController = [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
+        failureController.delegate = weakSelf;
+        [[weakSelf navigationController] presentViewController:failureController animated:YES completion:nil];
+    };
+
+    
+    [self initialize];
+    
+}
+-(void)initialize{
+    
+    [filterBtn setSelected:NO];
     filterState=1;
     isSearched=NO;
     userOnline = [[NSMutableArray alloc] init];
@@ -63,29 +80,28 @@
     searchStart    = 0;
     onlineStart   = 0;
     offlineStart  = 0;
-   
+    
     searchLength  = LoadLength;
     onlineLength  = LoadLength;
     offlineLength = LoadLength;
     
     searchAPI = [[unifiApiConnector alloc] initWithUrl:@""
-        withCompleteCallback:^(NSJSONSerialization *responseJSON,NSString *reponseString){
-            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-                if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
-                    [json setObject: @"profile.jpg" forKey:@"picture"];
-                }
-                [userSearch addObject:json];
-            }
-            [userTable reloadData];
-        }
-        withErrorCallback:nil
-    ];
+                                  withCompleteCallback:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+                                      for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+                                          if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
+                                              [json setObject: @"profile.jpg" forKey:@"picture"];
+                                          }
+                                          [userSearch addObject:json];
+                                      }
+                                      [userTable reloadData];
+                                  }
+                                     withErrorCallback:handleError                 ];
     
     firstLoad=YES;
     [self loadOnlineUserWithLoadmore:NO];
     [self loadOfflineUserWithLoadmore:NO];
-    
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -122,20 +138,6 @@
         searchLength    = LoadLength;
         userSearch      = [[NSMutableArray alloc] init];
         [self loadSearchUserWithLoadmore:NO];
-//        isSearched = YES;
-//        userSearch = [[NSMutableArray alloc] init];
-//        __weak NSArray *tmp;
-//        if(filterState==1) tmp = userOnline;
-//        else tmp = userOffline;
-//        
-//        for (NSJSONSerialization* json in tmp)
-//        {
-//            NSRange nameRange = [[[json valueForKey:@"json"] valueForKey:@"name"] rangeOfString:text options:NSCaseInsensitiveSearch];
-//            if(nameRange.location != NSNotFound)
-//            {
-//                [userSearch addObject:json];
-//            }
-//        }
     }
     
     [self.userTable reloadData];
@@ -272,11 +274,10 @@
          }
          firstLoad=false;
      }
-     withHandleError:^(NSError *error) {
-         [DejalBezelActivityView removeViewAnimated:YES];
-     }
+     withHandleError:handleError
      fromStart:onlineStart toLength:onlineLength 
      ];
+    
 }
 
 -(void)loadOfflineUserWithLoadmore:(bool)flag{
@@ -299,9 +300,7 @@
          }
          firstLoad=false;
      }
-     withHandleError:^(NSError *error) {
-         [DejalBezelActivityView removeViewAnimated:YES];
-     }
+     withHandleError:handleError
      fromStart:offlineStart toLength:offlineLength
      ];
 }
@@ -323,6 +322,13 @@
         [searchAPI loadGetData];
     }
 }
+
+- (void)failureView:(unifiFailureViewController *)viewController
+       retryWithSel:(SEL)selector{
+    [self initialize];
+
+}
+
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;
 }

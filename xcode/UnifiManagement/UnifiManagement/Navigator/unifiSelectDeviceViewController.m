@@ -15,6 +15,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "unifiSwitch.h"
 
+
 @interface unifiSelectDeviceViewController ()
 
 @end
@@ -26,8 +27,9 @@
     unifiApiConnector *searchAPI;
     UITapGestureRecognizer *dismissKeybaordTap;
     NSInteger onlineStart,offlineStart,onlineLength,offlineLength,searchStart,searchLength;
+    ApiErrorCallback handleError;
 }
-@synthesize deviceOnline,deviceOffline,deviceSearch,deviceTable,searchBar,filterState,isSearched,userData,delegate;
+@synthesize deviceOnline,deviceOffline,deviceSearch,deviceTable,searchBar,filterBtn,filterState,isSearched,userData,delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -54,6 +56,24 @@
     deviceTable.delegate = self;
     deviceTable.dataSource = self;
     searchBar.delegate = self;
+    __weak typeof(self) weakSelf=self;
+    
+    handleError= ^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:YES];
+        unifiFailureViewController *failureController = [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
+        failureController.delegate = weakSelf;
+        [weakSelf presentViewController:failureController animated:YES completion:nil];
+    };
+    
+    
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [self initialize];
+}
+
+- (void)initialize{
+    
+    [filterBtn setSelected:NO];
     filterState=1;
     isSearched=NO;
     deviceOnline = [[NSMutableArray alloc] init];
@@ -78,13 +98,13 @@
                                       [DejalBezelActivityView removeViewAnimated:YES];
                                       [deviceTable reloadData];
                                   }
-                                     withErrorCallback:nil
+                                withErrorCallback:handleError
                  ];
     
     firstLoad=YES;
     [self loadOnlineDeviceWithLoadmore:NO];
     [self loadOfflineDeviceWithLoadmore:NO];
-    
+
 }
 - (void)didReceiveMemoryWarning
 {
@@ -302,10 +322,7 @@
 
                 [DejalBezelActivityView removeViewAnimated:YES];
             }
-            withHandleError:^(NSError *error) {
-                [switchView setOn:NO animated:YES];
-//                [DejalBezelActivityView removeViewAnimated:YES];
-            }
+            withHandleError:handleError
             fromGoogleId:[userData valueForKey:@"google_id"]
             andHostname:[switchView getParameterByKey:@"hostname"]
             andMac:[switchView getParameterByKey:@"mac"]
@@ -329,10 +346,7 @@
                 }
                 [DejalBezelActivityView removeViewAnimated:YES];
             }
-            withHandleError:^(NSError *error) {
-                [switchView setOn:YES animated:YES];
-//                 [DejalBezelActivityView removeViewAnimated:YES];
-            }
+            withHandleError:handleError
             fromMac:[switchView getParameterByKey:@"mac"]
         ];
     }
@@ -356,9 +370,7 @@
          }
          firstLoad=false;
      }
-     withHandleError:^(NSError *error) {
-         [DejalBezelActivityView removeViewAnimated:YES];
-     }
+     withHandleError:handleError
      fromStart:onlineStart toLength:onlineLength
      ];
 }
@@ -381,9 +393,7 @@
          }
          firstLoad=false;
      }
-     withHandleError:^(NSError *error) {
-         [DejalBezelActivityView removeViewAnimated:YES];
-     }
+     withHandleError:handleError
      fromStart:offlineStart toLength:offlineLength
      ];
 }
@@ -405,6 +415,12 @@
         [searchAPI loadGetData];
     }
 }
+
+- (void)failureView:(unifiFailureViewController *)viewController
+       retryWithSel:(SEL)selector{
+    
+}
+
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;
 }

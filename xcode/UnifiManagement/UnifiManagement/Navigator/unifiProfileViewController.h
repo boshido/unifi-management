@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "unifiSelectDeviceViewController.h"
+#import "unifiFailureViewController.h"
 
-@interface unifiProfileViewController : UIViewController<unifiSelectDeviceViewControllerDelegate>{
+@interface unifiProfileViewController : UIViewController<unifiSelectDeviceViewControllerDelegate,unifiFailureViewControllerDelegate>{
     NSInteger contentSize;
 }
 @property(retain,nonatomic) NSJSONSerialization *userData;
