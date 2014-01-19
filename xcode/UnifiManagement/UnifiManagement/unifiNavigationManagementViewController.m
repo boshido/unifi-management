@@ -28,6 +28,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,10 +36,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)settingView:(unifiSettingViewController *)viewController
-        didSignoutSign:(BOOL)sign{
-    [self popToRootViewControllerAnimated:NO];
-}
-
 
 @end

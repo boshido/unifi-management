@@ -7,7 +7,7 @@
 //
 
 #import "unifiTabViewController.h"
-
+#import "unifiGlobalVariable.h"
 @interface unifiTabViewController ()
 
 @end
@@ -28,9 +28,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.delegate = self;
-    unifiSettingViewController * tmp = [self.viewControllers objectAtIndex:2];
-    tmp.delegate =  [self.viewControllers objectAtIndex:0];
-    
+//    unifiSettingViewController * tmp = [self.viewControllers objectAtIndex:2];
+//    tmp.delegate =  [self.viewControllers objectAtIndex:0];
     
 //    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
 //    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;

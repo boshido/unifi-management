@@ -7,8 +7,8 @@
 //
 
 #import "unifiGoogleViewController.h"
-
-
+#import "unifiGoogleNavigationController.h"
+#import "DejalActivityView.h"
 
 NSString *clientId = @"422391959017-g7pjv4dcgfqrahuad57nftm3s7jkct40.apps.googleusercontent.com";
 NSString *secret = @"NfkcgQKYWoczllzdZXr7VSSj";
@@ -43,9 +43,8 @@ NSString *hd = @"";
     
     
     NSString *url = [NSString stringWithFormat:@"https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=%@&redirect_uri=%@&scope=%@&data-requestvisibleactions=%@&access_type=%@&approval_prompt=%@&hd=%@",clientId,callbakc,scope,visibleactions,accessType,approval,hd];
-    
+    webview.delegate =self;
     [webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,8 +55,6 @@ NSString *hd = @"";
 
 
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
-    //    [indicator startAnimating];
-   // NSLog(@"ha");
     if ([[[request URL] host] isEqualToString:@"localhost"]) {
         
         // Extract oauth_verifier from URL query
@@ -68,7 +65,6 @@ NSString *hd = @"";
             NSString* key = [keyValue objectAtIndex:0];
             if ([key isEqualToString:@"code"]) {
                 verifier = [keyValue objectAtIndex:1];
-                //NSLog(@"verifier %@",verifier);
                 break;
             }
         }
@@ -90,14 +86,26 @@ NSString *hd = @"";
         
         return NO;
     }
-    return YES;
+    else{
+        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+        return YES;
+    }
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [DejalBezelActivityView removeViewAnimated:YES ];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+     [DejalBezelActivityView removeViewAnimated:YES ];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 
 {
     [receivedData appendData:data];
-    //NSLog(@"verifier %@",receivedData);
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
@@ -114,25 +122,23 @@ NSString *hd = @"";
     
     NSDictionary *tokenData = [NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:nil];
     
-    [unifiGlobalVariable sharedGlobalData].refreshToken = [tokenData objectForKey:@"refresh_token"];
+    //[unifiGlobalVariable sharedGlobalData].refreshToken = [tokenData objectForKey:@"refresh_token"];
+    unifiGoogleNavigationController *googleNavigation =  (unifiGoogleNavigationController *)self.navigationController;
     
-    NSString *error = [NSString stringWithFormat:@"Can not save refresh token to plist."];
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
-    NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:tokenData
-                                                                   format:NSPropertyListXMLFormat_v1_0
-                                                         errorDescription:&error];
-    if(plistData) {
-        [plistData writeToFile:plistPath atomically:YES];
-    }
-    else {
-        NSLog(@"Error : %@",error);
+    if([googleNavigation.tokenDelegate respondsToSelector:@selector(unifiGoogleNavigation:finishWithRefreshToken:)]){
+        [googleNavigation.tokenDelegate unifiGoogleNavigation:googleNavigation finishWithRefreshToken:[tokenData objectForKey:@"refresh_token"]];
     }
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(IBAction)backButtonPressed:(id)sender {
+    [webview goBack];
+}
 -(IBAction)cancelAuthenticaiton:(id)sender{
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleBlackTranslucent;
 }
 @end

@@ -13,6 +13,7 @@
 @end
 
 @implementation unifiGoogleNavigationController
+@synthesize tokenDelegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

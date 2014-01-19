@@ -13,10 +13,8 @@
     NSURLConnection *theConnection;
     NSMutableData *receivedData;
 }
-
 @property (nonatomic, retain) IBOutlet UIWebView *webview;
-@property (nonatomic, retain) NSString *isLogin;
-@property (assign, nonatomic) Boolean isReader;
 
 -(IBAction)cancelAuthenticaiton:(id)sender;
+-(IBAction)backButtonPressed:(id)sender;
 @end

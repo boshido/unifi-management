@@ -151,7 +151,7 @@
 
 
 -(void)loadDashBoardInfo{
-    __block bool flag = NO;
+   // __block bool flag = NO;
 //    
 //    ApiCompleteCallback apCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
 //        NSInteger connected =[[[responseJSON valueForKey:@"data"] valueForKey:@"connected"] intValue];

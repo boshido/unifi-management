@@ -14,6 +14,9 @@
 @property(retain,nonatomic) NSString *email;
 @property(retain,nonatomic) NSString *profilePicture;
 @property(retain,nonatomic) NSString *refreshToken;
+@property(retain,nonatomic) NSString *permissionName;
+@property NSInteger permissionNumber;
+
 +(unifiGlobalVariable *)sharedGlobalData;
 +(void)initialValue;
 @end

@@ -10,6 +10,6 @@
 #import "unifiTabViewController.h"
 #import "unifiSettingViewController.h"
 
-@interface unifiNavigationManagementViewController : UINavigationController<unifiSettingViewControllerDelegate>
+@interface unifiNavigationManagementViewController : UINavigationController
 
 @end

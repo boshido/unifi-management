@@ -12,7 +12,6 @@
 #import "unifiGoogleResource.h"
 #import "unifiGoogleNavigationController.h"
 
-@interface unifiSplashViewController : UIViewController{
-    TJSpinner *spinner;
-}
+@interface unifiSplashViewController : UIViewController<unifiGoogleNavigationControllerDelegate>
+-(IBAction)signIn:(id)sender;
 @end

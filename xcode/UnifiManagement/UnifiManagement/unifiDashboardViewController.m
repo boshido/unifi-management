@@ -10,6 +10,7 @@
 #import "unifiApResource.h"
 #import "unifiDeviceResource.h"
 #import "DejalActivityView.h"
+#import "unifiFailureViewController.h"
 
 @interface unifiDashboardViewController ()
 
@@ -45,6 +46,7 @@
     
     
 }
+
 -(void)viewDidAppear:(BOOL)animated{
     [self loadDashBoardInfo];
      autoLoad = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadDashBoardInfo) userInfo:nil repeats:YES];
@@ -61,15 +63,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    if(webFlag==TRUE){
-        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
-        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
-        [self loadDashBoardInfo];
-    };
-    webFlag=TRUE;
-}
+// ----------------------------------   API         ------------------------------------
 
 -(void)loadDashBoardInfo{
     NSLog(@"Still Here");
@@ -121,14 +115,30 @@
     
     ApiErrorCallback errorHandle = ^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:YES];
+        unifiFailureViewController *failureController = [[self storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
+        [[self navigationController] presentViewController:failureController animated:YES completion:nil];
     };
-    
     [unifiApResource getApCount:apCallback withHandleError:errorHandle];
     [unifiDeviceResource getDeviceCount:deviceCallback withHandleError:errorHandle];
     [unifiApResource getApMapCount:apMapCallback withHandleError:errorHandle];
 }
 
 
+// ----------------------------------   Delegate    ------------------------------------
+
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    if(webFlag==TRUE){
+        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+        [self loadDashBoardInfo];
+    };
+    webFlag=TRUE;
+}
+
+// ----------------------------------   Other       ------------------------------------
 
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;

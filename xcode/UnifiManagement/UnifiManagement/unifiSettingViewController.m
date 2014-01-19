@@ -18,7 +18,6 @@
 @end
 
 @implementation unifiSettingViewController
-@synthesize delegate;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -53,31 +52,25 @@
     __weak typeof(profilePicture) profilePictureWeak = profilePicture;
      __weak typeof(spinner) spinnerWeak = spinner;
     
-    [unifiGoogleResource getUserData:^(NSJSONSerialization *responseJSON,NSString * responseNSString) {
-            name.text = [responseJSON valueForKey:@"given_name"];
-            surname.text = [responseJSON valueForKey:@"family_name"];
-            email.text  = [responseJSON valueForKey:@"email"];
-            [profilePicture setImageWithURL:[NSURL URLWithString:[responseJSON valueForKey:@"picture"]]
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-
-                    [UIView animateWithDuration:0.5
-                                          delay:0.0  /* do not add a delay because we will use performSelector. */
-                                        options:UIViewAnimationOptionCurveEaseOut
-                                     animations:^ {
-                                         profilePictureWeak.alpha = 1.0;
-                                     }
-                                     completion:^(BOOL finished) {
-                                         // [myLabel1 removeFromSuperview];
-                                     }];
-
-                    [spinnerWeak stopAnimating];
-                }
-            ];
-        
-        }
-        withHandleError:nil
-        fromRefreshToken:[unifiGlobalVariable sharedGlobalData].refreshToken
-    ];
+    name.text = [unifiGlobalVariable sharedGlobalData].name;
+    surname.text = [unifiGlobalVariable sharedGlobalData].surname;
+    email.text  = [unifiGlobalVariable sharedGlobalData].email;
+    [profilePicture setImageWithURL:[NSURL URLWithString:[ unifiGlobalVariable sharedGlobalData].profilePicture]
+                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                              
+                              [UIView animateWithDuration:0.5
+                                                    delay:0.0  /* do not add a delay because we will use performSelector. */
+                                                  options:UIViewAnimationOptionCurveEaseOut
+                                               animations:^ {
+                                                   profilePictureWeak.alpha = 1.0;
+                                               }
+                                               completion:^(BOOL finished) {
+                                                   // [myLabel1 removeFromSuperview];
+                                               }];
+                              
+                              [spinnerWeak stopAnimating];
+                          }
+     ];
 
 
 }
@@ -117,24 +110,14 @@
                  //TODO: Handle/Log error
              }
              [unifiGlobalVariable initialValue];
+             [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
              
-             if ([self.delegate respondsToSelector:@selector(settingView:didSignoutSign:)]) {
-                 [self.delegate settingView:self didSignoutSign:1];
-             }
-             [self.tabBarController.delegate
-              tabBarController:self.tabBarController
-              shouldSelectViewController:[self.tabBarController.viewControllers objectAtIndex:0]];  // send didSelectViewController to the tabBarController delegate
+//             [self.tabBarController.delegate
+//              tabBarController:self.tabBarController
+//              shouldSelectViewController:[self.tabBarController.viewControllers objectAtIndex:0]];  // send didSelectViewController to the tabBarController delegate
          };
          unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"https://accounts.google.com/Logout" withCompleteCallback:completeCallback withErrorCallback:nil];
          [object loadGetData];
     }
-}
-
--(void)downloadAndLoadImage{
-    NSURL *connector = [NSURL URLWithString:url];
-    NSData *data = [[NSData alloc] initWithContentsOfURL:connector];
-    
-    profilePicture.image = [[UIImage alloc] initWithData:data];
-    [spinner stopAnimating];
 }
 @end

@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol unifiGoogleNavigationControllerDelegate;
 @interface unifiGoogleNavigationController : UINavigationController
 
+@property (weak,nonatomic) id<unifiGoogleNavigationControllerDelegate> tokenDelegate;
+
+@end
+@protocol unifiGoogleNavigationControllerDelegate <NSObject>
+
+- (void)unifiGoogleNavigation:(unifiGoogleNavigationController *)viewController
+ finishWithRefreshToken:(NSString*)refreshToken;
 @end

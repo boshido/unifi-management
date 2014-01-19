@@ -9,7 +9,7 @@
 #import "unifiGlobalVariable.h"
 @implementation unifiGlobalVariable
 static unifiGlobalVariable *sharedGlobalData = nil;
-@synthesize name,surname,email,profilePicture,refreshToken;
+@synthesize name,surname,email,profilePicture,refreshToken,permissionName,permissionNumber;
 
 +(unifiGlobalVariable *)sharedGlobalData{
     if(sharedGlobalData == nil){
@@ -31,6 +31,8 @@ static unifiGlobalVariable *sharedGlobalData = nil;
 }
 
 +(void) initialValue{
+    sharedGlobalData.permissionName=@"";
+    sharedGlobalData.permissionNumber=-1;
     sharedGlobalData.name=@"";
     sharedGlobalData.surname=@"";
     sharedGlobalData.email=@"";

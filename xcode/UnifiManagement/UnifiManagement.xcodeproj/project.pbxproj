@@ -39,6 +39,10 @@
 		0E55CDB118748A18005858CF /* profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0E55CDB018748A18005858CF /* profile.jpg */; };
 		0E55CDB418749A20005858CF /* unifiDeviceResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E55CDB318749A20005858CF /* unifiDeviceResource.m */; };
 		0E66899F183DF1A400434A2F /* unifiUserResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E66899E183DF1A400434A2F /* unifiUserResource.m */; };
+		0E7246CB188C1EF50087DEF2 /* UploadIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246C7188C1EF50087DEF2 /* UploadIcon@2x.png */; };
+		0E7246CC188C1EF50087DEF2 /* DownloadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246C8188C1EF50087DEF2 /* DownloadIcon.png */; };
+		0E7246CD188C1EF50087DEF2 /* Download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246C9188C1EF50087DEF2 /* Download@2x.png */; };
+		0E7246CE188C1EF50087DEF2 /* UploadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246CA188C1EF50087DEF2 /* UploadIcon.png */; };
 		0E836376184CBCCE0009D786 /* dx.chartjs.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836372184CBCCE0009D786 /* dx.chartjs.js */; };
 		0E836377184CBCCE0009D786 /* globalize.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836373184CBCCE0009D786 /* globalize.min.js */; };
 		0E836378184CBCCE0009D786 /* jquery-1.9.1.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */; };
@@ -46,7 +50,6 @@
 		0EAC5BA81860881100FCC28B /* unifiUserViewControllerDep.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E17314E185F1309004CD0A1 /* unifiUserViewControllerDep.m */; };
 		0EAC5BAC1860E36100FCC28B /* BlackBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EAC5BAB1860E36100FCC28B /* BlackBG.png */; };
 		0EAC5BAE1860E9D600FCC28B /* BlackBG2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EAC5BAD1860E9D600FCC28B /* BlackBG2.png */; };
-		0EADF90F1874510700480598 /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF90E1874510700480598 /* profile.png */; };
 		0EADF912187457D100480598 /* DeviceIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF910187457D100480598 /* DeviceIcon.png */; };
 		0EADF913187457D100480598 /* DeviceIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EADF911187457D100480598 /* DeviceIcon@2x.png */; };
 		0EAEE09718799F10002D3FB6 /* dashboardchart.html in Resources */ = {isa = PBXBuildFile; fileRef = 0EAEE09618799F10002D3FB6 /* dashboardchart.html */; };
@@ -206,13 +209,16 @@
 		0E55CDB318749A20005858CF /* unifiDeviceResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiDeviceResource.m; path = Resource/unifiDeviceResource.m; sourceTree = "<group>"; };
 		0E66899D183DF1A400434A2F /* unifiUserResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiUserResource.h; path = Resource/unifiUserResource.h; sourceTree = "<group>"; };
 		0E66899E183DF1A400434A2F /* unifiUserResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiUserResource.m; path = Resource/unifiUserResource.m; sourceTree = "<group>"; };
+		0E7246C7188C1EF50087DEF2 /* UploadIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UploadIcon@2x.png"; sourceTree = "<group>"; };
+		0E7246C8188C1EF50087DEF2 /* DownloadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownloadIcon.png; sourceTree = "<group>"; };
+		0E7246C9188C1EF50087DEF2 /* Download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download@2x.png"; sourceTree = "<group>"; };
+		0E7246CA188C1EF50087DEF2 /* UploadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UploadIcon.png; sourceTree = "<group>"; };
 		0E836372184CBCCE0009D786 /* dx.chartjs.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = dx.chartjs.js; sourceTree = "<group>"; };
 		0E836373184CBCCE0009D786 /* globalize.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = globalize.min.js; sourceTree = "<group>"; };
 		0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.1.min.js"; sourceTree = "<group>"; };
 		0EA516E1187A8E790098FB12 /* apmapchart.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = apmapchart.html; sourceTree = "<group>"; };
 		0EAC5BAB1860E36100FCC28B /* BlackBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlackBG.png; sourceTree = "<group>"; };
 		0EAC5BAD1860E9D600FCC28B /* BlackBG2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlackBG2.png; sourceTree = "<group>"; };
-		0EADF90E1874510700480598 /* profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile.png; sourceTree = "<group>"; };
 		0EADF910187457D100480598 /* DeviceIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeviceIcon.png; sourceTree = "<group>"; };
 		0EADF911187457D100480598 /* DeviceIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeviceIcon@2x.png"; sourceTree = "<group>"; };
 		0EAEE09618799F10002D3FB6 /* dashboardchart.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = dashboardchart.html; sourceTree = "<group>"; };
@@ -507,6 +513,8 @@
 				0E488D99183C4FE4004FF995 /* Main_iPad.storyboard */,
 				0E488D93183C4FE4004FF995 /* unifiAppDelegate.h */,
 				0E488D94183C4FE4004FF995 /* unifiAppDelegate.m */,
+				0EBCF10D184344FF00D11BFD /* unifiSplashViewController.h */,
+				0EBCF10E184344FF00D11BFD /* unifiSplashViewController.m */,
 				0E4FD6931847BA30009383C6 /* unifiTabViewController.h */,
 				0E4FD6941847BA30009383C6 /* unifiTabViewController.m */,
 				0EF176631856CF7700F5CCF5 /* unifiNavigationManagementViewController.h */,
@@ -527,13 +535,12 @@
 		0E488D8B183C4FE4004FF995 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0EEAB778188A667400DF66A5 /* Unknow.png */,
-				0EEAB774188A65C900DF66A5 /* Windows.png */,
-				0EEAB76C188A625F00DF66A5 /* PC.png */,
-				0EEAB76E188A625F00DF66A5 /* Android.png */,
-				0EEAB76F188A625F00DF66A5 /* Apple.png */,
+				0E7246CF188C207B0087DEF2 /* DeviceIcon */,
+				0E7246C7188C1EF50087DEF2 /* UploadIcon@2x.png */,
+				0E7246CA188C1EF50087DEF2 /* UploadIcon.png */,
+				0E7246C8188C1EF50087DEF2 /* DownloadIcon.png */,
+				0E7246C9188C1EF50087DEF2 /* Download@2x.png */,
 				0E55CDB018748A18005858CF /* profile.jpg */,
-				0EADF90E1874510700480598 /* profile.png */,
 				0E836371184C807C0009D786 /* Chart */,
 				0E1E465A183CE75600624634 /* Icon */,
 				0EAC5BAB1860E36100FCC28B /* BlackBG.png */,
@@ -565,6 +572,25 @@
 				0E488DAF183C4FE5004FF995 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0E7246C2188C1B090087DEF2 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Device;
+			sourceTree = "<group>";
+		};
+		0E7246CF188C207B0087DEF2 /* DeviceIcon */ = {
+			isa = PBXGroup;
+			children = (
+				0EEAB778188A667400DF66A5 /* Unknow.png */,
+				0EEAB774188A65C900DF66A5 /* Windows.png */,
+				0EEAB76C188A625F00DF66A5 /* PC.png */,
+				0EEAB76E188A625F00DF66A5 /* Android.png */,
+				0EEAB76F188A625F00DF66A5 /* Apple.png */,
+			);
+			name = DeviceIcon;
 			sourceTree = "<group>";
 		};
 		0E836371184C807C0009D786 /* Chart */ = {
@@ -649,6 +675,7 @@
 			children = (
 				0EB0770E1887C94B00521834 /* Statistic */,
 				0EB0770D1887C94100521834 /* User */,
+				0E7246C2188C1B090087DEF2 /* Device */,
 			);
 			name = NavigationManagement;
 			sourceTree = "<group>";
@@ -660,8 +687,6 @@
 				0E17314E185F1309004CD0A1 /* unifiUserViewControllerDep.m */,
 				0ED0FED218448A7600349D39 /* unifiDashboardViewControllerDep.h */,
 				0ED0FED318448A7600349D39 /* unifiDashboardViewControllerDep.m */,
-				0EBCF10D184344FF00D11BFD /* unifiSplashViewController.h */,
-				0EBCF10E184344FF00D11BFD /* unifiSplashViewController.m */,
 				0ED0FEDA1845A17300349D39 /* MHTabBarSegue.h */,
 				0ED0FEDB1845A17300349D39 /* MHTabBarSegue.m */,
 				0E488D9C183C4FE4004FF995 /* unifiViewController.h */,
@@ -775,7 +800,6 @@
 				0EBCF14B1843C5FC00D11BFD /* PieIconPressed@2x.png in Resources */,
 				0EBCF15D1843C61B00D11BFD /* TWIcon3.png in Resources */,
 				0EBCF14A1843C5FC00D11BFD /* PieIconPressed.png in Resources */,
-				0EADF90F1874510700480598 /* profile.png in Resources */,
 				0EB4200D188533890013D6B5 /* DottedSelected.png in Resources */,
 				0E2032BE185702EA00D949E4 /* HomeIcon.png in Resources */,
 				0EF4E94A1854D4C10097FACB /* SettingIcon@2x.png in Resources */,
@@ -797,11 +821,13 @@
 				0E2032C9185706D100D949E4 /* BackwardIcon@2x.png in Resources */,
 				0EF4E95B1854D9460097FACB /* DashboardIcon@2x.png in Resources */,
 				0EF4E94F1854D69A0097FACB /* DiagramIcon@2x.png in Resources */,
+				0E7246CD188C1EF50087DEF2 /* Download@2x.png in Resources */,
 				0EB41FFC188528F70013D6B5 /* Backward2Icon@2x.png in Resources */,
 				0EBCF1481843C5FC00D11BFD /* PieIcon.png in Resources */,
 				0EB4200E188533890013D6B5 /* DottedSelected@2x.png in Resources */,
 				0E2032C8185706D100D949E4 /* BackwardIcon.png in Resources */,
 				0E2032BF185702EA00D949E4 /* HomeIcon@2x.png in Resources */,
+				0E7246CE188C1EF50087DEF2 /* UploadIcon.png in Resources */,
 				0EAC5BAC1860E36100FCC28B /* BlackBG.png in Resources */,
 				0EEAB766188A14AE00DF66A5 /* CloseIcon.png in Resources */,
 				0EAC5BAE1860E9D600FCC28B /* BlackBG2.png in Resources */,
@@ -838,11 +864,13 @@
 				0EB9E9C4185C970B002FB1B3 /* DateIconPressed.png in Resources */,
 				0EEAB770188A625F00DF66A5 /* PC.png in Resources */,
 				0EBCF1601843C61B00D11BFD /* UserIcon@2x.png in Resources */,
+				0E7246CB188C1EF50087DEF2 /* UploadIcon@2x.png in Resources */,
 				0EBCF1411843C5FC00D11BFD /* Logo.png in Resources */,
 				0EEAB77D188ABD5F00DF66A5 /* MiniCloseIcon@2x.png in Resources */,
 				0EB9E9C9185C9890002FB1B3 /* HoursIcon.png in Resources */,
 				0EBCF14C1843C5FC00D11BFD /* TreeIcon.png in Resources */,
 				0EBCF1431843C5FC00D11BFD /* NotificationIcon@2x.png in Resources */,
+				0E7246CC188C1EF50087DEF2 /* DownloadIcon.png in Resources */,
 				0EBCF13B1843C5FC00D11BFD /* APIconPressed.png in Resources */,
 				0EEAB775188A65C900DF66A5 /* Windows.png in Resources */,
 				0EBCF15C1843C61B00D11BFD /* TWIcon2@2x.png in Resources */,
@@ -1034,8 +1062,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Watchrapong Agsonchu (Y7F4AUP26U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Watchrapong Agsonchu (Y7F4AUP26U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/boshido/Desktop/Git/unifi-management/xcode/UnifiManagement",
@@ -1046,7 +1074,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5CD50A3A-C8BA-4932-B909-84FB2934101A";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1057,8 +1085,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Watchrapong Agsonchu (Y7F4AUP26U)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Watchrapong Agsonchu (Y7F4AUP26U)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/boshido/Desktop/Git/unifi-management/xcode/UnifiManagement",
@@ -1069,7 +1097,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5CD50A3A-C8BA-4932-B909-84FB2934101A";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

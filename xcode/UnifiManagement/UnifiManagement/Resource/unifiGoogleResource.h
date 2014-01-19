@@ -12,4 +12,6 @@
 @interface unifiGoogleResource : NSObject
 +(void)getAccessToken:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromRefreshToken:(NSString *)refreshToken;
 +(void)getUserData:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromRefreshToken:(NSString *)refreshToken;
++(void)getPermission:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromEmail:(NSString *)email;
++(void)isNeedForLogin:(void(^)(void))callback;
 @end

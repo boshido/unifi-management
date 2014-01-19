@@ -27,67 +27,115 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    spinner = [[TJSpinner alloc] initWithSpinnerType:kTJSpinnerTypeActivityIndicator];
-    [spinner setColor:[UIColor colorWithRed:17/255.00 green:181/255.00 blue:255.00/255.00 alpha:1.0]];
-    [spinner setStrokeWidth:20];
-    [spinner setInnerRadius:6];
-    [spinner setOuterRadius:15];
-    [spinner setNumberOfStrokes:8];
-    spinner.hidesWhenStopped = YES;
-    [spinner setPatternStyle:TJActivityIndicatorPatternStylePetal];
-    spinner.center = CGPointMake(160, 285);
-    [spinner startAnimating];
-    [self.view addSubview:spinner];
-    
-    // Read the XML file.
-    
-    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
-   
-    NSMutableDictionary *plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-    NSString *value = [plistDict objectForKey:@"refresh_token"];
-    if (![value isEqualToString:@""] && value != NULL) {
-       [unifiGlobalVariable sharedGlobalData].refreshToken = value;
-    }
-    
-    
-    //[UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0]
-    //[UIColor colorWithRed:0.173 green:0.745 blue:0.914 alpha:1.0]
+//    NSString *error = [NSString stringWithFormat:@"Can not save refresh token to plist."];
+//    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
+//    NSData *plistData = [NSPropertyListSerialization dataFromPropertyList:tokenData
+//                                                                   format:NSPropertyListXMLFormat_v1_0
+//                                                         errorDescription:&error];
+//    if(plistData) {
+//        [plistData writeToFile:plistPath atomically:YES];
+//    }
+//    else {
+//        NSLog(@"Error : %@",error);
+//    }
+
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     
-    
-    if([[unifiGlobalVariable sharedGlobalData].refreshToken isEqualToString:@""]){
-        unifiGoogleNavigationController *loginView = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiGoogleNavigationController"];
-        [spinner stopAnimating];
-        
-        [self presentViewController:loginView animated:NO completion:nil];
-        
-    }
-    else{
-        
-//        [unifiGoogleResource
-//            getUserData:^(NSJSONSerialization *responseJSON,NSString *responseNSString) {
-//                NSLog(@"%@",responseJSON);
-//                [unifiGlobalVariable sharedGlobalData].name = [responseJSON valueForKey:@"given_name"];
-//                [unifiGlobalVariable sharedGlobalData].surname = [responseJSON valueForKey:@"family_name"];
-//                [unifiGlobalVariable sharedGlobalData].email = [responseJSON valueForKey:@"email"];
-//                [unifiGlobalVariable sharedGlobalData].profilePicture = [responseJSON valueForKey:@"picture"];
-//                [self dismissViewControllerAnimated:NO completion:nil];
-//                [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiTabViewController"] animated:NO completion:nil];
-//            }
-//            withRefreshToken:[unifiGlobalVariable sharedGlobalData].refreshToken
-//        ];
-        
-        
-    }
+//    if(![[unifiGlobalVariable sharedGlobalData].refreshToken isEqualToString:@""]){
+//        
+//        
+//    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(IBAction)signIn:(id)sender{
+    unifiGoogleNavigationController *google = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiGoogleNavigationController"];
+    google.tokenDelegate=self;
+    [self presentViewController: google animated:YES completion:nil];
+}
+
+- (void)unifiGoogleNavigation:(unifiGoogleNavigationController *)viewController
+ finishWithRefreshToken:(NSString*)refreshToken{
+    
+    NSLog(@"%@",refreshToken );
+    [unifiGoogleResource
+     getUserData:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+         [unifiGlobalVariable sharedGlobalData].name = [responseJSON valueForKey:@"given_name"];
+         [unifiGlobalVariable sharedGlobalData].surname = [responseJSON valueForKey:@"family_name"];
+         [unifiGlobalVariable sharedGlobalData].email = [responseJSON valueForKey:@"email"];
+         [unifiGlobalVariable sharedGlobalData].profilePicture = [responseJSON valueForKey:@"picture"];
+         
+         [unifiGoogleResource
+          getPermission:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+              if([[responseJSON valueForKey:@"code"] intValue]==200){
+                  [unifiGlobalVariable sharedGlobalData].refreshToken = refreshToken;
+                  [unifiGlobalVariable sharedGlobalData].permissionNumber = [[[responseJSON valueForKey:@"data"] valueForKey:@"gaccess"] intValue];
+                  [unifiGlobalVariable sharedGlobalData].permissionName = [[responseJSON valueForKey:@"data"] valueForKey:@"gname"];
+                  
+                  NSLog(@"%@",@{
+                                @"refreshToken":[unifiGlobalVariable sharedGlobalData].refreshToken,
+                                @"permissonNumber":[NSNumber numberWithInt:[unifiGlobalVariable sharedGlobalData].permissionNumber],
+                                @"permissionName":[unifiGlobalVariable sharedGlobalData].permissionName
+                                });
+                  
+                  
+                  NSString *error = [NSString stringWithFormat:@"Can not save refresh token to plist."];
+                  NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                  NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
+                  NSData *plistData = [NSPropertyListSerialization
+                                       dataFromPropertyList:@{
+                                                              @"refreshToken":[unifiGlobalVariable sharedGlobalData].refreshToken,
+                                                              @"permissonNumber":[NSNumber numberWithInt:[unifiGlobalVariable sharedGlobalData].permissionNumber],
+                                                              @"permissionName":[unifiGlobalVariable sharedGlobalData].permissionName
+                                                              }
+                                       format:NSPropertyListXMLFormat_v1_0
+                                       errorDescription:&error
+                                       ];
+                  if(plistData) {
+                      [plistData writeToFile:plistPath atomically:YES];
+                  }
+                  else {
+                      NSLog(@"Error : %@",error);
+                  }
+                  [self dismissViewControllerAnimated:YES completion:nil];
+              }
+              else{
+                  UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Permission Denied"
+                                                                 message: @"You don't have permission for using this Application."
+                                                                delegate: self
+                                                       cancelButtonTitle:@"Ok"
+                                                       otherButtonTitles:nil,nil
+                                        ];
+                  [alert show];
+              }
+          }
+          withHandleError:^(NSError *error) {
+              
+          }
+          fromEmail:[responseJSON valueForKey:@"email"]
+          ];
+     }
+     withHandleError:^(NSError *error) {
+         UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Token Invalid"
+                                                        message: @"Can not get data from google"
+                                                       delegate: self
+                                              cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil,nil
+                               ];
+         [alert show];
+     }
+     fromRefreshToken:refreshToken
+     ];
+    
+}
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleBlackTranslucent;
 }
 @end

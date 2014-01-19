@@ -7,7 +7,7 @@
 //
 
 #import "unifiAppDelegate.h"
-
+#import "unifiGoogleResource.h"
 
 @implementation unifiAppDelegate
 @synthesize window,splashView;
@@ -51,12 +51,30 @@
     
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    UIStoryboard *storyboard = [self.window.rootViewController storyboard];
+    [unifiGoogleResource isNeedForLogin:^{
+        [self.window.rootViewController  presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
+    }];
 //    
 //    splashView = [storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"];
 //    [self.window.rootViewController presentViewController:splashView animated:NO completion:nil];
        //[self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     //}];
+    
+//    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
+//    
+//    NSMutableDictionary *plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+//    NSString *value = [plistDict objectForKey:@"refresh_token"];
+//    
+//    if (![value isEqualToString:@""] && value != NULL) {
+//        [unifiGlobalVariable sharedGlobalData].refreshToken = value;
+//        NSLog(@"%@", [unifiGlobalVariable sharedGlobalData].refreshToken );
+//    }
+//    else{
+//        
+//        [self.window.rootViewController  presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
+//    }
     
     
 }

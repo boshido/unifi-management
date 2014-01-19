@@ -41,13 +41,15 @@
     [unifiSystemResource testConection:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
         [DejalBezelActivityView removeViewAnimated:YES];
         [self dismissViewControllerAnimated:YES completion:^{
-            if([self.delegate respondsToSelector:@selector(failureView:retryWithSel:) ]){
-                if(selector != nil){
-                    IMP imp = [self methodForSelector:selector];
-                    void (*func)(id, SEL) = (void *)imp;
-                    func(self, selector);
+            if(delegate != nil){
+                if([self.delegate respondsToSelector:@selector(failureView:retryWithSel:) ]){
+                    if(selector != nil){
+                        IMP imp = [self methodForSelector:selector];
+                        void (*func)(id, SEL) = (void *)imp;
+                        func(self, selector);
+                    }
+                    [self.delegate failureView:self retryWithSel:selector];
                 }
-                [self.delegate failureView:self retryWithSel:selector];
             }
         }];
     } withHandleError:^(NSError *error) {
