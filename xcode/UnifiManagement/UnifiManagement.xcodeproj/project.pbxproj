@@ -41,8 +41,16 @@
 		0E66899F183DF1A400434A2F /* unifiUserResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E66899E183DF1A400434A2F /* unifiUserResource.m */; };
 		0E7246CB188C1EF50087DEF2 /* UploadIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246C7188C1EF50087DEF2 /* UploadIcon@2x.png */; };
 		0E7246CC188C1EF50087DEF2 /* DownloadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246C8188C1EF50087DEF2 /* DownloadIcon.png */; };
-		0E7246CD188C1EF50087DEF2 /* Download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246C9188C1EF50087DEF2 /* Download@2x.png */; };
+		0E7246CD188C1EF50087DEF2 /* DownloadIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246C9188C1EF50087DEF2 /* DownloadIcon@2x.png */; };
 		0E7246CE188C1EF50087DEF2 /* UploadIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246CA188C1EF50087DEF2 /* UploadIcon.png */; };
+		0E7246D8188C24770087DEF2 /* Activity.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246D0188C24770087DEF2 /* Activity.png */; };
+		0E7246D9188C24770087DEF2 /* WirelessGood.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246D1188C24770087DEF2 /* WirelessGood.png */; };
+		0E7246DA188C24770087DEF2 /* WirelessBest.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246D2188C24770087DEF2 /* WirelessBest.png */; };
+		0E7246DB188C24770087DEF2 /* WirelessBad.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246D3188C24770087DEF2 /* WirelessBad.png */; };
+		0E7246DC188C24770087DEF2 /* WirelessGood@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246D4188C24770087DEF2 /* WirelessGood@2x.png */; };
+		0E7246DD188C24770087DEF2 /* WirelessBad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246D5188C24770087DEF2 /* WirelessBad@2x.png */; };
+		0E7246DE188C24770087DEF2 /* WirelessBest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246D6188C24770087DEF2 /* WirelessBest@2x.png */; };
+		0E7246DF188C24770087DEF2 /* Activity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E7246D7188C24770087DEF2 /* Activity@2x.png */; };
 		0E836376184CBCCE0009D786 /* dx.chartjs.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836372184CBCCE0009D786 /* dx.chartjs.js */; };
 		0E836377184CBCCE0009D786 /* globalize.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836373184CBCCE0009D786 /* globalize.min.js */; };
 		0E836378184CBCCE0009D786 /* jquery-1.9.1.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */; };
@@ -211,8 +219,16 @@
 		0E66899E183DF1A400434A2F /* unifiUserResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiUserResource.m; path = Resource/unifiUserResource.m; sourceTree = "<group>"; };
 		0E7246C7188C1EF50087DEF2 /* UploadIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UploadIcon@2x.png"; sourceTree = "<group>"; };
 		0E7246C8188C1EF50087DEF2 /* DownloadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DownloadIcon.png; sourceTree = "<group>"; };
-		0E7246C9188C1EF50087DEF2 /* Download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download@2x.png"; sourceTree = "<group>"; };
+		0E7246C9188C1EF50087DEF2 /* DownloadIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DownloadIcon@2x.png"; sourceTree = "<group>"; };
 		0E7246CA188C1EF50087DEF2 /* UploadIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UploadIcon.png; sourceTree = "<group>"; };
+		0E7246D0188C24770087DEF2 /* Activity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Activity.png; sourceTree = "<group>"; };
+		0E7246D1188C24770087DEF2 /* WirelessGood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WirelessGood.png; sourceTree = "<group>"; };
+		0E7246D2188C24770087DEF2 /* WirelessBest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WirelessBest.png; sourceTree = "<group>"; };
+		0E7246D3188C24770087DEF2 /* WirelessBad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WirelessBad.png; sourceTree = "<group>"; };
+		0E7246D4188C24770087DEF2 /* WirelessGood@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WirelessGood@2x.png"; sourceTree = "<group>"; };
+		0E7246D5188C24770087DEF2 /* WirelessBad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WirelessBad@2x.png"; sourceTree = "<group>"; };
+		0E7246D6188C24770087DEF2 /* WirelessBest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WirelessBest@2x.png"; sourceTree = "<group>"; };
+		0E7246D7188C24770087DEF2 /* Activity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Activity@2x.png"; sourceTree = "<group>"; };
 		0E836372184CBCCE0009D786 /* dx.chartjs.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = dx.chartjs.js; sourceTree = "<group>"; };
 		0E836373184CBCCE0009D786 /* globalize.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = globalize.min.js; sourceTree = "<group>"; };
 		0E836374184CBCCE0009D786 /* jquery-1.9.1.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.1.min.js"; sourceTree = "<group>"; };
@@ -392,6 +408,14 @@
 		0E1E465A183CE75600624634 /* Icon */ = {
 			isa = PBXGroup;
 			children = (
+				0E7246D0188C24770087DEF2 /* Activity.png */,
+				0E7246D1188C24770087DEF2 /* WirelessGood.png */,
+				0E7246D2188C24770087DEF2 /* WirelessBest.png */,
+				0E7246D3188C24770087DEF2 /* WirelessBad.png */,
+				0E7246D4188C24770087DEF2 /* WirelessGood@2x.png */,
+				0E7246D5188C24770087DEF2 /* WirelessBad@2x.png */,
+				0E7246D6188C24770087DEF2 /* WirelessBest@2x.png */,
+				0E7246D7188C24770087DEF2 /* Activity@2x.png */,
 				0EEAB77A188ABD5F00DF66A5 /* MiniCloseIcon.png */,
 				0EEAB77B188ABD5F00DF66A5 /* MiniCloseIcon@2x.png */,
 				0EEAB763188A14AE00DF66A5 /* CloseIcon@2x.png */,
@@ -539,7 +563,7 @@
 				0E7246C7188C1EF50087DEF2 /* UploadIcon@2x.png */,
 				0E7246CA188C1EF50087DEF2 /* UploadIcon.png */,
 				0E7246C8188C1EF50087DEF2 /* DownloadIcon.png */,
-				0E7246C9188C1EF50087DEF2 /* Download@2x.png */,
+				0E7246C9188C1EF50087DEF2 /* DownloadIcon@2x.png */,
 				0E55CDB018748A18005858CF /* profile.jpg */,
 				0E836371184C807C0009D786 /* Chart */,
 				0E1E465A183CE75600624634 /* Icon */,
@@ -779,6 +803,7 @@
 				0E836377184CBCCE0009D786 /* globalize.min.js in Resources */,
 				0E836376184CBCCE0009D786 /* dx.chartjs.js in Resources */,
 				0E836378184CBCCE0009D786 /* jquery-1.9.1.min.js in Resources */,
+				0E7246D9188C24770087DEF2 /* WirelessGood.png in Resources */,
 				0E2032CD185794AF00D949E4 /* jquery.mobile-1.3.2.min.js in Resources */,
 				0EBCF1631843C61B00D11BFD /* UserIconPressed.png in Resources */,
 				0EB4200C188533890013D6B5 /* Dotted@2x.png in Resources */,
@@ -789,18 +814,22 @@
 				0EBCF1641843C61B00D11BFD /* UserIconPressed@2x.png in Resources */,
 				0E2032C21857045200D949E4 /* HomeIconPressed.png in Resources */,
 				0EBCF15A1843C61B00D11BFD /* TWIcon@2x.png in Resources */,
+				0E7246DF188C24770087DEF2 /* Activity@2x.png in Resources */,
 				0EF4E93F1854C1360097FACB /* WhiteBG.png in Resources */,
 				0ED0FED11844867900349D39 /* trafficchart.html in Resources */,
 				0EADF912187457D100480598 /* DeviceIcon.png in Resources */,
 				0EBCF14D1843C5FC00D11BFD /* TreeIcon@2x.png in Resources */,
 				0EF4E95A1854D9460097FACB /* DashboardIcon.png in Resources */,
 				0EB9E9CA185C9890002FB1B3 /* HoursIcon@2x.png in Resources */,
+				0E7246DB188C24770087DEF2 /* WirelessBad.png in Resources */,
 				0EBCF1381843C5FC00D11BFD /* APIcon@2x.png in Resources */,
 				0EBCF15E1843C61B00D11BFD /* TWIcon3@2x.png in Resources */,
 				0EBCF14B1843C5FC00D11BFD /* PieIconPressed@2x.png in Resources */,
 				0EBCF15D1843C61B00D11BFD /* TWIcon3.png in Resources */,
+				0E7246D8188C24770087DEF2 /* Activity.png in Resources */,
 				0EBCF14A1843C5FC00D11BFD /* PieIconPressed.png in Resources */,
 				0EB4200D188533890013D6B5 /* DottedSelected.png in Resources */,
+				0E7246DC188C24770087DEF2 /* WirelessGood@2x.png in Resources */,
 				0E2032BE185702EA00D949E4 /* HomeIcon.png in Resources */,
 				0EF4E94A1854D4C10097FACB /* SettingIcon@2x.png in Resources */,
 				0E488D9B183C4FE4004FF995 /* Main_iPad.storyboard in Resources */,
@@ -821,8 +850,9 @@
 				0E2032C9185706D100D949E4 /* BackwardIcon@2x.png in Resources */,
 				0EF4E95B1854D9460097FACB /* DashboardIcon@2x.png in Resources */,
 				0EF4E94F1854D69A0097FACB /* DiagramIcon@2x.png in Resources */,
-				0E7246CD188C1EF50087DEF2 /* Download@2x.png in Resources */,
+				0E7246CD188C1EF50087DEF2 /* DownloadIcon@2x.png in Resources */,
 				0EB41FFC188528F70013D6B5 /* Backward2Icon@2x.png in Resources */,
+				0E7246DE188C24770087DEF2 /* WirelessBest@2x.png in Resources */,
 				0EBCF1481843C5FC00D11BFD /* PieIcon.png in Resources */,
 				0EB4200E188533890013D6B5 /* DottedSelected@2x.png in Resources */,
 				0E2032C8185706D100D949E4 /* BackwardIcon.png in Resources */,
@@ -833,6 +863,7 @@
 				0EAC5BAE1860E9D600FCC28B /* BlackBG2.png in Resources */,
 				0E488DA0183C4FE5004FF995 /* Images.xcassets in Resources */,
 				0E488D98183C4FE4004FF995 /* Main_iPhone.storyboard in Resources */,
+				0E7246DD188C24770087DEF2 /* WirelessBad@2x.png in Resources */,
 				0EEAB773188A625F00DF66A5 /* Apple.png in Resources */,
 				0EBCF14E1843C5FC00D11BFD /* TWIcon.png in Resources */,
 				0E2032C31857045300D949E4 /* HomeIconPressed@2x.png in Resources */,
@@ -852,6 +883,7 @@
 				0EB9E9CC185C9890002FB1B3 /* HoursIconPressed@2x.png in Resources */,
 				0EEAB772188A625F00DF66A5 /* Android.png in Resources */,
 				0EB9E9CB185C9890002FB1B3 /* HoursIconPressed.png in Resources */,
+				0E7246DA188C24770087DEF2 /* WirelessBest.png in Resources */,
 				0EB9E9C3185C970B002FB1B3 /* DateIconPressed@2x.png in Resources */,
 				0EBCF1451843C5FC00D11BFD /* NotificationIconPressed@2x.png in Resources */,
 				0EF4E93B1854C04E0097FACB /* TransparentBG.png in Resources */,
