@@ -9,6 +9,8 @@
 #import "unifiDeviceResource.h"
 
 @implementation unifiDeviceResource
+
+// GET
 +(void)getDeviceCount:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-count",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
@@ -25,7 +27,17 @@
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/authorized-device?google_id=%@",ApiServerAddress,googleId] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
++(void)getDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromMac:(NSString *)mac{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device?mac=%@",ApiServerAddress,mac] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
++(void)getDeviceDailyStatistic:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStartTime:(NSTimeInterval )starttime fromEndTime:(NSTimeInterval )endtime  withMac:(NSString *)mac{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/stat-daily?mac=%@&at=%f&to=%f",ApiServerAddress,mac,starttime,endtime] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
 
+
+// Post
 +(void)authorizeDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromGoogleId:(NSString *)googleId andHostname:(NSString *)hostname  andMac:(NSString *)mac andFirstName:(NSString *)firstName andLastName:(NSString *)lastName andEmail:(NSString *)email{
 
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/authorize",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"google-id=%@&device-name=%@&device-mac=%@&google-fname=%@&google-lname=%@&google-email=%@",googleId,hostname,mac,firstName,lastName,email]];
@@ -34,6 +46,16 @@
 +(void)unAuthorizeDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromMac:(NSString *)mac{
     
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/deactive-session",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"mac=%@",mac]];
+    [object loadPostData];
+}
++(void)blockDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromMac:(NSString *)mac{
+    
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/block",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"mac=%@",mac]];
+    [object loadPostData];
+}
++(void)unBlockDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromMac:(NSString *)mac{
+    
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/un-block",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"mac=%@",mac]];
     [object loadPostData];
 }
 @end

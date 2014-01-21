@@ -11,6 +11,8 @@
 #import "unifiUserResource.h"
 #import "DejalActivityView.h"
 #import "unifiUITapGestureRecognizer.h"
+#import "unifiDeviceProfileViewController.h"
+#import "unifiUserProfileViewController.h"
 @interface unifiStatisticViewController ()
 
 @end
@@ -280,10 +282,19 @@
 }
 -(void)describeTapped:(unifiUITapGestureRecognizer*)gestureRecognizer{
     NSLog(@"%@",[gestureRecognizer getParameterByKey:@"google_id"]);
+    unifiUserProfileViewController *userProfile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiUserProfileViewController"];
+    userProfile.googleId= [gestureRecognizer getParameterByKey:@"google_id"];
+    
+    [self.navigationController pushViewController:userProfile animated:YES];
+
 }
 
 -(void)hostnameTapped:(unifiUITapGestureRecognizer*)gestureRecognizer{
     NSLog(@"%@",[gestureRecognizer getParameterByKey:@"mac"]);
+    unifiDeviceProfileViewController *deviceProfile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiDeviceProfileViewController"];
+    deviceProfile.deviceMac = [gestureRecognizer getParameterByKey:@"mac"];
+    
+    [self.navigationController pushViewController:deviceProfile animated:YES];
 }
 
 

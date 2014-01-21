@@ -6,22 +6,23 @@
 //  Copyright (c) 2556 KMUTNB. All rights reserved.
 //
 
-#import "unifiProfileViewController.h"
+#import "unifiUserProfileViewController.h"
 #import "unifiDeviceResource.h"
 #import "DejalActivityView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "unifiSelectDeviceViewController.h"
 #import "unifiUITapGestureRecognizer.h"
+#import "unifiDeviceProfileViewController.h"
 
-@interface unifiProfileViewController ()
+@interface unifiUserProfileViewController ()
 
 @end
 
-@implementation unifiProfileViewController{
+@implementation unifiUserProfileViewController{
     NSString *markToDelete;
     ApiErrorCallback handleError;
 }
-@synthesize userData,profileView,typeBar,scrollView,profilePicture,profileEmail,profileName,deviceCount,onlineDevice,offlineDevice;
+@synthesize userData,profileView,typeBar,scrollView,profilePicture,profileEmail,profileName,deviceCount,onlineDevice,offlineDevice,googleId;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -186,6 +187,14 @@
     if([json valueForKey:@"hostname"] != NULL) [hostname setText:[json valueForKey:@"hostname"]];
     else [hostname setText:[json valueForKey:@"mac"]];
     
+    unifiUITapGestureRecognizer* deviceProfile = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(showDeviceProfile:)];
+    // if labelView is not set userInteractionEnabled, you must do so
+    [deviceProfile initParameter];
+    [deviceProfile setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
+    [hostname setUserInteractionEnabled:YES];
+    [hostname addGestureRecognizer:deviceProfile];
+
+    
     download = [[UILabel alloc] initWithFrame:CGRectMake(115, contentSize, 50, 21)];
     [download setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
     [download setTextAlignment:NSTextAlignmentRight];
@@ -213,6 +222,7 @@
     [unAuthorizeGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
     [unAuthorize setUserInteractionEnabled:YES];
     [unAuthorize addGestureRecognizer:unAuthorizeGesture];
+    
     
     
     [scrollView addSubview:status];
@@ -285,6 +295,13 @@
                                          cancelButtonTitle:@"Cancel"
                                          otherButtonTitles:@"Yes",nil];
     [alert show];
+    
+}
+-(void)showDeviceProfile:(unifiUITapGestureRecognizer*)gestureRecognizer{
+    unifiDeviceProfileViewController *deviceProfile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiDeviceProfileViewController"];
+    deviceProfile.deviceMac = [gestureRecognizer getParameterByKey:@"mac"];
+    
+    [self.navigationController pushViewController:deviceProfile animated:YES];
     
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

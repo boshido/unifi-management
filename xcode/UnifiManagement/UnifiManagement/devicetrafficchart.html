@@ -21,7 +21,7 @@
                 height:100%;
                 padding:0px;
                 margin:0px;
-                background-color:rgb(74, 73, 76);
+                /*background-color:rgb(74, 73, 76);*/
                 /*background-color:rgb(31, 171, 149);*/
             }
         </style>
@@ -33,7 +33,7 @@
 	</head>
 	<body>
 		
-        <div id="chartContainer" style="width: 100%; height: 260px;"></div>
+        <div id="chartContainer" style="width: 100%; height: 100%;"></div>
         <script type="text/javascript">
             var c1;
             $(document).on('touchstart','*', function(e) {
@@ -45,137 +45,77 @@
             showLineChart();
             function showLineChart(source,type)
             {
-              
+                                
                 c1 = $("#chartContainer").dxChart(
                 {
                     commonSeriesSettings: {
-                        argumentField: "date",
-                        tagField:"tag",
+                        argumentField: 'date',
+                        type: 'bar',
                         label: {
-                            visible: true,
-                            connector: { visible: true },  
+                            visible: false,
+                            connector: { visible: false },  
                             format: 'fixedPoint',
                             precision: 2,
-                            backgroundColor:'rgb(47, 47, 47)',
+                            backgroundColor:'rgba(47, 47, 47,1)',
+                            font: {
+                                color: 'rgba(224,224,224,1)',
+                                opacity: 1,
+                                size: 11,
+                                weight: 800
+                            },
                             customizeText: function(value){
                                 return parseUnitWithLabel(value.value);
                             }
                         }
                     },
                     series: [
-                        { type: 'spline' , valueField: "traffic", name: "Traffic" , color: 'rgba(62,62,62,1)'}
-                                                    
+                        { valueField: 'download', name: 'Download',color: 'rgba(27,183,166,1)' },
+                        { valueField: 'upload', name: 'Upload',color: 'rgba(254,140,40,1)' }
                     ],
-                    pointClick: function (clickedPoint,e) { 
-                        var iframe = document.createElement("IFRAME");
-                        iframe.setAttribute("src", "js-call:showUser:"+clickedPoint.tag);
-                        document.documentElement.appendChild(iframe);
-                        iframe.parentNode.removeChild(iframe);
-                        iframe = null;
-                    },
-                    argumentAxis:{
-                       type: 'discrete',
-                       label:{
+                    palette: 'Soft Pastel',
+                    argumentAxis: { 
+                        type: 'discrete',
+                        label:{
                             alignment:'center',
                             customizeText: function () {
-                                return getDateForChart(type,this.value);                             
+                                return getDateForChart('daily',this.value);                             
                             }
                        }
-                       /* grid: {
-                            visible: true,
-                            color: 'rgba(62,62,62,1)'
-                        }*/
-                    },
-                    valueAxis: {
-                        label:{
-                            customizeText: function () {
-                                return parseUnit(this.value,label);
-                            }
-                        },
-                        grid: {
-                            visible: true,
-                            // color: 'rgba(62,62,62,1)',
-                            // size:2
-                            color: 'rgba(144,144,144,1)',
-                            size:2
-                        },
-                        title:{
-                            font: {
-                                color: 'rgba(255,255,255,1)',
-                                opacity: 1,
-                                size: 14,
-                                weight: 800
-                            }
-                        }
-                    },
-                    tooltip:{
-                        enabled: false,
-                        format: 'fixedPoint',
-                        precision: 2,
-                        customizeText: function(value){
-
-                            return parseUnitWithLabel(value.value);
-                        },
-                        color:'rgba(255, 255, 255,1)',
-                        font: {  color: 'rgba(80,80,80,1)' }
-                    },
-                    title: {
-                        text: 'Recent Traffic<br>'+getDate(new Date()),
-                        font: {
-                            color: 'rgba(255,255,255,1)',
-                            opacity: 1,
-                            size: 20,
-                            weight: 800
-                        }
                     },
                     legend: {
-                        verticalAlignment: "bottom",
-                        horizontalAlignment: "center",
-                        font: {
-                            color: 'rgba(255,255,255,1)',
-                            opacity: 0.75,
-                            size: 20,
-                            weight: 800
-                        },
-                        visible:false
-                    },
-                    commonAxisSettings: {
-                        label: {
-                             font: {  size: 12,weight: 800,color: 'rgba(255,255,255,1)' }
-                        }
-                    },
-                    commonPaneSettings: {
-                      /* border:{
-                            visible: true,
-                            right: false,
-                            top:false
-                            color: 'rgba(62,62,62,1)'
-                        } ,
-                        backgroundColor: 'rgba(27, 183, 166,0.5)'*/
+                        horizontalAlignment: 'center',
+                        verticalAlignment: 'bottom'
                     },
                     margin:{
                         top:40,
-                        right:10,
-                        left:10
+                        bottom:20,
+                        right:20,
+                        left:20
                     }
                 });
             }
-            function setValue(source,type){
+        
+            function setValue(source){
                 source = source.data;
-                var dataSource = [];
-                var categories = [];       
-                var max = Math.max.apply(Math,source.map(function(o){return o.bytes;}));
+                var dataSource = [];      
+                var tmp_max1 = Math.max.apply(Math,source.map(function(o){return o.tx_bytes;}));
+                var tmp_max2 = Math.max.apply(Math,source.map(function(o){return o.rx_bytes;}));
+                var max = tmp_max1 > tmp_max2 ? tmp_max1 : tmp_max2;
                 var label = getUnit(max);
 
                 for(var y in source){
+                    // dataSource.unshift({
+                    //     date:getDateForChart('daily',new Date(source[y].date*1000)),
+                    //     download:source[y].tx_bytes,
+                    //     upload:source[y].rx_bytes
+                    // });  
                     dataSource.unshift({
-                        date:new Date(source[y].datetime.sec*1000),
-                        traffic:source[y].bytes,
-                        tag:source[y]._id
-                    });  
-
-                   // categories.push(source[y].datetime.sec*1000);
+                        date:new Date(source[y].date*1000),
+                        download:source[y].tx_bytes,
+                        upload:source[y].rx_bytes
+                    }); 
                 }
+
                 c1.dxChart('instance').option('dataSource',dataSource);
                 c1.dxChart('instance').option('valueAxis',{
                         label:{
@@ -185,15 +125,13 @@
                         },
                         grid: {
                             visible: true,
-                            // color: 'rgba(62,62,62,1)',
-                            // size:2
                             color: 'rgba(144,144,144,1)',
                             size:2
                         },
                         title:{
-                            text: label,
+                            text:label,
                             font: {
-                                color: 'rgba(255,255,255,1)',
+                                color: 'rgba(46,52,52,1)',
                                 opacity: 1,
                                 size: 14,
                                 weight: 800
@@ -207,22 +145,22 @@
                 if(Math.floor(data/1073741824) != 0){
                     data = data / 1073741824;
                     label = 'GB';
-                    data = data.toFixed(2);
+                    data = data.toFixed(1);
                 }
                 else if(Math.floor(data / 1048576) != 0){
                     data = data / 1048576;
                     label = 'MB';
-                    data = data.toFixed(2);
+                    data = data.toFixed(1);
                 }                   
                 else if(Math.floor(data / 1024) != 0){
                     data = data / 1024;
                     label = 'KB';
-                    data = data.toFixed(2);
+                    data = data.toFixed(1);
                 }
                 else{
                     label = 'B';
                 }
-                return data+' '+label;
+                return data;
             }
 
             function parseUnit(data,type){
@@ -267,8 +205,8 @@
                 else{
                     var day = time.getDate();
                     var month = time.getMonth();
-                    var year = time.getFullYear();
-                    return day;
+                    var year = (time.getFullYear()+543).toString();
+                     return day+'/'+(month+1)+'/'+(year).substr(2,2);
                 }
             }
 

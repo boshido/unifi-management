@@ -8,7 +8,7 @@
 
 #import "unifiUserViewControllerDep.h"
 #import "unifiUserResource.h"
-#import "unifiProfileViewController.h"
+#import "unifiUserProfileViewController.h"
 #import "unifiTableViewCell.h"
 #import "DejalActivityView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -177,7 +177,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    unifiProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiProfileViewController"];
+    unifiUserProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiUserProfileViewController"];
 
     if(isSearched){
         [profile setUserData:[[userSearch objectAtIndex:indexPath.row] objectForKey:@"json"]];

@@ -10,7 +10,7 @@
 #import "unifiSelectDeviceViewController.h"
 #import "unifiFailureViewController.h"
 
-@interface unifiProfileViewController : UIViewController<unifiSelectDeviceViewControllerDelegate,unifiFailureViewControllerDelegate>{
+@interface unifiUserProfileViewController : UIViewController<unifiSelectDeviceViewControllerDelegate,unifiFailureViewControllerDelegate>{
     NSInteger contentSize;
 }
 @property(retain,nonatomic) NSJSONSerialization *userData;
@@ -19,6 +19,8 @@
 @property(retain,nonatomic) IBOutlet UIImageView *profilePicture;
 @property(retain,nonatomic) IBOutlet UILabel *profileName,*profileEmail,*deviceCount;
 @property(retain,nonatomic) NSMutableArray *onlineDevice,*offlineDevice;
+@property(retain,nonatomic) NSString *googleId;
+
 
 -(IBAction)addDevice:(id)sender;
 @end
