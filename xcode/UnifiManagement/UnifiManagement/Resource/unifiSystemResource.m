@@ -10,6 +10,7 @@
 
 @implementation unifiSystemResource
 +(void)getTrafficReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStartTime:(NSTimeInterval )time andType:(NSString *)type{
+    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/traffic-report?time=%f&type=%@",ApiServerAddress,time,type]);
     unifiApiConnector *object = [[unifiApiConnector alloc]
         initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/traffic-report?time=%f&type=%@",ApiServerAddress,time,type]
         withCompleteCallback:completeCallback withErrorCallback:errorCallback

@@ -19,7 +19,7 @@
 @end
 
 @implementation unifiStatisticViewController
-@synthesize chart,statusView,coverView,scrollView,hourlyButton,dateButton,average,date,statistic,time;
+@synthesize chart,statusView,coverView,scrollView,hourlyButton,dateButton,average,date,statistic,time,chartType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,7 +46,7 @@
 //    bottomBorder.frame = CGRectMake(0.0f, statusView.frame.size.height, statusView.frame.size.width, 1.0f);
 //    bottomBorder.backgroundColor = [UIColor colorWithRed:0.867 green:0.867 blue:0.867 alpha:1.0].CGColor;
 //    [statusView.layer addSublayer:bottomBorder ];
-    
+    isTraffic = YES;
     [hourlyButton setSelected:YES];
     [dateButton setSelected:NO];
     timeType = @"hourly";
@@ -111,7 +111,8 @@
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     ApiCompleteCallback completeCallback = ^(NSJSONSerialization *responseJSON,NSString *responseNSString){
         statistic = responseJSON;
-        [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,\"%@\")", responseNSString,timeType]];
+        
+        [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,\"%@\",%@)", responseNSString,timeType,isTraffic ? @"true" : @"false"]];
         [DejalBezelActivityView removeViewAnimated:YES];
         NSInteger plotCount=0;
         float averageTraffic=0.0f;
@@ -307,7 +308,7 @@
 -(IBAction)backToHome:(id)sender{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
--(IBAction)toggleChart:(id)sender{
+-(IBAction)toggleTimeType:(id)sender{
     UIButton *button = (UIButton *)sender;
     if(!button.selected){
         if([button tag] == 1) { // Hours Pressed
@@ -325,6 +326,60 @@
         
         [button setSelected:YES];
     }
+}
+-(IBAction)toggleChartType:(id)sender{
+    if(isTraffic){
+        [UIView
+            animateWithDuration:0.3
+            delay:0.0  /* do not add a delay because we will use performSelector. */
+            options:UIViewAnimationOptionCurveEaseOut
+            animations:^ {
+                chartType.center = CGPointMake(360, 44);
+            }
+            completion:^(BOOL finished) {
+                [chartType setTitle:@"Count" forState:UIControlStateNormal];
+                [UIView
+                    animateWithDuration:0.3
+                    delay:0.0  /* do not add a delay because we will use performSelector. */
+                    options:UIViewAnimationOptionCurveEaseOut
+                    animations:^ {
+                        chartType.center = CGPointMake(285, 44);
+                    }
+                    completion:^(BOOL finished) {
+                    }
+                 ];
+            }
+         ];
+        
+        isTraffic=!isTraffic;
+        [self showGraph];
+    }
+    else{
+        [UIView
+             animateWithDuration:0.3
+             delay:0.0  /* do not add a delay because we will use performSelector. */
+             options:UIViewAnimationOptionCurveEaseOut
+             animations:^ {
+                 chartType.center = CGPointMake(360, 44);
+             }
+             completion:^(BOOL finished) {
+                 [chartType setTitle:@"Traffic" forState:UIControlStateNormal];
+                 [UIView
+                      animateWithDuration:0.3
+                      delay:0.1  /* do not add a delay because we will use performSelector. */
+                      options:UIViewAnimationOptionCurveEaseOut
+                      animations:^ {
+                          chartType.center = CGPointMake(285, 44);
+                      }
+                      completion:^(BOOL finished) {
+                      }
+                  ];
+             }
+         ];
+         isTraffic=!isTraffic;
+        [self showGraph];
+    }
+    
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;

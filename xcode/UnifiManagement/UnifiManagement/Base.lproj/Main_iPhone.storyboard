@@ -585,6 +585,19 @@
                                             <action selector="backToParent:" destination="yrm-hW-WAB" eventType="touchUpInside" id="F9o-0K-KA5"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwe-y3-JAR" userLabel="Back">
+                                        <rect key="frame" x="250" y="31" width="70" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.10588236149999999" green="0.71764707569999997" blue="0.65098041299999998" alpha="1" colorSpace="deviceRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <inset key="titleEdgeInsets" minX="-9" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="Traffic">
+                                            <color key="titleShadowColor" red="0.62755102039999999" green="0.61746589350000003" blue="0.6250297387" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleChartType:" destination="yrm-hW-WAB" eventType="touchUpInside" id="cSp-Oi-bpE"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.16078431900000001" green="0.16078431900000001" blue="0.16078431900000001" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
@@ -619,7 +632,7 @@
                                         <state key="selected" image="HoursIconPressed.png"/>
                                         <state key="highlighted" image="HoursIconPressed.png"/>
                                         <connections>
-                                            <action selector="toggleChart:" destination="yrm-hW-WAB" eventType="touchUpInside" id="22r-dz-dLR"/>
+                                            <action selector="toggleTimeType:" destination="yrm-hW-WAB" eventType="touchUpInside" id="isp-25-RhZ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QhL-X0-lOz" userLabel="Daily">
@@ -631,7 +644,7 @@
                                         <state key="selected" image="DateIconPressed.png"/>
                                         <state key="highlighted" image="DateIconPressed.png"/>
                                         <connections>
-                                            <action selector="toggleChart:" destination="yrm-hW-WAB" eventType="touchUpInside" id="arj-fL-hE1"/>
+                                            <action selector="toggleTimeType:" destination="yrm-hW-WAB" eventType="touchUpInside" id="tfo-wD-OFd"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -738,6 +751,7 @@
                     <connections>
                         <outlet property="average" destination="N3U-Tk-0bG" id="EOf-27-ee8"/>
                         <outlet property="chart" destination="3xb-SW-FME" id="mKd-0t-94m"/>
+                        <outlet property="chartType" destination="Rwe-y3-JAR" id="L4Z-sw-NXj"/>
                         <outlet property="coverView" destination="bd9-lx-9Bd" id="bVo-Nc-fYW"/>
                         <outlet property="date" destination="y79-qV-FHZ" id="BKq-Zf-1HP"/>
                         <outlet property="dateButton" destination="QhL-X0-lOz" id="lfK-15-hfz"/>
@@ -1579,7 +1593,7 @@ EFNpZ25vdXQ
                                             <action selector="blockDevice:" destination="I4D-Vk-GHe" eventType="touchUpInside" id="dEh-Sw-VHc"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uTI-V9-PGp">
+                                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uTI-V9-PGp">
                                         <rect key="frame" x="249" y="5" width="64" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
