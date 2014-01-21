@@ -200,6 +200,19 @@
                             }
                         }
                 });
+                c1.dxChart('instance').option('argumentAxis',{
+                       type: 'discrete',
+                       label:{
+                            alignment:'center',
+                            customizeText: function () {
+                                return getDateForChart(type,this.value);                             
+                            }
+                       }
+                       /* grid: {
+                            visible: true,
+                            color: 'rgba(62,62,62,1)'
+                        }*/
+                    });
             }
 
             function parseUnitWithLabel(data){

@@ -29,8 +29,8 @@
         for(NSString * user in userArray){
             [parameter appendFormat:@"&mac[]=%@",user];
         }
-    NSLog(@"%@",parameter);
-        unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/user?%@",ApiServerAddress,[parameter substringFromIndex:1]] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+        unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"" withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+        object.url = [NSString stringWithFormat:@"http://%@/unifi/user?%@",ApiServerAddress,[parameter substringFromIndex:1]];
         [object loadGetData];
   
 }

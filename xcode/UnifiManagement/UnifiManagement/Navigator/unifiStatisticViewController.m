@@ -9,6 +9,7 @@
 #import "unifiStatisticViewController.h"
 #import "unifiSystemResource.h"
 #import "unifiUserResource.h"
+#import "unifiDeviceResource.h"
 #import "DejalActivityView.h"
 #import "unifiUITapGestureRecognizer.h"
 #import "unifiDeviceProfileViewController.h"
@@ -169,6 +170,7 @@
                         if(coverView.alpha==1)coverView.alpha=0;
                         if(responseJSON != nil){
                             if([[responseJSON valueForKey:@"code"] intValue] == 200){
+                                NSLog(@"%@",responseJSON);
                                 for(NSJSONSerialization *json in [responseJSON valueForKey:@"data"]){
                                     if([ json valueForKey:@"google_id"] == nil)continue;
                                 

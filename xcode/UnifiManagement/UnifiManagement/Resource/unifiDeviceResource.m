@@ -15,6 +15,14 @@
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-count",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
++(void)getOnlineDeviceList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/online-device-list?start=%i&length=%i",ApiServerAddress,start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
++(void)getOfflineDeviceList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/offline-device-list?start=%i&length=%i",ApiServerAddress,start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
 +(void)getPendingDeviceList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length{
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/pending-device-list?start=%i&length=%i",ApiServerAddress,start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
