@@ -293,6 +293,8 @@
     
     [unifiDeviceResource
       getOnlineDeviceList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+          
+          NSLog(@"%@",responseJSON);
          for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
              [deviceOnline addObject:json];
          }

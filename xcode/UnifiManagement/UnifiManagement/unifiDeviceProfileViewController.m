@@ -52,6 +52,7 @@ static NSInteger TimePlus = 60*60*24*5;
     statisticChart.delegate = self;
     statisticChart.scrollView.scrollEnabled = NO;
     statisticChart.scrollView.bounces = NO;
+
     [statisticChart loadRequest:urlRequest];
     
     __weak typeof(self) weakSelf=self;
@@ -165,7 +166,27 @@ static NSInteger TimePlus = 60*60*24*5;
     
     [unifiDeviceResource
          getDeviceDailyStatistic:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-             [statisticChart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@)",responseNSString]];
+             NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+             long long max=0;
+             for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+                 [dataSource addObject: @{
+                                          @"date":[ NSNumber numberWithLongLong:[[json valueForKey:@"date"] longLongValue]*1000 ],
+                                          @"download":[ NSNumber numberWithLongLong:[[json valueForKey:@"tx_bytes"] longLongValue]],
+                                          @"upload":[ NSNumber numberWithLongLong:[[json valueForKey:@"rx_bytes"] longLongValue]]
+                                          }];
+                 if(max < [[json valueForKey:@"tx_bytes"] longLongValue])max = [[json valueForKey:@"tx_bytes"] longLongValue];
+                 if(max < [[json valueForKey:@"rx_bytes"] longLongValue])max = [[json valueForKey:@"rx_bytes"] longLongValue];
+             }
+             
+             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dataSource
+                                                                options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                                  error:nil];
+             if (jsonData) {
+                 NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                 [statisticChart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,%lld)",jsonString,max]];
+             }
+             
+             
              if(!isFirstLoad){
                  [DejalBezelActivityView removeViewAnimated:YES];
              }

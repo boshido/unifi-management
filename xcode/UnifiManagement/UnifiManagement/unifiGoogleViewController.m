@@ -136,6 +136,7 @@ NSString *hd = @"";
     [webview goBack];
 }
 -(IBAction)cancelAuthenticaiton:(id)sender{
+    [DejalBezelActivityView removeViewAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{

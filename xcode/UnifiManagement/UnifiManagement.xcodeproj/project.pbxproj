@@ -99,13 +99,13 @@
 		0EBCF1611843C61B00D11BFD /* UserIcon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EBCF1561843C61B00D11BFD /* UserIcon2.png */; };
 		0EBCF1621843C61B00D11BFD /* UserIcon2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EBCF1571843C61B00D11BFD /* UserIcon2@2x.png */; };
 		0EBF867F1872B93600F2B49D /* unifiUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF867E1872B93600F2B49D /* unifiUserProfileViewController.m */; };
+		0EC8D44018A3CBDC001DE953 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC8D43F18A3CBDC001DE953 /* SDWebImage.framework */; };
 		0ED0FED11844867900349D39 /* trafficchart.html in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0FED01844867900349D39 /* trafficchart.html */; };
 		0ED0FED418448A7600349D39 /* unifiDashboardViewControllerDep.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FED318448A7600349D39 /* unifiDashboardViewControllerDep.m */; };
 		0ED0FED71844AB4A00349D39 /* unifiGlobalVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FED61844AB4A00349D39 /* unifiGlobalVariable.m */; };
 		0ED0FEDD1845A17300349D39 /* MHTabBarSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FEDB1845A17300349D39 /* MHTabBarSegue.m */; };
 		0ED0FF3D18466AB600349D39 /* unifiGoogleNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FF3C18466AB600349D39 /* unifiGoogleNavigationController.m */; };
 		0ED0FF4118466C1200349D39 /* unifiGoogleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FF4018466C1200349D39 /* unifiGoogleViewController.m */; };
-		0EE2D00E185639C800409FBE /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE2D00D185639C800409FBE /* SDWebImage.framework */; };
 		0EE2D01018563A0600409FBE /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EE2D00F18563A0600409FBE /* ImageIO.framework */; };
 		0EE341DA184C325A00C8814A /* unifiSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE341D9184C325A00C8814A /* unifiSettingViewController.m */; };
 		0EE341DE184C7CA700C8814A /* unifiStatisticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EE341DD184C7CA700C8814A /* unifiStatisticViewController.m */; };
@@ -294,6 +294,7 @@
 		0EBCF1571843C61B00D11BFD /* UserIcon2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UserIcon2@2x.png"; sourceTree = "<group>"; };
 		0EBF867D1872B93600F2B49D /* unifiUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiUserProfileViewController.h; path = Navigator/unifiUserProfileViewController.h; sourceTree = "<group>"; };
 		0EBF867E1872B93600F2B49D /* unifiUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiUserProfileViewController.m; path = Navigator/unifiUserProfileViewController.m; sourceTree = "<group>"; };
+		0EC8D43F18A3CBDC001DE953 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
 		0ED0FED01844867900349D39 /* trafficchart.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = trafficchart.html; sourceTree = "<group>"; };
 		0ED0FED218448A7600349D39 /* unifiDashboardViewControllerDep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiDashboardViewControllerDep.h; sourceTree = "<group>"; };
 		0ED0FED318448A7600349D39 /* unifiDashboardViewControllerDep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiDashboardViewControllerDep.m; sourceTree = "<group>"; };
@@ -305,7 +306,6 @@
 		0ED0FF3C18466AB600349D39 /* unifiGoogleNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiGoogleNavigationController.m; sourceTree = "<group>"; };
 		0ED0FF3F18466C1200349D39 /* unifiGoogleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiGoogleViewController.h; sourceTree = "<group>"; };
 		0ED0FF4018466C1200349D39 /* unifiGoogleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiGoogleViewController.m; sourceTree = "<group>"; };
-		0EE2D00D185639C800409FBE /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
 		0EE2D00F18563A0600409FBE /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		0EE341D8184C325A00C8814A /* unifiSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiSettingViewController.h; sourceTree = "<group>"; };
 		0EE341D9184C325A00C8814A /* unifiSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiSettingViewController.m; sourceTree = "<group>"; };
@@ -379,8 +379,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EC8D44018A3CBDC001DE953 /* SDWebImage.framework in Frameworks */,
 				0EE2D01018563A0600409FBE /* ImageIO.framework in Frameworks */,
-				0EE2D00E185639C800409FBE /* SDWebImage.framework in Frameworks */,
 				0E488D87183C4FE4004FF995 /* CoreGraphics.framework in Frameworks */,
 				0E488D89183C4FE4004FF995 /* UIKit.framework in Frameworks */,
 				0E488D85183C4FE4004FF995 /* Foundation.framework in Frameworks */,
@@ -536,8 +536,8 @@
 		0E488D83183C4FE4004FF995 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0EC8D43F18A3CBDC001DE953 /* SDWebImage.framework */,
 				0EE2D00F18563A0600409FBE /* ImageIO.framework */,
-				0EE2D00D185639C800409FBE /* SDWebImage.framework */,
 				0E488D84183C4FE4004FF995 /* Foundation.framework */,
 				0E488D86183C4FE4004FF995 /* CoreGraphics.framework */,
 				0E488D88183C4FE4004FF995 /* UIKit.framework */,
@@ -1138,7 +1138,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5CD50A3A-C8BA-4932-B909-84FB2934101A";
+				PROVISIONING_PROFILE = "D7C132BA-AFBD-45DB-A937-873ED2771BE4";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1161,7 +1161,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5CD50A3A-C8BA-4932-B909-84FB2934101A";
+				PROVISIONING_PROFILE = "D7C132BA-AFBD-45DB-A937-873ED2771BE4";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

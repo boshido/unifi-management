@@ -45,7 +45,6 @@
             showLineChart();
             function showLineChart(source,type)
             {
-              
                 c1 = $("#chartContainer").dxChart(
                 {
                     commonSeriesSettings: {
@@ -78,7 +77,7 @@
                        label:{
                             alignment:'center',
                             customizeText: function () {
-                                return getDateForChart(type,this.value);                             
+                                return getDateForChart(type,new Date(this.value));                             
                             }
                        }
                        /* grid: {
@@ -160,22 +159,21 @@
                     }
                 });
             }
-            function setValue(source,timeType,isTraffic){
-                source = source.data;
-                var dataSource = [];
-                var categories = [];       
-                var max = Math.max.apply(Math,source.map(function(o){return o.bytes;}));
+            function setValue(dataSource,max,timeType,isTraffic){
+                // source = source.data;
+                // var dataSource = [];
+                // var categories = [];       
+                // var max = Math.max.apply(Math,source.map(function(o){return o.bytes;}));
                 var label = getUnit(max);
                 if(isTraffic){
-                    for(var y in source){
-                       
-                        dataSource.unshift({
-                            date:new Date(source[y].datetime.sec*1000),
-                            traffic:source[y].bytes,
-                            tag:source[y]._id
-                        });  
-                       // categories.push(source[y].datetime.sec*1000);
-                    }
+                    // for(var y in source){
+                    //     dataSource.unshift({
+                    //         date:new Date(source[y].datetime.sec*1000),
+                    //         traffic:source[y].bytes,
+                    //         tag:source[y]._id
+                    //     });  
+                    //    // categories.push(source[y].datetime.sec*1000);
+                    // }
                     c1.dxChart('instance').option('dataSource',dataSource);
                     c1.dxChart('instance').option('commonSeriesSettings',{
                                                     argumentField: "date",
@@ -223,7 +221,7 @@
                            label:{
                                 alignment:'center',
                                 customizeText: function () {
-                                    return getDateForChart(timeType,this.value);                             
+                                    return getDateForChart(timeType,new Date(this.value));                             
                                 }
                            }
                            /* grid: {
@@ -233,13 +231,13 @@
                     });
                 }
                 else{
-                    for(var y in source){
-                       dataSource.unshift({
-                            date:new Date(source[y].datetime.sec*1000),
-                            deviceCount:source[y].guest_macs.length,
-                            tag:source[y]._id
-                        });  
-                    }
+                    // for(var y in source){
+                    //    dataSource.unshift({
+                    //         date:new Date(source[y].datetime.sec*1000),
+                    //         deviceCount:source[y].guest_macs.length,
+                    //         tag:source[y]._id
+                    //     });  
+                    // }
                     c1.dxChart('instance').option('dataSource',dataSource);
                     c1.dxChart('instance').option('commonSeriesSettings',{
                                                     argumentField: "date",
@@ -285,7 +283,7 @@
                            label:{
                                 alignment:'center',
                                 customizeText: function () {
-                                    return getDateForChart(timeType,this.value);                             
+                                    return getDateForChart(timeType,new Date(this.value));                             
                                 }
                            }
                            /* grid: {

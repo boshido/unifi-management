@@ -184,9 +184,12 @@
     else
         cell.textLabel.text = [json valueForKey:@"name"];
     
-    [cell.imageView setImageWithURL:[NSURL URLWithString:[json valueForKey:@"picture"]]
+    NSLog(@"%@",json );
+    if([json valueForKey:@"picture"] != nil)
+        [cell.imageView setImageWithURL:[NSURL URLWithString:[json valueForKey:@"picture"]]
                    placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
-
+    else
+        cell.imageView.image = [UIImage imageNamed:@"profile.jpg"];
     
     return cell;
 }

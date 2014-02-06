@@ -78,7 +78,7 @@
                         label:{
                             alignment:'center',
                             customizeText: function () {
-                                return getDateForChart('daily',this.value);                             
+                                return getDateForChart('daily',new Date(this.value));                             
                             }
                        }
                     },
@@ -95,27 +95,12 @@
                 });
             }
         
-            function setValue(source){
-                source = source.data;
-                var dataSource = [];      
-                var tmp_max1 = Math.max.apply(Math,source.map(function(o){return o.tx_bytes;}));
+            function setValue(dataSource,max){
+   
+               /* var tmp_max1 = Math.max.apply(Math,source.map(function(o){return o.tx_bytes;}));
                 var tmp_max2 = Math.max.apply(Math,source.map(function(o){return o.rx_bytes;}));
-                var max = tmp_max1 > tmp_max2 ? tmp_max1 : tmp_max2;
+                var max = tmp_max1 > tmp_max2 ? tmp_max1 : tmp_max2;*/
                 var label = getUnit(max);
-
-                for(var y in source){
-                    // dataSource.unshift({
-                    //     date:getDateForChart('daily',new Date(source[y].date*1000)),
-                    //     download:source[y].tx_bytes,
-                    //     upload:source[y].rx_bytes
-                    // });  
-                    dataSource.unshift({
-                        date:new Date(source[y].date*1000),
-                        download:source[y].tx_bytes,
-                        upload:source[y].rx_bytes
-                    }); 
-                }
-
                 c1.dxChart('instance').option('dataSource',dataSource);
                 c1.dxChart('instance').option('valueAxis',{
                         label:{

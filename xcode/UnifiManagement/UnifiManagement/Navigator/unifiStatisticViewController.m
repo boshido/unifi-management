@@ -111,8 +111,45 @@
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     ApiCompleteCallback completeCallback = ^(NSJSONSerialization *responseJSON,NSString *responseNSString){
         statistic = responseJSON;
+//        [chart performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:[NSString stringWithFormat:@"setValue(%@,\"%@\",%@)", responseNSString,timeType,isTraffic ? @"true" : @"false"] waitUntilDone:NO];
+//        NSString* jsString = [NSString stringWithFormat:@
+//                              "window.setTimeout(function() { \n"
+//                              "setValue(%@,\"%@\",%@); \n"
+//                              "},0.5);",responseNSString,timeType,isTraffic ? @"true" : @"false"];
+//        
+//        [ chart stringByEvaluatingJavaScriptFromString:jsString];
+        NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+        long long max=0;
+        if(isTraffic){
+            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+                [dataSource addObject: @{
+                                         @"date":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]*1000 ],
+                                         @"traffic":[ NSNumber numberWithLongLong:[[json valueForKey:@"bytes"] longLongValue]],
+                                         @"tag":[json valueForKey:@"_id"]
+                                         }];
+                if(max < [[json valueForKey:@"bytes"] longLongValue])max = [[json valueForKey:@"bytes"] longLongValue];
+            }
+        }
+        else{
+            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+                [dataSource addObject: @{
+                                         @"date":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]*1000 ],
+                                         @"deviceCount":[ NSNumber numberWithLongLong:[[json valueForKey:@"guest_macs"] length] ],
+                                         @"tag":[json valueForKey:@"_id"]
+                                         }];
+                if(max < [[json valueForKey:@"bytes"] longLongValue])max = [[json valueForKey:@"bytes"] longLongValue];
+            }
+        }
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dataSource
+                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                             error:nil];
+        if (jsonData) {
+           
+            NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,%lld,\"%@\",%@)", jsonString,max,timeType,isTraffic ? @"true" : @"false"]];
+        }
         
-        [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,\"%@\",%@)", responseNSString,timeType,isTraffic ? @"true" : @"false"]];
+        
         [DejalBezelActivityView removeViewAnimated:YES];
         NSInteger plotCount=0;
         float averageTraffic=0.0f;
