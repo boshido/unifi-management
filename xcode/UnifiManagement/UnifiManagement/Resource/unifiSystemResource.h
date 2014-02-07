@@ -11,6 +11,6 @@
 
 @interface unifiSystemResource : NSObject
 +(void)getTrafficReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStartTime:(NSTimeInterval )time andType:(NSString *)type;
-+(void)getDeviceReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromType:(NSString *)type;
++(void)getTrafficUserReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStartTime:(NSTimeInterval )time andType:(NSString *)type;
 +(void)testConection:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback;
 @end

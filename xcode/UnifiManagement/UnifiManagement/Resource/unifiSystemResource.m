@@ -17,11 +17,12 @@
     
     [object loadGetData];
 }
-+(void)getDeviceReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromType:(NSString *)type{
++(void)getTrafficUserReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStartTime:(NSTimeInterval )time andType:(NSString *)type{
     unifiApiConnector *object = [[unifiApiConnector alloc]
-        initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-report?type=%@",ApiServerAddress,type]
+        initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/traffic-user-report?time=%f&type=%@",ApiServerAddress,time,type]
         withCompleteCallback:completeCallback withErrorCallback:errorCallback
     ];
+ 
     [object loadGetData];
 }
 +(void)testConection:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
