@@ -199,13 +199,13 @@
     unifiUserProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiUserProfileViewController"];
     
     if(isSearched){
-        [profile setUserData:[userSearch objectAtIndex:indexPath.row]];
+        [profile setGoogleId:[[userSearch objectAtIndex:indexPath.row] valueForKey:@"google_id"]];
     }
     else if(filterState==1){
-        [profile setUserData:[userOnline objectAtIndex:indexPath.row]];
+        [profile setGoogleId:[[userOnline objectAtIndex:indexPath.row] valueForKey:@"google_id"]];
     }
     else{
-        [profile setUserData:[userOffline objectAtIndex:indexPath.row]];
+        [profile setGoogleId:[[userOffline objectAtIndex:indexPath.row] valueForKey:@"google_id"]];
     }
     
     [[self navigationController] pushViewController:profile animated:YES];

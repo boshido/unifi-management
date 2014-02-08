@@ -200,12 +200,12 @@
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     [unifiSystemResource
          getTrafficUserReport:^(NSJSONSerialization *responseJSON,NSString *responseString){
-             NSLog(@"%@",responseString);
+             //NSLog(@"%@",responseString);
              if(coverView.alpha==1)coverView.alpha=0;
              if(responseJSON != nil){
                  if([[responseJSON valueForKey:@"code"] intValue] == 200){
                      for(NSJSONSerialization *json in [responseJSON valueForKey:@"data"]){
-                         if([ json valueForKey:@"google_id"] == [NSNull null])continue;
+                         if(![[ json valueForKey:@"is_auth"] boolValue])continue;
                          
                          UILabel *describe,*hostname;
                          describe = [[UILabel alloc] initWithFrame:CGRectMake(11, contentSize, 185, 21)];
@@ -223,7 +223,7 @@
                          [hostname setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
                          [hostname setTextAlignment:NSTextAlignmentLeft];
                          [hostname setFont:[UIFont systemFontOfSize:11]];
-                         if([json valueForKey:@"hostname"] != NULL) [hostname setText:[json valueForKey:@"hostname"]];
+                         if([json valueForKey:@"hostname"] != [NSNull null]) [hostname setText:[json valueForKey:@"hostname"]];
                          else [hostname setText:[json valueForKey:@"mac"]];
                          
                          [scrollView addSubview:describe];

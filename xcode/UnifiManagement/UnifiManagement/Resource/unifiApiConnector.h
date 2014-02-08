@@ -10,8 +10,8 @@
 typedef void(^ApiCompleteCallback)(NSJSONSerialization *responseJSON,NSString *responseNSString);
 typedef void(^ApiErrorCallback)(NSError *error);
 
-//static NSString *ApiServerAddress = @"202.44.47.47";
-static NSString *ApiServerAddress = @"192.168.0.2";
+static NSString *ApiServerAddress = @"202.44.47.47";
+//static NSString *ApiServerAddress = @"192.168.0.2";
 
 @interface unifiApiConnector : NSObject
 @property(nonatomic, retain) NSURLConnection *theConnection;

@@ -8,6 +8,7 @@
 
 #import "unifiUserProfileViewController.h"
 #import "unifiDeviceResource.h"
+#import "unifiGoogleResource.h"
 #import "DejalActivityView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "unifiSelectDeviceViewController.h"
@@ -55,8 +56,6 @@
         failureController.delegate = weakSelf;
         [[weakSelf navigationController] presentViewController:failureController animated:YES completion:nil];
     };
-
-    
     
 }
 - (void)viewDidAppear:(BOOL)animated{
@@ -66,21 +65,9 @@
     onlineDevice = [[NSMutableArray alloc] init];
     offlineDevice = [[NSMutableArray alloc] init];
     
-    [profileName setText:[userData valueForKey:@"name"]];
-    [profileEmail setText:[userData valueForKey:@"email"]];
-    [profilePicture.layer setCornerRadius:45.0f];
-    [profilePicture.layer setMasksToBounds: YES];
-    // border
-    [profilePicture.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [profilePicture.layer setBorderWidth:0.3f];
-    
-    if([userData valueForKey:@"picture"] != [NSNull null]){
-        [profilePicture setImageWithURL:[NSURL URLWithString:[userData valueForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
-    }
-    else [profilePicture setImage:[UIImage imageNamed:@"profile.jpg"]];
-    
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+    [self loadProfile];
     [self loadDevice];
     
     [profilePicture.layer setCornerRadius:45.0f];
@@ -97,7 +84,29 @@
 }
 
 // ----------------------------------   API         ------------------------------------
-
+-(void)loadProfile{
+    [unifiGoogleResource
+     getUserData:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+         userData = [responseJSON valueForKey:@"data"];
+         NSLog(@"%@",responseJSON);
+         [profileName setText:[userData valueForKey:@"name"]];
+         [profileEmail setText:[userData valueForKey:@"email"]];
+         [profilePicture.layer setCornerRadius:45.0f];
+         [profilePicture.layer setMasksToBounds: YES];
+         // border
+         [profilePicture.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+         [profilePicture.layer setBorderWidth:0.3f];
+         
+         if([userData valueForKey:@"picture"] != [NSNull null]){
+             [profilePicture setImageWithURL:[NSURL URLWithString:[userData valueForKey:@"picture"]] placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
+         }
+         else [profilePicture setImage:[UIImage imageNamed:@"profile.jpg"]];
+         
+     }
+     withHandleError:handleError
+     fromGoogleId:googleId
+     ];
+}
 -(void)loadDevice{
     [unifiDeviceResource
      getAuthorizedDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
@@ -110,7 +119,7 @@
          [self displayDevice];
      }
      withHandleError:handleError
-     fromGoogleId:[userData valueForKey:@"google_id"]
+     fromGoogleId:googleId
      ];
 }
 

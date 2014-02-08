@@ -34,6 +34,16 @@
     [ self getAccessToken:getAccessToken withHandleError:errorCallback fromRefreshToken:refreshToken];
 
 }
++(void)getUserData:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromGoogleId:(NSString *)id{
+    
+    unifiApiConnector *object = [[unifiApiConnector alloc]
+                                 initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/google-account?google_id=%@",ApiServerAddress,id]
+                                 withCompleteCallback:completeCallback withErrorCallback:errorCallback
+                                 ];
+    [object loadGetData];
+    
+}
+
 +(void)getPermission:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromEmail:(NSString *)email
 {
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"http://202.44.47.47/fitmmon/v3/webui/apiv2/loginAPI.php"

@@ -86,7 +86,7 @@ static NSInteger TimePlus = 60*60*24*5;
     [unifiDeviceResource
      getDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
          NSJSONSerialization *json  = [responseJSON valueForKey:@"data"];
-         hostname.text = [json valueForKey:@"hostname"];
+         hostname.text = [json valueForKey:@"hostname"] == [NSNull null] ? @"No Hostname" : [json valueForKey:@"hostname"];
          mac.text = [json valueForKey:@"mac"];
          
          if([[json valueForKey:@"blocked"] boolValue]){
@@ -95,19 +95,19 @@ static NSInteger TimePlus = 60*60*24*5;
 //         if([[json valueForKey:@"is_auth"] boolValue]){
 //             [authorizeBtn setSelected:YES];
 //         }
-         NSRange search = [[json valueForKey:@"hostname"] rangeOfString:@"iphone" options:NSCaseInsensitiveSearch];
+         NSRange search = [hostname.text rangeOfString:@"iphone" options:NSCaseInsensitiveSearch];
          if(search.location != NSNotFound)
              [deviceImg setImage:[UIImage imageNamed:@"Apple.png"]];
          else{
-             search = [[json valueForKey:@"hostname"] rangeOfString:@"ipad" options:NSCaseInsensitiveSearch];
+             search = [hostname.text rangeOfString:@"ipad" options:NSCaseInsensitiveSearch];
              if(search.location != NSNotFound)
                  [deviceImg setImage:[UIImage imageNamed:@"Apple.png"]];
              else{
-                 search = [[json valueForKey:@"hostname"]  rangeOfString:@"android" options:NSCaseInsensitiveSearch];
+                 search = [hostname.text  rangeOfString:@"android" options:NSCaseInsensitiveSearch];
                  if(search.location != NSNotFound)
                      [deviceImg setImage:[UIImage imageNamed:@"Android.png"]];
                  else{
-                     search = [[json valueForKey:@"hostname"]  rangeOfString:@"windows" options:NSCaseInsensitiveSearch];
+                     search = [hostname.text  rangeOfString:@"windows" options:NSCaseInsensitiveSearch];
                      if(search.location != NSNotFound)
                          [deviceImg setImage:[UIImage imageNamed:@"Windows.png"]];
                      else

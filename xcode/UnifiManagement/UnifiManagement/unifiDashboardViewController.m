@@ -106,6 +106,7 @@
     };
     
     ApiCompleteCallback apMapCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
+       
         apMaplist=responseNSString;
         flag3 = YES;
         if(flag1 && flag2 && flag3){
