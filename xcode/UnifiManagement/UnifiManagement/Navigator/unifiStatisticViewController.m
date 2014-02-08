@@ -14,11 +14,14 @@
 #import "unifiUITapGestureRecognizer.h"
 #import "unifiDeviceProfileViewController.h"
 #import "unifiUserProfileViewController.h"
+#import "unifiFailureViewController.h"
 @interface unifiStatisticViewController ()
 
 @end
 
-@implementation unifiStatisticViewController
+@implementation unifiStatisticViewController{
+    ApiErrorCallback handleError;
+}
 @synthesize chart,statusView,coverView,scrollView,hourlyButton,dateButton,average,date,statistic,time,chartType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -68,6 +71,13 @@
     chart.scrollView.scrollEnabled = NO;
     chart.scrollView.bounces = NO;
     [chart loadRequest:urlRequest];
+    
+    __weak typeof(self) weakSelf=self;
+    handleError= ^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:YES];
+        unifiFailureViewController *failureController = [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
+        [[weakSelf navigationController] presentViewController:failureController animated:YES completion:nil];
+    };
     
 }
 
@@ -172,11 +182,8 @@
         }
         
     };
-    ApiErrorCallback errorCallback =^(NSError *error) {
-        [DejalBezelActivityView removeViewAnimated:YES];
-    };
     
-    [unifiSystemResource getTrafficReport:completeCallback withHandleError:errorCallback fromStartTime:[[NSDate date] timeIntervalSince1970]+time andType:timeType];
+    [unifiSystemResource getTrafficReport:completeCallback withHandleError:handleError fromStartTime:[[NSDate date] timeIntervalSince1970]+time andType:timeType];
     
     NSDate *today = [NSDate dateWithTimeIntervalSince1970:[[NSDate date] timeIntervalSince1970]+time];
     
@@ -260,10 +267,8 @@
              }
              [DejalBezelActivityView removeViewAnimated:YES];
          }
-         withHandleError:^(NSError *error) {
-             [DejalBezelActivityView removeViewAnimated:YES];
-         }
-        fromStartTime:[clickedTime doubleValue] andType:timeType
+         withHandleError:handleError
+         fromStartTime:[clickedTime doubleValue] andType:timeType
     ];
     
 

@@ -40,7 +40,7 @@
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
                                                     cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                timeoutInterval:20.0];
+                                                timeoutInterval:30.0];
 
     theConnection=[[NSURLConnection alloc] initWithRequest:request  delegate:self startImmediately:YES];
     if (!theConnection) {

@@ -11,11 +11,14 @@
 NS_ENUM(NSInteger, CellStyle) {
         ImageWithTextStyle,
         TextWithDetailStyle,
+        TextWithTreeDetailStyle
 };
 
 @interface unifiTableViewCell : UITableViewCell{
     enum CellStyle cellStyle;
 }
+@property(retain,nonatomic) UILabel *secondDetailTextLabel;
+@property(retain,nonatomic) UILabel *thirdDetailTextLabel;
 
 -(void)setCellStyle:(enum CellStyle)style;
 @end

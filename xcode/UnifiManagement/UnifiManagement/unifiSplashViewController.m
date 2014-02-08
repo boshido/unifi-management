@@ -7,7 +7,7 @@
 //
 
 #import "unifiSplashViewController.h"
-
+#import "DejalActivityView.h"
 @interface unifiSplashViewController ()
 
 @end
@@ -63,7 +63,8 @@
 
 - (void)unifiGoogleNavigation:(unifiGoogleNavigationController *)viewController
  finishWithRefreshToken:(NSString*)refreshToken{
-    
+    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Authenticating"];
     NSLog(@"%@",refreshToken );
     [unifiGoogleResource
      getUserData:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
@@ -74,6 +75,7 @@
          
          [unifiGoogleResource
           getPermission:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+              [DejalBezelActivityView removeViewAnimated:YES];
               if([[responseJSON valueForKey:@"code"] intValue]==200){
                   [unifiGlobalVariable sharedGlobalData].refreshToken = refreshToken;
                   [unifiGlobalVariable sharedGlobalData].permissionNumber = [[[responseJSON valueForKey:@"data"] valueForKey:@"gaccess"] intValue];
@@ -107,6 +109,7 @@
                   [self dismissViewControllerAnimated:YES completion:nil];
               }
               else{
+                  
                   UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Permission Denied"
                                                                  message: @"You don't have permission for using this Application."
                                                                 delegate: self
@@ -117,7 +120,14 @@
               }
           }
           withHandleError:^(NSError *error) {
-              
+              [DejalBezelActivityView removeViewAnimated:YES];
+              UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Conection Failure"
+                                                             message: @""
+                                                            delegate: self
+                                                   cancelButtonTitle:@"Ok"
+                                                   otherButtonTitles:nil,nil];
+              [alert show];
+
           }
           fromEmail:[responseJSON valueForKey:@"email"]
           ];

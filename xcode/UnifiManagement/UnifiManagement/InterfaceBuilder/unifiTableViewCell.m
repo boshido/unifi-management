@@ -9,11 +9,24 @@
 #import "unifiTableViewCell.h"
 
 @implementation unifiTableViewCell
+@synthesize secondDetailTextLabel,thirdDetailTextLabel;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        secondDetailTextLabel = [[UILabel alloc]init];
+        secondDetailTextLabel.textAlignment = NSTextAlignmentLeft;
+        secondDetailTextLabel.font = [UIFont systemFontOfSize:12];
+        secondDetailTextLabel.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
+        
+        thirdDetailTextLabel = [[UILabel alloc]init];
+        thirdDetailTextLabel.textAlignment = NSTextAlignmentLeft;
+        thirdDetailTextLabel.font = [UIFont systemFontOfSize:12];
+        thirdDetailTextLabel.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
+        
+        [self.contentView addSubview:secondDetailTextLabel];
+        [self.contentView addSubview:thirdDetailTextLabel];
     }
     return self;
 }
@@ -49,7 +62,18 @@
             self.detailTextLabel.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
             
             break;
+        case TextWithTreeDetailStyle:
+            self.imageView.frame = CGRectMake(20.0f , 4.0f, 35.0f, 35.0f);
             
+            self.textLabel.frame = CGRectMake(75.0f, 4.0f, 150, 20);
+            self.textLabel.font = [UIFont systemFontOfSize:13];
+            self.textLabel.textColor = [UIColor colorWithRed:0.435 green:0.443 blue:0.475 alpha:1.0];
+            self.detailTextLabel.frame = CGRectMake(75.0f,20.0f, 70, 20);
+            self.detailTextLabel.font = [UIFont systemFontOfSize:12];
+            self.detailTextLabel.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
+            self.secondDetailTextLabel.frame = CGRectMake(160.0f,20.0f, 60, 20);
+            self.thirdDetailTextLabel.frame = CGRectMake(225.0f,20.0f, 100, 20);
+            break;
     }
 }
 

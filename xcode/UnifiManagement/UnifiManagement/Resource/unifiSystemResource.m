@@ -25,6 +25,10 @@
  
     [object loadGetData];
 }
++(void)getMapList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/map-list",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
 +(void)testConection:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
     unifiApiConnector *object = [[unifiApiConnector alloc]
                                  initWithUrl:[NSString stringWithFormat:@"http://%@/unifi",ApiServerAddress]
