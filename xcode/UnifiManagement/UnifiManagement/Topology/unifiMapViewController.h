@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface unifiMapViewController : UIViewController<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
-@property(retain,nonatomic) IBOutlet UIScrollView *scrollView;
+@interface unifiMapViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
 @property(retain,nonatomic) IBOutlet UITableView *mapTable;
-@property(retain,nonatomic) UIImageView *map;
 @property(retain,nonatomic) NSMutableArray *mapList;
 @end

@@ -37,7 +37,7 @@
 }
 -(IBAction)retry:(id)sender{
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Conecting to server."];
     [unifiSystemResource testConection:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
         [DejalBezelActivityView removeViewAnimated:YES];
         [self dismissViewControllerAnimated:YES completion:^{
@@ -54,8 +54,8 @@
         }];
     } withHandleError:^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:YES];
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Conection Failure"
-                                                       message: @""
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Connection failed!"
+                                                       message: @"Error - The request timed out"
                                                       delegate: self
                                              cancelButtonTitle:@"Ok"
                                              otherButtonTitles:nil,nil];
