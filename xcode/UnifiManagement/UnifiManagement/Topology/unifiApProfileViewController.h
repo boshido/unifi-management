@@ -11,8 +11,9 @@
 @interface unifiApProfileViewController : UIViewController <UIAlertViewDelegate>
 @property(retain,nonatomic) NSString* mac;
 @property(retain,nonatomic) IBOutlet UIImageView *apImage;
-@property(retain,nonatomic) IBOutlet UILabel *header,*ip,*userCount;
+@property(retain,nonatomic) IBOutlet UILabel *header,*version,*serial,*ip,*userCount,*upTime;
 @property(retain,nonatomic) IBOutlet UIScrollView *deviceScrollView;
+
 
 -(IBAction)editApName:(id)sender;
 -(IBAction)restartAp:(id)sender;

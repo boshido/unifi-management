@@ -8,9 +8,12 @@
 
 #import "unifiAppDelegate.h"
 #import "unifiGoogleResource.h"
-
+#import "unifiSystemResource.h"
+#import "DejalActivityView.h"
+#import "unifiGlobalVariable.h"
+#import "unifiSplashViewController.h"
 @implementation unifiAppDelegate
-@synthesize window,splashView;
+@synthesize window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -54,11 +57,17 @@
     
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-    UIStoryboard *storyboard = [self.window.rootViewController storyboard];
-    [unifiGoogleResource isNeedForLogin:^{
-        [self.window.rootViewController  presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
-    }];
-//    
+//    UIStoryboard *storyboard = [self.window.rootViewController storyboard];
+//    unifiSplashViewController *splashView = [storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"];
+//    splashView.flag = true;
+//    [self.window.rootViewController  presentViewController:splashView animated:NO completion:nil];
+    
+//    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+//    [DejalBezelActivityView activityViewForView:self.window.rootViewController.view withLabel:@"Authenticating"];
+//    [unifiGoogleResource isNeedForLogin:^{
+//        [self.window.rootViewController  presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
+//    }];
+//
 //    splashView = [storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"];
 //    [self.window.rootViewController presentViewController:splashView animated:NO completion:nil];
        //[self.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
@@ -88,7 +97,24 @@
 }
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-	NSLog(@"My token is: %@", deviceToken);
+    NSString *deviceTokenString = [deviceToken description];
+    
+    deviceTokenString = [deviceTokenString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    [unifiGlobalVariable sharedGlobalData].iosToken = deviceTokenString;
+    
+    [unifiSystemResource
+        setIosToken:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+            NSLog(@"%@",responseNSString);
+        }
+        withHandleError:^(NSError *error) {
+            
+        }
+        fromTokenId:deviceTokenString
+        isEnabled:YES
+    ];
+    
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error

@@ -7,10 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "unifiGlobalVariable.h"
-#import "unifiSplashViewController.h"
 @interface unifiAppDelegate : UIResponder <UIApplicationDelegate>
-
 @property (strong, nonatomic) UIWindow *window;
-@property (retain, nonatomic) unifiSplashViewController *splashView;
 @end

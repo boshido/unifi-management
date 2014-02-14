@@ -11,7 +11,7 @@
 #import "unifiApiConnector.h"
 #import "unifiGoogleResource.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "unifiTabViewController.h"
+#import "unifiSystemResource.h"
 
 @interface unifiSettingViewController ()
 
@@ -31,6 +31,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self initialize];
+}
+-(void)initialize{
     spinner = [[TJSpinner alloc] initWithSpinnerType:kTJSpinnerTypeActivityIndicator];
     [spinner setColor:[UIColor colorWithRed:17/255.00 green:181/255.00 blue:255.00/255.00 alpha:1.0]];
     [spinner setStrokeWidth:20];
@@ -48,12 +56,12 @@
     // border
     [profilePicture.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [profilePicture.layer setBorderWidth:0.3f];
-   
-    __weak typeof(profilePicture) profilePictureWeak = profilePicture;
-     __weak typeof(spinner) spinnerWeak = spinner;
     
-    name.text = [unifiGlobalVariable sharedGlobalData].name;
-    surname.text = [unifiGlobalVariable sharedGlobalData].surname;
+    __weak typeof(profilePicture) profilePictureWeak = profilePicture;
+    __weak typeof(spinner) spinnerWeak = spinner;
+    
+    name.text = [NSString stringWithFormat:@"%@ %@",[unifiGlobalVariable sharedGlobalData].name,[unifiGlobalVariable sharedGlobalData].surname];
+    permission.text = [unifiGlobalVariable sharedGlobalData].permissionName;
     email.text  = [unifiGlobalVariable sharedGlobalData].email;
     [profilePicture setImageWithURL:[NSURL URLWithString:[ unifiGlobalVariable sharedGlobalData].profilePicture]
                           completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
@@ -71,13 +79,54 @@
                               [spinnerWeak stopAnimating];
                           }
      ];
-
-
+    [self loadAlarm];
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)loadAlarm{
+    [unifiSystemResource
+        getAlarm:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+            
+            if([[responseJSON valueForKey:@"code"] intValue] == 200){
+                NSInteger contentSize = 5;
+                for (NSJSONSerialization *json in [responseJSON valueForKey:@"data"]) {
+                    UILabel *describe = [[UILabel alloc] initWithFrame:CGRectMake(11, contentSize, 250, 21)];
+                    //hostname = [[UILabel alloc] initWithFrame:CGRectMake(144, contentSize, 103, 21)];
+                    
+                    [describe setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
+                    [describe setTextAlignment:NSTextAlignmentLeft];
+                    [describe setFont:[UIFont systemFontOfSize:11]];
+                    
+                    [describe setText:[json valueForKey:@"msg"]];
+                    
+                    [alarmView addSubview:describe];
+                    
+                    //                    unifiUITapGestureRecognizer* describeGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(describeTapped:)];
+                    //                    // if labelView is not set userInteractionEnabled, you must do so
+                    //                    [describeGesture initParameter];
+                    //                    [describeGesture setParameter:[json valueForKey:@"google_id"] withKey:@"google_id"];
+                    //                    [describe setUserInteractionEnabled:YES];
+                    //                    [describe addGestureRecognizer:describeGesture];
+                    //
+                    //                    unifiUITapGestureRecognizer* hostnameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(hostnameTapped:)];
+                    //                    // if labelView is not set userInteractionEnabled, you must do so
+                    //                    [hostnameGesture initParameter];
+                    //                    [hostnameGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
+                    //                    [hostname setUserInteractionEnabled:YES];
+                    //                    [hostname addGestureRecognizer:hostnameGesture];
+                    contentSize+=20;
+                    
+                }
+            }
+        }
+        withHandleError:^(NSError *error) {
+        
+        }
+        withType:false fromStart:0 toLength:5
+     ];
 }
 -(IBAction)signOut:(id)sender{
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Comfirm Dialog"
@@ -110,7 +159,10 @@
                  //TODO: Handle/Log error
              }
              [unifiGlobalVariable initialValue];
-             [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
+             [self.tabBarController dismissViewControllerAnimated:YES completion:^{
+                  [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
+             }];
+            
              
 //             [self.tabBarController.delegate
 //              tabBarController:self.tabBarController
@@ -119,5 +171,9 @@
          unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"https://accounts.google.com/Logout" withCompleteCallback:completeCallback withErrorCallback:nil];
          [object loadGetData];
     }
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleBlackTranslucent;
 }
 @end

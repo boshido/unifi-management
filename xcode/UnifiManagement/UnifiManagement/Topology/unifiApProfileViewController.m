@@ -19,7 +19,7 @@
     NSJSONSerialization *apData;
     ApiErrorCallback handleError;
 }
-@synthesize mac,apImage,header,ip,userCount,deviceScrollView;
+@synthesize mac,apImage,header,version,serial,ip,userCount,upTime,deviceScrollView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -62,15 +62,34 @@
             
             if([[apData valueForKey:@"state"] intValue] == 1){
                 apImage.image = [UIImage imageNamed:@"UnifiOnlineIcon"];
-                userCount.text = [NSString stringWithFormat:@"User Count : %i",[[apData valueForKey:@"num_sta"] intValue]];
+                userCount.text = [NSString stringWithFormat:@"%i",[[apData valueForKey:@"num_sta"] intValue]];
             }
             else {
                 apImage.image = [UIImage imageNamed:@"UnifiOfflineIcon"];
-                userCount.text = [NSString stringWithFormat:@"User Count : %i",0];
+                userCount.text = [NSString stringWithFormat:@"%i",0];
             }
             header.text = [apData valueForKey:@"name"];
             ip.text = [apData valueForKey:@"ip"];
+            version.text = [apData valueForKey:@"version"];
+            serial.text = [apData valueForKey:@"serial"];
             
+            NSInteger days = ([[apData valueForKey:@"uptime"] intValue] / 60 / 60 / 24);
+            NSInteger hours = ([[apData valueForKey:@"uptime"] intValue] / 60 / 60);
+            NSInteger minutes = ([[apData valueForKey:@"uptime"] intValue] / 60);
+            NSInteger seconds = ([[apData valueForKey:@"uptime"] intValue]);
+            
+            if(days > 0){
+                upTime.text = [NSString stringWithFormat:@"%i d %i h %i m %i s",days,hours%24,minutes%60,seconds%60];
+            }
+            else if (hours > 0){
+                upTime.text = [NSString stringWithFormat:@"%i h %i m %i s",hours,minutes%60,seconds%60];
+            }
+            else if (minutes > 0){
+                upTime.text = [NSString stringWithFormat:@"%i m %i s",minutes,seconds%60];
+            }
+            else if (seconds > 0){
+                upTime.text = [NSString stringWithFormat:@"%i s",seconds];
+            }
             [DejalBezelActivityView removeViewAnimated:YES];
         }
         
@@ -120,7 +139,6 @@
         }
     } withHandleError:handleError fromApMac:mac];
 }
-
 -(IBAction)backToParent:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }

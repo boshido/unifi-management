@@ -110,7 +110,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(IBAction)showBlockedDevice:(id)sender{
+   
+//    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"TEST" message:@"subview" delegate:nil cancelButtonTitle:@"Finish" otherButtonTitles:nil, nil];
+//    UITableView *v = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 270, 270)];
+//    v.backgroundColor = [UIColor yellowColor];
+//    [av setValue:v forKey:@"accessoryView"];
+//    [av show];
+}
 -(IBAction)backToParent:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }

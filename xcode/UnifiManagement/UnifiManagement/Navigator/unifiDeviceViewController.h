@@ -17,6 +17,7 @@
 @property NSInteger filterState;
 @property bool isSearched;
 
+-(IBAction)showBlockedDevice:(id)sender;
 -(IBAction)backToParent:(id)sender;
 -(IBAction)backToHome:(id)sender;
 -(IBAction)filter:(id)sender;

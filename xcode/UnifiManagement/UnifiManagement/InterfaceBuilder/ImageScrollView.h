@@ -52,6 +52,6 @@
 @property (nonatomic) UIImageView *zoomView;
 
 - (void)initial;
-- (void)displayImage:(NSString *)url completed:(void(^)(void))callback;
-
+//- (void)displayImage:(NSString *)url completed:(void(^)(void))callback;
+- (void)displayImage:(UIImage *)image;
 @end

@@ -13,5 +13,7 @@
 #import "unifiGoogleNavigationController.h"
 
 @interface unifiSplashViewController : UIViewController<unifiGoogleNavigationControllerDelegate>
+@property bool flag;
+
 -(IBAction)signIn:(id)sender;
 @end

@@ -53,7 +53,7 @@
     
     [object loadPostData];
 }
-+(void)isNeedForLogin:(void(^)(void))callback{
++(void)isNeedForLogin:(void(^)(void))needCallback isNotNeedForLogin:(void(^)(void))notNeedCallback{
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
     
@@ -66,7 +66,7 @@
              [unifiGlobalVariable sharedGlobalData].name = [responseJSON valueForKey:@"given_name"];
              [unifiGlobalVariable sharedGlobalData].surname = [responseJSON valueForKey:@"family_name"];
              [unifiGlobalVariable sharedGlobalData].email = [responseJSON valueForKey:@"email"];
-             [unifiGlobalVariable sharedGlobalData].profilePicture = [responseJSON valueForKey:@"picture"];
+             [unifiGlobalVariable sharedGlobalData].profilePicture = [[responseJSON valueForKey:@"picture"] stringByReplacingOccurrencesOfString:@"?sz=50" withString:@""];
              
              [unifiGoogleResource
               getPermission:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
@@ -94,6 +94,7 @@
                                            ];
                       if(plistData) {
                           [plistData writeToFile:plistPath atomically:YES];
+                          if(notNeedCallback != nil)notNeedCallback();
                       }
                       else {
                           NSLog(@"Error : %@",error);
@@ -101,24 +102,26 @@
                   }
                   else{
                       [unifiGlobalVariable initialValue];
-                      callback();
+                      if(needCallback != nil)needCallback();
                   }
               }
               withHandleError:^(NSError *error) {
                   [unifiGlobalVariable initialValue];
+                  if(needCallback != nil)needCallback();
               }
               fromEmail:[responseJSON valueForKey:@"email"]
               ];
          }
          withHandleError:^(NSError *error) {
              [unifiGlobalVariable initialValue];
+             if(needCallback != nil)needCallback();
          }
          fromRefreshToken:refreshToken
          ];
     }
     else{
         [unifiGlobalVariable initialValue];
-        callback();
+        if(needCallback != nil)needCallback();
     }
 }
 @end

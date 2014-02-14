@@ -30,9 +30,17 @@
     [object loadGetData];
 }
 +(void)getMapApList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromMapId:(NSString *)id{
-    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/map-ap-list?id=%@",ApiServerAddress,id]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/map-ap-list?id=%@",ApiServerAddress,id] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
+}
++(void)getAlarm:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback withType:(bool)type fromStart:(NSInteger)start toLength:(NSInteger)length {
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/alarm?type=%@&start=%i&length=%i",ApiServerAddress,type ? @"true" : @"false",start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
++(void)setIosToken:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromTokenId:(NSString *)tokenId isEnabled:(BOOL)flag{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/ios-token",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"token_id=%@&enabled=%@",tokenId,flag ? @"true" : @"false"]];
+    
+    [object loadPostData];
 }
 +(void)testConection:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
     unifiApiConnector *object = [[unifiApiConnector alloc]

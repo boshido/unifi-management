@@ -13,7 +13,7 @@
 @end
 
 @implementation unifiSplashViewController
-
+@synthesize flag;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,15 +39,18 @@
 //    else {
 //        NSLog(@"Error : %@",error);
 //    }
-
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
+    
+    NSMutableDictionary *plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    NSString *refreshToken = [plistDict objectForKey:@"refreshToken"];
+    if(![refreshToken isEqualToString:@""] && refreshToken != NULL){
+        [self isNeedForLogin:refreshToken];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     
-//    if(![[unifiGlobalVariable sharedGlobalData].refreshToken isEqualToString:@""]){
-//        
-//        
-//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,14 +61,18 @@
 -(IBAction)signIn:(id)sender{
     unifiGoogleNavigationController *google = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiGoogleNavigationController"];
     google.tokenDelegate=self;
-    [self presentViewController: google animated:YES completion:nil];
+    [self presentViewController:google animated:YES completion:nil];
 }
 
 - (void)unifiGoogleNavigation:(unifiGoogleNavigationController *)viewController
  finishWithRefreshToken:(NSString*)refreshToken{
+
+    NSLog(@"%@",refreshToken );
+    [self isNeedForLogin:refreshToken];
+}
+- (void)isNeedForLogin:(NSString *)refreshToken{
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Authenticating"];
-    NSLog(@"%@",refreshToken );
     [unifiGoogleResource
      getUserData:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
          [unifiGlobalVariable sharedGlobalData].name = [responseJSON valueForKey:@"given_name"];
@@ -107,6 +114,8 @@
                       NSLog(@"Error : %@",error);
                   }
                   [self dismissViewControllerAnimated:YES completion:nil];
+                  [self presentViewController: [self.storyboard instantiateViewControllerWithIdentifier:@"unifiTabViewController"] animated:YES completion:nil
+                  ];
               }
               else{
                   
@@ -127,7 +136,7 @@
                                                    cancelButtonTitle:@"Ok"
                                                    otherButtonTitles:nil,nil];
               [alert show];
-
+              
           }
           fromEmail:[responseJSON valueForKey:@"email"]
           ];
@@ -143,7 +152,6 @@
      }
      fromRefreshToken:refreshToken
      ];
-    
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;

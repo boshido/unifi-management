@@ -34,6 +34,9 @@
     mapTable.delegate = self;
     mapTable.dataSource = self;
     
+}
+-(void)viewDidAppear:(BOOL)animated{
+    NSLog(@"haha");
     [unifiSystemResource
         getMapList:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
             mapList = [responseJSON valueForKey:@"data"];
@@ -42,7 +45,7 @@
         withHandleError:^(NSError *error) {
         
         }
-     ];
+    ];
 }
 
 

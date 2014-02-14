@@ -135,32 +135,32 @@
 
 
 #pragma mark - Configure scrollView to display new image
-- (void)displayImage:(NSString *)url completed:(void(^)(void))callback
+- (void)displayImage:(UIImage *)image
 {
     // reset our zoomScale to 1.0 before doing any further calculations
     self.zoomScale = 1.0;
     // clear the previous image
     [zoomView removeFromSuperview];
     zoomView = nil;
-    zoomView = [[UIImageView alloc] init];
+    zoomView = [[UIImageView alloc] initWithImage:image];
     zoomView.userInteractionEnabled = true;
-    
+    zoomView.frame = CGRectMake(zoomView.frame.origin.x, zoomView.frame.origin.y, image.size.width, image.size.height);
     
     // make a new UIImageView for the new image
-    __weak typeof (self) weakSelf = self;
-    __weak typeof (zoomView) weakZoomView = zoomView;
-    
-    [zoomView setImageWithURL:[NSURL URLWithString:url]
-              placeholderImage:[UIImage imageNamed:@"map.png"] options:SDWebImageRefreshCached
-                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                         if(cacheType==2){
-                             weakZoomView.frame = CGRectMake(weakZoomView.frame.origin.x, weakZoomView.frame.origin.y, image.size.width, image.size.height);
-                             [weakSelf configureForImageSize:image.size];
-                             NSLog(@"Display Image");
-                             callback();
-                         }
-                     }
-     ];
+//    __weak typeof (self) weakSelf = self;
+//    __weak typeof (zoomView) weakZoomView = zoomView;
+//    
+//    [zoomView setImageWithURL:[NSURL URLWithString:url]
+//              placeholderImage:[UIImage imageNamed:@"map.png"] options:SDWebImageRefreshCached
+//                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+//                         if(cacheType==2){
+//                             weakZoomView.frame = CGRectMake(weakZoomView.frame.origin.x, weakZoomView.frame.origin.y, image.size.width, image.size.height);
+//                             [weakSelf configureForImageSize:image.size];
+//                             NSLog(@"Display Image");
+//                             callback();
+//                         }
+//                     }
+//     ];
     [self addSubview:zoomView];
     [self configureForImageSize:zoomView.image.size];
 }

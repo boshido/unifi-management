@@ -10,9 +10,10 @@
 #import "TJSpinner.h"
 
 @interface unifiSettingViewController : UIViewController{
+    IBOutlet UILabel *permission;
     IBOutlet UILabel *name;
-    IBOutlet UILabel *surname;
     IBOutlet UILabel *email;
+    IBOutlet UIView *alarmView;
     NSString *url;
     TJSpinner *spinner;
     IBOutlet UIImageView *profilePicture;
