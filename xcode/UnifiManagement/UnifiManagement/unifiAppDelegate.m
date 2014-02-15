@@ -112,7 +112,7 @@
             
         }
         fromTokenId:deviceTokenString
-        isEnabled:YES
+        isEnabled:nil
     ];
     
 }

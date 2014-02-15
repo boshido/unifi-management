@@ -118,7 +118,7 @@
                   ];
               }
               else{
-                  
+                  [DejalBezelActivityView removeViewAnimated:YES];
                   UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Permission Denied"
                                                                  message: @"You don't have permission for using this Application."
                                                                 delegate: self
@@ -142,6 +142,7 @@
           ];
      }
      withHandleError:^(NSError *error) {
+         [DejalBezelActivityView removeViewAnimated:YES];
          UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Token Invalid"
                                                         message: @"Can not get data from google"
                                                        delegate: self

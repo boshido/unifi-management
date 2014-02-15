@@ -32,7 +32,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    apNameField = [[UITextField alloc] init];
 	// Do any additional setup after loading the view.
     __weak typeof (self) weakSelf = self;
     handleError= ^(NSError *error) {

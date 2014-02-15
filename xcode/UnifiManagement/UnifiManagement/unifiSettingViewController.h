@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "TJSpinner.h"
 
-@interface unifiSettingViewController : UIViewController{
+@interface unifiSettingViewController : UIViewController<UIAlertViewDelegate>{
     IBOutlet UILabel *permission;
     IBOutlet UILabel *name;
     IBOutlet UILabel *email;
-    IBOutlet UIView *alarmView;
+    IBOutlet UIScrollView *scrollView;
     NSString *url;
     TJSpinner *spinner;
     IBOutlet UIImageView *profilePicture;
-
+    NSJSONSerialization *settingsData;
 }
 
 -(IBAction)signOut:(id)sender;

@@ -12,6 +12,7 @@
 		0E022CBE18AD463900C7BCF6 /* AddIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CBB18AD463900C7BCF6 /* AddIcon.png */; };
 		0E022CBF18AD463900C7BCF6 /* EditIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CBC18AD463900C7BCF6 /* EditIcon.png */; };
 		0E022CC018AD463900C7BCF6 /* DeleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CBD18AD463900C7BCF6 /* DeleteIcon.png */; };
+		0E022CC318AE17D800C7BCF6 /* unifiSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E022CC218AE17D800C7BCF6 /* unifiSettingsView.m */; };
 		0E1E4659183CE74000624634 /* unifiApiConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E4658183CE74000624634 /* unifiApiConnector.m */; };
 		0E1E465D183CEDC800624634 /* unifiApResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E465C183CEDC800624634 /* unifiApResource.m */; };
 		0E2032BE185702EA00D949E4 /* HomeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032BC185702EA00D949E4 /* HomeIcon.png */; };
@@ -199,6 +200,8 @@
 		0E022CBB18AD463900C7BCF6 /* AddIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddIcon.png; sourceTree = "<group>"; };
 		0E022CBC18AD463900C7BCF6 /* EditIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EditIcon.png; sourceTree = "<group>"; };
 		0E022CBD18AD463900C7BCF6 /* DeleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteIcon.png; sourceTree = "<group>"; };
+		0E022CC118AE17D800C7BCF6 /* unifiSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiSettingsView.h; path = InterfaceBuilder/unifiSettingsView.h; sourceTree = "<group>"; };
+		0E022CC218AE17D800C7BCF6 /* unifiSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiSettingsView.m; path = InterfaceBuilder/unifiSettingsView.m; sourceTree = "<group>"; };
 		0E17314D185F1309004CD0A1 /* unifiUserViewControllerDep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiUserViewControllerDep.h; path = Navigator/unifiUserViewControllerDep.h; sourceTree = "<group>"; };
 		0E17314E185F1309004CD0A1 /* unifiUserViewControllerDep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiUserViewControllerDep.m; path = Navigator/unifiUserViewControllerDep.m; sourceTree = "<group>"; };
 		0E1E4657183CE74000624634 /* unifiApiConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiApiConnector.h; path = Resource/unifiApiConnector.h; sourceTree = "<group>"; };
@@ -435,6 +438,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E022CC418AF239E00C7BCF6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0EE341D8184C325A00C8814A /* unifiSettingViewController.h */,
+				0EE341D9184C325A00C8814A /* unifiSettingViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		0E1E4650183CE69300624634 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -589,6 +601,7 @@
 				0E86AC22183CAA6E001FB78B /* InterfaceBuilder */,
 				0EE341DB184C7C5B00C8814A /* NavigationManagement */,
 				0EC8D44118A5F9A0001DE953 /* Topology */,
+				0E022CC418AF239E00C7BCF6 /* Settings */,
 				0E488D96183C4FE4004FF995 /* Main_iPhone.storyboard */,
 				0E488D99183C4FE4004FF995 /* Main_iPad.storyboard */,
 				0E488D93183C4FE4004FF995 /* unifiAppDelegate.h */,
@@ -597,10 +610,6 @@
 				0EBCF10E184344FF00D11BFD /* unifiSplashViewController.m */,
 				0E4FD6931847BA30009383C6 /* unifiTabViewController.h */,
 				0E4FD6941847BA30009383C6 /* unifiTabViewController.m */,
-				0EAEE0981879A074002D3FB6 /* unifiDashboardViewController.h */,
-				0EAEE0991879A074002D3FB6 /* unifiDashboardViewController.m */,
-				0EE341D8184C325A00C8814A /* unifiSettingViewController.h */,
-				0EE341D9184C325A00C8814A /* unifiSettingViewController.m */,
 				0EEAB77E188AD79D00DF66A5 /* unifiFailureViewController.h */,
 				0EEAB77F188AD79D00DF66A5 /* unifiFailureViewController.m */,
 				0EF4E95F185501D30097FACB /* Deprecated */,
@@ -732,6 +741,8 @@
 				0ED16A6918A9C6F300C0E524 /* unifiButton.m */,
 				0E022CA818AC943400C7BCF6 /* unifiAlertTableView.h */,
 				0E022CA918AC943400C7BCF6 /* unifiAlertTableView.m */,
+				0E022CC118AE17D800C7BCF6 /* unifiSettingsView.h */,
+				0E022CC218AE17D800C7BCF6 /* unifiSettingsView.m */,
 			);
 			name = InterfaceBuilder;
 			sourceTree = "<group>";
@@ -793,6 +804,8 @@
 		0EE341DB184C7C5B00C8814A /* NavigationManagement */ = {
 			isa = PBXGroup;
 			children = (
+				0EAEE0981879A074002D3FB6 /* unifiDashboardViewController.h */,
+				0EAEE0991879A074002D3FB6 /* unifiDashboardViewController.m */,
 				0EB0770E1887C94B00521834 /* Statistic */,
 				0EB0770D1887C94100521834 /* User */,
 				0E7246C2188C1B090087DEF2 /* Device */,
@@ -1058,6 +1071,7 @@
 				0E66899F183DF1A400434A2F /* unifiUserResource.m in Sources */,
 				0EEAB769188A216B00DF66A5 /* unifiSwitch.m in Sources */,
 				0EB0770C1887C92400521834 /* unifiSelectDeviceViewController.m in Sources */,
+				0E022CC318AE17D800C7BCF6 /* unifiSettingsView.m in Sources */,
 				0EAEE09A1879A074002D3FB6 /* unifiDashboardViewController.m in Sources */,
 				0E1E4659183CE74000624634 /* unifiApiConnector.m in Sources */,
 				0E488D91183C4FE4004FF995 /* main.m in Sources */,

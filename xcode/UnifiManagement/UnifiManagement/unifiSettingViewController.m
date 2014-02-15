@@ -11,13 +11,19 @@
 #import "unifiApiConnector.h"
 #import "unifiGoogleResource.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "DejalActivityView.h"
 #import "unifiSystemResource.h"
+#import "unifiSettingsView.h"
+#import "unifiButton.h"
 
 @interface unifiSettingViewController ()
 
 @end
 
-@implementation unifiSettingViewController
+@implementation unifiSettingViewController{
+    UITextField *alertField;
+    NSInteger groupIndex;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -79,55 +85,225 @@
                               [spinnerWeak stopAnimating];
                           }
      ];
-    [self loadAlarm];
+    [self loadSettingInfoWithLoading:YES];
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)loadAlarm{
+-(void)loadSettingInfoWithLoading:(bool)loadingFlag{
+    if(loadingFlag){
+        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+    }
     [unifiSystemResource
-        getAlarm:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-            
-            if([[responseJSON valueForKey:@"code"] intValue] == 200){
-                NSInteger contentSize = 5;
-                for (NSJSONSerialization *json in [responseJSON valueForKey:@"data"]) {
-                    UILabel *describe = [[UILabel alloc] initWithFrame:CGRectMake(11, contentSize, 250, 21)];
-                    //hostname = [[UILabel alloc] initWithFrame:CGRectMake(144, contentSize, 103, 21)];
+        getSettingsInformation:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+            if([[responseJSON valueForKey:@"code"]intValue] == 200){
+                [DejalBezelActivityView removeViewAnimated:YES];
+                
+                settingsData = [responseJSON valueForKey:@"data"];
+                [scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+                
+                // General Settings
+                unifiSettingsView *generalView = [[unifiSettingsView alloc] initWithFrame:CGRectMake(10, 10, 300, 0)];
+                generalView.header.text = @"General Settings";
+                generalView.firstColumn.text = @"Unit";
+                generalView.secondColumn.text= @"Enabled";
+                
+                UIButton *notificationEnabled = [unifiSettingsView generateUIButtonWithTitle:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"On":@"Off"];
+                [notificationEnabled addTarget:self action:@selector(setNotificationEnabled:) forControlEvents:UIControlEventTouchUpInside];
+                [generalView addRowWithSubject:@"Push Notification" andFirstColumnView:nil andSecondColumnView:notificationEnabled];
+                
+                UIButton *loadMetric = [unifiSettingsView generateUIButtonWithTitle: [NSString stringWithFormat:@"%i per AP",[[[ settingsData valueForKey:@"load_balance"] valueForKey:@"max_sta"] intValue]]];
+                [loadMetric addTarget:self action:@selector(setLoadMetric:) forControlEvents:UIControlEventTouchUpInside];
+                
+                UIButton *loadEnabled = [unifiSettingsView generateUIButtonWithTitle: [[[ settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"On":@"Off"];
+                [loadEnabled addTarget:self action:@selector(setLoadEnabled:) forControlEvents:UIControlEventTouchUpInside];
+                [generalView addRowWithSubject:@"Users Load Balancing" andFirstColumnView:loadMetric andSecondColumnView:loadEnabled];
+    
+                [scrollView addSubview:generalView];
+                
+                // Bandwidth Group Settings
+                unifiSettingsView *groupView = [[unifiSettingsView alloc] initWithFrame:CGRectMake(10, generalView.frame.size.height+5, 300, 0)];
+                groupView.header.text = @"Bandwidth Groups";
+                groupView.firstColumn.text = @"Down";
+                groupView.secondColumn.text= @"Up";
+                
+                UIButton *addGroup = [unifiSettingsView generateAccessoryUIButtonWithImagedName:@"AddIcon.png"];
+                addGroup.frame = CGRectMake(105, 0, 20, 20);
+                [addGroup addTarget:self action:@selector(addGroup:) forControlEvents:UIControlEventTouchUpInside];
+                [groupView addSubview:addGroup];
+                
+                NSUInteger index = 0;
+                for(NSJSONSerialization *group in [settingsData valueForKey:@"usergroup"]){
+                    NSString *downString,*upString;
                     
-                    [describe setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
-                    [describe setTextAlignment:NSTextAlignmentLeft];
-                    [describe setFont:[UIFont systemFontOfSize:11]];
+                    if([[group valueForKey:@"qos_rate_max_down"] intValue] >0 && [[group valueForKey:@"downRate_enabled"] boolValue])
+                        downString = [NSString stringWithFormat:@"%0.0d KBps",[[group valueForKey:@"qos_rate_max_down"] intValue]/8];
+                    else
+                        downString = @"No Limit";
                     
-                    [describe setText:[json valueForKey:@"msg"]];
+                    if([[group valueForKey:@"qos_rate_max_up"] intValue] >0 && [[group valueForKey:@"upRate_enabled"] boolValue])
+                        upString= [NSString stringWithFormat:@"%0.0d KBps",[[group valueForKey:@"qos_rate_max_up"] intValue]/8];
+                    else
+                        upString = @"No Limit";
+
                     
-                    [alarmView addSubview:describe];
+                    UIButton *downButton = [unifiSettingsView generateUIButtonWithTitle:downString];
+                    downButton.tag=index;
+                    [downButton addTarget:self action:@selector(setGroupDownload:) forControlEvents:UIControlEventTouchUpInside];
                     
-                    //                    unifiUITapGestureRecognizer* describeGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(describeTapped:)];
-                    //                    // if labelView is not set userInteractionEnabled, you must do so
-                    //                    [describeGesture initParameter];
-                    //                    [describeGesture setParameter:[json valueForKey:@"google_id"] withKey:@"google_id"];
-                    //                    [describe setUserInteractionEnabled:YES];
-                    //                    [describe addGestureRecognizer:describeGesture];
-                    //
-                    //                    unifiUITapGestureRecognizer* hostnameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(hostnameTapped:)];
-                    //                    // if labelView is not set userInteractionEnabled, you must do so
-                    //                    [hostnameGesture initParameter];
-                    //                    [hostnameGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
-                    //                    [hostname setUserInteractionEnabled:YES];
-                    //                    [hostname addGestureRecognizer:hostnameGesture];
-                    contentSize+=20;
+                    UIButton *upButton = [unifiSettingsView generateUIButtonWithTitle:upString];
+                    upButton.tag=index;
+                    [upButton addTarget:self action:@selector(setGroupUpload:) forControlEvents:UIControlEventTouchUpInside];
                     
+
+                    
+                    [groupView addRowWithSubject:[group valueForKey:@"name"] andFirstColumnView:downButton  andSecondColumnView:upButton];
+                    index++;
                 }
+                [scrollView addSubview:groupView];
             }
         }
         withHandleError:^(NSError *error) {
-        
+            
         }
-        withType:false fromStart:0 toLength:5
-     ];
+        fromTokenId:@"27216b1263b9fa530b2033e6f1c83d3d23e312347ae5d68fef5b630ade49484f"
+    ];
+    NSLog(@"%@",[unifiGlobalVariable sharedGlobalData].iosToken);
 }
+
+-(IBAction)setNotificationEnabled:(id)sender{
+    
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Comfirm Dialog"
+                                                   message: [NSString stringWithFormat:@"Do you really want to turn notification %@",[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"off" : @"on"]
+                                                  delegate: self
+                                         cancelButtonTitle:@"Cancel"
+                                         otherButtonTitles:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"Turn off" : @"Turn on",nil];
+    
+    alert.tag = 2;
+    [alert show];
+}
+
+-(IBAction)setLoadMetric:(id)sender{
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Users Load Banlancing"
+                          message:@"Balance number of stations per radio"
+                          delegate:self
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles:@"Continue", nil ];
+    
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alertField = [alert textFieldAtIndex:0];
+    alertField.keyboardType = UIKeyboardTypeNumberPad;
+    alertField.text = [NSString stringWithFormat:@"%i",[[[ settingsData valueForKey:@"load_balance"] valueForKey:@"max_sta"] intValue]];
+    [alert setTag:3];
+    [alert show];
+
+}
+
+-(IBAction)setLoadEnabled:(id)sender{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Comfirm Dialog"
+                                                   message: [NSString stringWithFormat:@"Do you really want to turn load banlancing %@",[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"off":@"on"]
+                                                  delegate: self
+                                         cancelButtonTitle:@"Cancel"
+                                         otherButtonTitles:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"Turn off" : @"Turn on" ,nil];
+    
+    alert.tag = 4;
+    [alert show];
+}
+
+-(IBAction)addGroup:(id)sender{
+   
+    
+}
+
+-(IBAction)setGroupDownload:(id)sender{
+    UIButton *button = (UIButton *)sender;
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:[NSString stringWithFormat:@"Setting \"%@\" Group",[[[ settingsData valueForKey:@"usergroup"] objectAtIndex:button.tag] valueForKey:@"name"]]
+                          message:@"Set 0 for no limit \nDownload (Maximum 12800 KBps)"
+                          delegate:self
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles:@"Continue", nil ];
+    
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alertField = [alert textFieldAtIndex:0];
+    alertField.keyboardType = UIKeyboardTypeNumberPad;
+    alertField.text = [NSString stringWithFormat:@"%i",[[[[ settingsData valueForKey:@"usergroup"] objectAtIndex:button.tag] valueForKey:@"qos_rate_max_down"] intValue]/8];
+    groupIndex = button.tag;
+    
+    [alert setTag:5];
+    [alert show];
+    
+}
+
+-(IBAction)setGroupUpload:(id)sender{
+    UIButton *button = (UIButton *)sender;
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:[NSString stringWithFormat:@"Setting \"%@\" Group",[[[ settingsData valueForKey:@"usergroup"] objectAtIndex:button.tag] valueForKey:@"name"]]
+                          message:@"Set 0 for no limit \nUpload (Maximum 12800 KBps)"
+                          delegate:self
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles:@"Continue", nil ];
+    
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alertField = [alert textFieldAtIndex:0];
+    alertField.keyboardType = UIKeyboardTypeNumberPad;
+    alertField.text = [NSString stringWithFormat:@"%i",[[[[ settingsData valueForKey:@"usergroup"] objectAtIndex:button.tag] valueForKey:@"qos_rate_max_up"] intValue]/8];
+    groupIndex = button.tag;
+    
+    [alert setTag:6];
+    [alert show];
+    
+}
+
+//-(void)loadAlarm{
+//    [unifiSystemResource
+//        getAlarm:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+//            
+//            if([[responseJSON valueForKey:@"code"] intValue] == 200){
+//                NSInteger contentSize = 5;
+//                for (NSJSONSerialization *json in [responseJSON valueForKey:@"data"]) {
+//                    UILabel *describe = [[UILabel alloc] initWithFrame:CGRectMake(11, contentSize, 250, 21)];
+//                    //hostname = [[UILabel alloc] initWithFrame:CGRectMake(144, contentSize, 103, 21)];
+//                    
+//                    [describe setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
+//                    [describe setTextAlignment:NSTextAlignmentLeft];
+//                    [describe setFont:[UIFont systemFontOfSize:11]];
+//                    
+//                    [describe setText:[json valueForKey:@"msg"]];
+//                    
+//                    [alarmView addSubview:describe];
+//                    
+//                    //                    unifiUITapGestureRecognizer* describeGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(describeTapped:)];
+//                    //                    // if labelView is not set userInteractionEnabled, you must do so
+//                    //                    [describeGesture initParameter];
+//                    //                    [describeGesture setParameter:[json valueForKey:@"google_id"] withKey:@"google_id"];
+//                    //                    [describe setUserInteractionEnabled:YES];
+//                    //                    [describe addGestureRecognizer:describeGesture];
+//                    //
+//                    //                    unifiUITapGestureRecognizer* hostnameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(hostnameTapped:)];
+//                    //                    // if labelView is not set userInteractionEnabled, you must do so
+//                    //                    [hostnameGesture initParameter];
+//                    //                    [hostnameGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
+//                    //                    [hostname setUserInteractionEnabled:YES];
+//                    //                    [hostname addGestureRecognizer:hostnameGesture];
+//                    contentSize+=20;
+//                    
+//                }
+//            }
+//        }
+//        withHandleError:^(NSError *error) {
+//        
+//        }
+//        withType:false fromStart:0 toLength:5
+//     ];
+//}
 -(IBAction)signOut:(id)sender{
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Comfirm Dialog"
                                                    message: @"Do you really want to signout"
@@ -135,41 +311,117 @@
                                          cancelButtonTitle:@"Cancel"
                                          otherButtonTitles:@"OK",nil];
     
-    
+    alert.tag = 1;
     [alert show];
     
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-    {
-        NSLog(@"user pressed Button Indexed 0");
-        // Any action can be performed here
+{   if(buttonIndex>0){
+        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     }
-    else
+    if(alertView.tag == 1)
     {
-         ApiCompleteCallback completeCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
-             NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-             NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
-         
-             NSError *error;
-             if(![[NSFileManager defaultManager] removeItemAtPath:plistPath error:&error])
-             {
+        if(buttonIndex>0){
+            ApiCompleteCallback completeCallback = ^(NSJSONSerialization *responseJSON,NSString * responseNSString){
+                [DejalBezelActivityView removeViewAnimated:YES];
+                NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                NSString *plistPath = [rootPath stringByAppendingPathComponent:@"refresh_token.plist"];
+
+                NSError *error;
+                if(![[NSFileManager defaultManager] removeItemAtPath:plistPath error:&error])
+                {
                  //TODO: Handle/Log error
-             }
-             [unifiGlobalVariable initialValue];
-             [self.tabBarController dismissViewControllerAnimated:YES completion:^{
+                }
+                [unifiGlobalVariable initialValue];
+                [self.tabBarController dismissViewControllerAnimated:YES completion:^{
                   [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
-             }];
-            
-             
-//             [self.tabBarController.delegate
-//              tabBarController:self.tabBarController
-//              shouldSelectViewController:[self.tabBarController.viewControllers objectAtIndex:0]];  // send didSelectViewController to the tabBarController delegate
-         };
-         unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"https://accounts.google.com/Logout" withCompleteCallback:completeCallback withErrorCallback:nil];
-         [object loadGetData];
+                }];
+
+
+
+                //             [self.tabBarController.delegate
+                //              tabBarController:self.tabBarController
+                //              shouldSelectViewController:[self.tabBarController.viewControllers objectAtIndex:0]];  // send didSelectViewController to the tabBarController delegate
+            };
+            unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:@"https://accounts.google.com/Logout" withCompleteCallback:completeCallback withErrorCallback:nil];
+            [object loadGetData];
+        }
+    }
+    else if(alertView.tag == 2){
+        if(buttonIndex>0){
+            [unifiSystemResource
+                 setIosToken:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+                     
+                     [self loadSettingInfoWithLoading:NO];
+                 }
+                 withHandleError:^(NSError *error) {
+                     
+                 }
+                 fromTokenId:@"27216b1263b9fa530b2033e6f1c83d3d23e312347ae5d68fef5b630ade49484f" isEnabled:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"false":@"true"
+            ];
+        }
+    }
+    else if(alertView.tag == 3){
+        if(buttonIndex>0){
+            [unifiSystemResource
+                 setLoadBalancing:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+                      [self loadSettingInfoWithLoading:NO];
+                 }
+                 withHandleError:^(NSError *error) {
+                     
+                 }
+                 withMaxUser:[alertField.text intValue]
+                 isEnabled:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"true":@"false"
+            ];
+        }
+    }
+    else if(alertView.tag == 4){
+        if(buttonIndex>0){
+            [unifiSystemResource
+                setLoadBalancing:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+                      [self loadSettingInfoWithLoading:NO];
+                }
+                withHandleError:^(NSError *error) {
+                     
+                }
+                withMaxUser:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"max_sta"] intValue]
+                isEnabled:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"false":@"true"
+            ];
+        }
+    }
+    else if(alertView.tag == 5){
+        if(buttonIndex>0){
+            [unifiSystemResource
+                setUserGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+                     [self loadSettingInfoWithLoading:NO];
+                }
+                withHandleError:^(NSError *error) {
+                    
+                }
+                fromId:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"_id"]
+                withName:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"name"]
+                andDownload:[alertField.text intValue]*8
+                andUpload:[[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"qos_rate_max_up"] intValue]
+             ];
+        }
+    }
+    else if(alertView.tag == 6){
+        if(buttonIndex>0){
+            [unifiSystemResource
+             setUserGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+                  [self loadSettingInfoWithLoading:NO];
+             }
+             withHandleError:^(NSError *error) {
+                 
+             }
+             fromId:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"_id"]
+             withName:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"name"]
+             andDownload:[[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"qos_rate_max_down"] intValue]
+             andUpload:[alertField.text intValue]*8
+             ];
+        }
     }
 }
 
