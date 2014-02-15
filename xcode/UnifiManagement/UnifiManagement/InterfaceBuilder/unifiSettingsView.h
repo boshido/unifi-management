@@ -12,9 +12,10 @@
 @interface unifiSettingsView : UIView
 @property(retain,nonatomic) UILabel *header,*firstColumn,*secondColumn;
 @property(retain,nonatomic) UIView *line;
+@property NSInteger contentSize;
 
-
--(void)addRowWithSubject:(NSString *)subject andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView;
+-(void)addRowWithSubjectString:(NSString *)subject andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView;
+-(void)addRowWithSubjectView:(UIView*)subjectView andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView;
 
 +(UIButton*)generateUIButtonWithTitle:(NSString *)title;
 +(UIButton*)generateAccessoryUIButtonWithImagedName:(NSString *)imagename;

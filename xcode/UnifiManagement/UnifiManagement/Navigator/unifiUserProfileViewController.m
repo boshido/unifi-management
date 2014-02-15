@@ -263,9 +263,9 @@
 
 - (void)unifiSelectDeviceView:(unifiSelectDeviceViewController *)viewController
               finishAddDevice:(BOOL)sign{
-    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
-    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
-    [self loadDevice];
+//    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+//    [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+//    [self loadDevice];
 }
 
 - (void)failureView:(unifiFailureViewController *)viewController

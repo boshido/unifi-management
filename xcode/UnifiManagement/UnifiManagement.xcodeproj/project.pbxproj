@@ -13,6 +13,7 @@
 		0E022CBF18AD463900C7BCF6 /* EditIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CBC18AD463900C7BCF6 /* EditIcon.png */; };
 		0E022CC018AD463900C7BCF6 /* DeleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CBD18AD463900C7BCF6 /* DeleteIcon.png */; };
 		0E022CC318AE17D800C7BCF6 /* unifiSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E022CC218AE17D800C7BCF6 /* unifiSettingsView.m */; };
+		0E022CC818AF247500C7BCF6 /* unifiAddBandwidthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E022CC718AF247500C7BCF6 /* unifiAddBandwidthViewController.m */; };
 		0E1E4659183CE74000624634 /* unifiApiConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E4658183CE74000624634 /* unifiApiConnector.m */; };
 		0E1E465D183CEDC800624634 /* unifiApResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E465C183CEDC800624634 /* unifiApResource.m */; };
 		0E2032BE185702EA00D949E4 /* HomeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032BC185702EA00D949E4 /* HomeIcon.png */; };
@@ -202,6 +203,8 @@
 		0E022CBD18AD463900C7BCF6 /* DeleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteIcon.png; sourceTree = "<group>"; };
 		0E022CC118AE17D800C7BCF6 /* unifiSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiSettingsView.h; path = InterfaceBuilder/unifiSettingsView.h; sourceTree = "<group>"; };
 		0E022CC218AE17D800C7BCF6 /* unifiSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiSettingsView.m; path = InterfaceBuilder/unifiSettingsView.m; sourceTree = "<group>"; };
+		0E022CC618AF247500C7BCF6 /* unifiAddBandwidthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiAddBandwidthViewController.h; sourceTree = "<group>"; };
+		0E022CC718AF247500C7BCF6 /* unifiAddBandwidthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiAddBandwidthViewController.m; sourceTree = "<group>"; };
 		0E17314D185F1309004CD0A1 /* unifiUserViewControllerDep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiUserViewControllerDep.h; path = Navigator/unifiUserViewControllerDep.h; sourceTree = "<group>"; };
 		0E17314E185F1309004CD0A1 /* unifiUserViewControllerDep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiUserViewControllerDep.m; path = Navigator/unifiUserViewControllerDep.m; sourceTree = "<group>"; };
 		0E1E4657183CE74000624634 /* unifiApiConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiApiConnector.h; path = Resource/unifiApiConnector.h; sourceTree = "<group>"; };
@@ -441,10 +444,20 @@
 		0E022CC418AF239E00C7BCF6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				0E022CC518AF243400C7BCF6 /* BandwidthGroup */,
 				0EE341D8184C325A00C8814A /* unifiSettingViewController.h */,
 				0EE341D9184C325A00C8814A /* unifiSettingViewController.m */,
 			);
 			name = Settings;
+			sourceTree = "<group>";
+		};
+		0E022CC518AF243400C7BCF6 /* BandwidthGroup */ = {
+			isa = PBXGroup;
+			children = (
+				0E022CC618AF247500C7BCF6 /* unifiAddBandwidthViewController.h */,
+				0E022CC718AF247500C7BCF6 /* unifiAddBandwidthViewController.m */,
+			);
+			name = BandwidthGroup;
 			sourceTree = "<group>";
 		};
 		0E1E4650183CE69300624634 /* Resource */ = {
@@ -1085,6 +1098,7 @@
 				0EEAB780188AD79D00DF66A5 /* unifiFailureViewController.m in Sources */,
 				0ED16A5D18A94D5800C0E524 /* unifiApProfileViewController.m in Sources */,
 				0E4FD692184732E8009383C6 /* unifiGoogleResource.m in Sources */,
+				0E022CC818AF247500C7BCF6 /* unifiAddBandwidthViewController.m in Sources */,
 				0EA86A87188D5B1D00BBBDC4 /* unifiDeviceProfileViewController.m in Sources */,
 				0EE341DE184C7CA700C8814A /* unifiStatisticViewController.m in Sources */,
 				0EBCF1121843763400D11BFD /* TJSpinner.m in Sources */,

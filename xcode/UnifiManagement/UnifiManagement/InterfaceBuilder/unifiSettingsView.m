@@ -7,11 +7,15 @@
 //
 
 #import "unifiSettingsView.h"
+const NSInteger subjectColumnX = 10;
+const NSInteger firstColumnX = 145;
+const NSInteger secondColumnX = 220;
+const NSInteger gapBetweenRow = 18;
 
 @implementation unifiSettingsView{
-    NSInteger contentSize;
+    
 }
-@synthesize header,firstColumn,secondColumn,line;
+@synthesize header,firstColumn,secondColumn,line,contentSize;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -23,13 +27,13 @@
         header.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
         header.textAlignment = NSTextAlignmentLeft;
         
-        firstColumn =[[UILabel alloc] initWithFrame:CGRectMake(160, 0, 60, 21)];
+        firstColumn =[[UILabel alloc] initWithFrame:CGRectMake(firstColumnX, 0, 60, 21)];
         firstColumn.font = [UIFont systemFontOfSize:12];
         firstColumn.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
         firstColumn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
         firstColumn.textAlignment = NSTextAlignmentCenter;
         
-        secondColumn =[[UILabel alloc] initWithFrame:CGRectMake(235, 0, 60, 21)];
+        secondColumn =[[UILabel alloc] initWithFrame:CGRectMake(secondColumnX, 0, 60, 21)];
         secondColumn.font = [UIFont systemFontOfSize:12];
         secondColumn.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
         secondColumn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
@@ -50,23 +54,33 @@
 
 }
 
--(void)addRowWithSubject:(NSString *)subject andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView{
-    NSInteger subjectColumnX = 10;
-    NSInteger firstColumnX = 160;
-    NSInteger secondColumnX = 235;
-    NSInteger gapBetweenRow = 18;
+-(void)addRowWithSubjectString:(NSString *)subject andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView{
+
     
-    UILabel *subjectColumn =[[UILabel alloc] initWithFrame:CGRectMake( subjectColumnX , contentSize, 125, 21)];
-    subjectColumn.font = [UIFont systemFontOfSize:12];
-    subjectColumn.textColor = [UIColor whiteColor];
-    subjectColumn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
-    subjectColumn.textAlignment = NSTextAlignmentLeft;
-    subjectColumn.text=subject;
+    UILabel *subjectView =[[UILabel alloc] initWithFrame:CGRectMake( subjectColumnX , contentSize, 125, 21)];
+    subjectView.font = [UIFont systemFontOfSize:12];
+    subjectView.textColor = [UIColor whiteColor];
+    subjectView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
+    subjectView.textAlignment = NSTextAlignmentLeft;
+    subjectView.text=subject;
     
     firstColumnView.frame = CGRectMake(firstColumnX, contentSize, 60, 21);
     secondColumnView.frame = CGRectMake(secondColumnX, contentSize, 60, 21);
     
-    [self addSubview:subjectColumn];
+    [self addSubview:subjectView];
+    [self addSubview:firstColumnView];
+    [self addSubview:secondColumnView];
+    contentSize +=gapBetweenRow;
+    
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, contentSize+13);
+}
+-(void)addRowWithSubjectView:(UIView*)subjectView andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView{
+    
+    subjectView.frame = CGRectMake( subjectColumnX , contentSize, 125, 21);
+    firstColumnView.frame = CGRectMake(firstColumnX, contentSize, 60, 21);
+    secondColumnView.frame = CGRectMake(secondColumnX, contentSize, 60, 21);
+    
+    [self addSubview:subjectView];
     [self addSubview:firstColumnView];
     [self addSubview:secondColumnView];
     contentSize +=gapBetweenRow;

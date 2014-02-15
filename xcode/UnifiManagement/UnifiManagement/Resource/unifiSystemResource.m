@@ -41,13 +41,19 @@
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/alarm?type=%@&start=%i&length=%i",ApiServerAddress,type ? @"true" : @"false",start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
+
 +(void)setIosToken:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromTokenId:(NSString *)tokenId isEnabled:(NSString *) flag{
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/ios-token",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"token_id=%@&enabled=%@",tokenId,flag != nil ? flag : @""]];
     
     [object loadPostData];
 }
-+(void)setUserGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id withName:(NSString *)name andDownload:(NSInteger)download andUpload:(NSInteger)upload {
-    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/usergroup",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"id=%@&name=%@&qos_rate_max_down=%i&qos_rate_max_up=%i",id,name,download,upload]];
++(void)setGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id withName:(NSString *)name andDownload:(NSInteger)download andUpload:(NSInteger)upload {
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/group",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"id=%@&name=%@&qos_rate_max_down=%i&qos_rate_max_up=%i",id,name,download,upload]];
+    
+    [object loadPostData];
+}
++(void)deleteGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id {
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/delete-group",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"id=%@",id]];
     
     [object loadPostData];
 }
@@ -57,11 +63,31 @@
     [object loadPostData];
 }
 
+
 +(void)testConection:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
     unifiApiConnector *object = [[unifiApiConnector alloc]
                                  initWithUrl:[NSString stringWithFormat:@"http://%@/unifi",ApiServerAddress]
                                  withCompleteCallback:completeCallback withErrorCallback:errorCallback
                                  ];
     [object loadGetData];
+}
+
+
+
+
++(void)getDeviceInGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length andGroupId:(NSString *)id{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-in-group?start=%i&length=%i&id=%@",ApiServerAddress,start,length,id ] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    
+    [object loadGetData];
+}
++(void)getDeviceForAdding:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length andGroupId:(NSString *)id{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-for-adding?start=%i&length=%i&id=%@",ApiServerAddress,start,length,id ] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    
+    [object loadGetData];
+}
++(void)changeDeviceToGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromGroupId:(NSString *)groupId andUserId:(NSString *)UserId{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/change-device-to-group",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"group_id=%@&user_id=%@",groupId,UserId]];
+    
+    [object loadPostData];
 }
 @end

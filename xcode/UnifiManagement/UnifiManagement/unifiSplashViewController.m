@@ -113,9 +113,10 @@
                   else {
                       NSLog(@"Error : %@",error);
                   }
-                  [self dismissViewControllerAnimated:YES completion:nil];
+                  
                   [self presentViewController: [self.storyboard instantiateViewControllerWithIdentifier:@"unifiTabViewController"] animated:YES completion:nil
                   ];
+                 // [self dismissViewControllerAnimated:YES completion:nil];
               }
               else{
                   [DejalBezelActivityView removeViewAnimated:YES];

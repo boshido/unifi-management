@@ -15,6 +15,7 @@
 #import "unifiSystemResource.h"
 #import "unifiSettingsView.h"
 #import "unifiButton.h"
+#import "unifiAddBandwidthViewController.h"
 
 @interface unifiSettingViewController ()
 
@@ -23,6 +24,7 @@
 @implementation unifiSettingViewController{
     UITextField *alertField;
     NSInteger groupIndex;
+    ApiErrorCallback handleError;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,7 +40,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-
+    __weak typeof(self) weakSelf = self;
+    handleError= ^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:YES];
+        unifiFailureViewController *failureController = [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
+        [weakSelf presentViewController:failureController animated:YES completion:nil];
+    };
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -113,14 +120,14 @@
                 
                 UIButton *notificationEnabled = [unifiSettingsView generateUIButtonWithTitle:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"On":@"Off"];
                 [notificationEnabled addTarget:self action:@selector(setNotificationEnabled:) forControlEvents:UIControlEventTouchUpInside];
-                [generalView addRowWithSubject:@"Push Notification" andFirstColumnView:nil andSecondColumnView:notificationEnabled];
+                [generalView addRowWithSubjectString:@"Push Notification" andFirstColumnView:nil andSecondColumnView:notificationEnabled];
                 
                 UIButton *loadMetric = [unifiSettingsView generateUIButtonWithTitle: [NSString stringWithFormat:@"%i per AP",[[[ settingsData valueForKey:@"load_balance"] valueForKey:@"max_sta"] intValue]]];
                 [loadMetric addTarget:self action:@selector(setLoadMetric:) forControlEvents:UIControlEventTouchUpInside];
                 
                 UIButton *loadEnabled = [unifiSettingsView generateUIButtonWithTitle: [[[ settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"On":@"Off"];
                 [loadEnabled addTarget:self action:@selector(setLoadEnabled:) forControlEvents:UIControlEventTouchUpInside];
-                [generalView addRowWithSubject:@"Users Load Balancing" andFirstColumnView:loadMetric andSecondColumnView:loadEnabled];
+                [generalView addRowWithSubjectString:@"Users Load Balancing" andFirstColumnView:loadMetric andSecondColumnView:loadEnabled];
     
                 [scrollView addSubview:generalView];
                 
@@ -150,6 +157,12 @@
                         upString = @"No Limit";
 
                     
+                    UIButton *nameButton = [unifiSettingsView generateUIButtonWithTitle:[group valueForKey:@"name"]];
+                    nameButton.tag=index;
+                    [nameButton setTitleColor:[UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0] forState:UIControlStateNormal];
+                    nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+                    [nameButton addTarget:self action:@selector(addUserToGroup:) forControlEvents:UIControlEventTouchUpInside];
+                    
                     UIButton *downButton = [unifiSettingsView generateUIButtonWithTitle:downString];
                     downButton.tag=index;
                     [downButton addTarget:self action:@selector(setGroupDownload:) forControlEvents:UIControlEventTouchUpInside];
@@ -158,17 +171,33 @@
                     upButton.tag=index;
                     [upButton addTarget:self action:@selector(setGroupUpload:) forControlEvents:UIControlEventTouchUpInside];
                     
-
+                    NSLog(@"%i",groupView.contentSize);
+                    UIButton *deleteGroup = [unifiSettingsView generateAccessoryUIButtonWithImagedName:@"DeleteIcon.png"];
+                    deleteGroup.tag=index;
                     
-                    [groupView addRowWithSubject:[group valueForKey:@"name"] andFirstColumnView:downButton  andSecondColumnView:upButton];
+                    if(![[group valueForKey:@"attr_no_delete"] boolValue]){
+                        deleteGroup.frame = CGRectMake(280, groupView.contentSize, 20, 20);
+                        [deleteGroup addTarget:self action:@selector(deleteGroup:) forControlEvents:UIControlEventTouchUpInside];
+                        [groupView addSubview:deleteGroup];
+                    }
+                    
+                    [groupView addRowWithSubjectView:nameButton andFirstColumnView:downButton  andSecondColumnView:upButton];
+                    
+//
+//                    if([[group valueForKey:@"attr_no_delete"] boolValue]){ // Default Limit
+//                        
+//                        [groupView addRowWithSubjectString:[group valueForKey:@"name"] andFirstColumnView:downButton  andSecondColumnView:upButton];
+//                    }
+//                    else{ // Other Limit
+//          
+//                    }
+//                    
                     index++;
                 }
                 [scrollView addSubview:groupView];
             }
         }
-        withHandleError:^(NSError *error) {
-            
-        }
+        withHandleError:handleError
         fromTokenId:@"27216b1263b9fa530b2033e6f1c83d3d23e312347ae5d68fef5b630ade49484f"
     ];
     NSLog(@"%@",[unifiGlobalVariable sharedGlobalData].iosToken);
@@ -215,8 +244,21 @@
 }
 
 -(IBAction)addGroup:(id)sender{
-   
     
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"Create Usergroup"
+                          message:@"Enter group name"
+                          delegate:self
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles:@"Continue", nil ];
+    
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alertField = [alert textFieldAtIndex:0];
+    alertField.keyboardType = UIKeyboardTypeAlphabet;
+    alertField.text = @"";
+    
+    [alert setTag:5];
+    [alert show];
 }
 
 -(IBAction)setGroupDownload:(id)sender{
@@ -235,7 +277,7 @@
     alertField.text = [NSString stringWithFormat:@"%i",[[[[ settingsData valueForKey:@"usergroup"] objectAtIndex:button.tag] valueForKey:@"qos_rate_max_down"] intValue]/8];
     groupIndex = button.tag;
     
-    [alert setTag:5];
+    [alert setTag:6];
     [alert show];
     
 }
@@ -257,10 +299,35 @@
     alertField.text = [NSString stringWithFormat:@"%i",[[[[ settingsData valueForKey:@"usergroup"] objectAtIndex:button.tag] valueForKey:@"qos_rate_max_up"] intValue]/8];
     groupIndex = button.tag;
     
-    [alert setTag:6];
+    [alert setTag:7];
     [alert show];
     
 }
+
+-(IBAction)deleteGroup:(id)sender{
+     UIButton *button = (UIButton *)sender;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle: @"Comfirm Dialog"
+                                                   message: [NSString stringWithFormat:@"Do you really want to delete %@ group",[[[ settingsData valueForKey:@"usergroup"] objectAtIndex:button.tag] valueForKey:@"name"]]
+                                                  delegate: self
+                                         cancelButtonTitle:@"Cancel"
+                                         otherButtonTitles:@"Delete" ,nil];
+    groupIndex = button.tag;
+    
+    alert.tag = 8;
+    [alert show];
+}
+-(IBAction)addUserToGroup:(id)sender{
+    UIButton *button = (UIButton *)sender;
+    
+    unifiAddBandwidthViewController *addBadwidth = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiAddBandwidthViewController"];
+    
+    addBadwidth.groupData = [[ settingsData valueForKey:@"usergroup"] objectAtIndex:button.tag] ;
+
+    
+    [self.navigationController pushViewController:addBadwidth animated:YES];
+}
+
+
 
 //-(void)loadAlarm{
 //    [unifiSystemResource
@@ -336,7 +403,7 @@
                 }
                 [unifiGlobalVariable initialValue];
                 [self.tabBarController dismissViewControllerAnimated:YES completion:^{
-                  [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
+//                  [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
                 }];
 
 
@@ -356,9 +423,7 @@
                      
                      [self loadSettingInfoWithLoading:NO];
                  }
-                 withHandleError:^(NSError *error) {
-                     
-                 }
+                 withHandleError:handleError
                  fromTokenId:@"27216b1263b9fa530b2033e6f1c83d3d23e312347ae5d68fef5b630ade49484f" isEnabled:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"false":@"true"
             ];
         }
@@ -369,9 +434,7 @@
                  setLoadBalancing:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
                       [self loadSettingInfoWithLoading:NO];
                  }
-                 withHandleError:^(NSError *error) {
-                     
-                 }
+                 withHandleError:handleError
                  withMaxUser:[alertField.text intValue]
                  isEnabled:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"true":@"false"
             ];
@@ -383,9 +446,7 @@
                 setLoadBalancing:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
                       [self loadSettingInfoWithLoading:NO];
                 }
-                withHandleError:^(NSError *error) {
-                     
-                }
+                withHandleError:handleError
                 withMaxUser:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"max_sta"] intValue]
                 isEnabled:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"false":@"true"
             ];
@@ -394,33 +455,55 @@
     else if(alertView.tag == 5){
         if(buttonIndex>0){
             [unifiSystemResource
-                setUserGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+                setGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
                      [self loadSettingInfoWithLoading:NO];
                 }
-                withHandleError:^(NSError *error) {
-                    
-                }
-                fromId:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"_id"]
-                withName:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"name"]
-                andDownload:[alertField.text intValue]*8
-                andUpload:[[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"qos_rate_max_up"] intValue]
+                withHandleError:handleError
+                fromId:@""
+                withName:alertField.text
+                andDownload:0
+                andUpload:0
              ];
         }
     }
     else if(alertView.tag == 6){
         if(buttonIndex>0){
             [unifiSystemResource
-             setUserGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+             setGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+                 [self loadSettingInfoWithLoading:NO];
+             }
+             withHandleError:handleError
+             fromId:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"_id"]
+             withName:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"name"]
+             andDownload:[alertField.text intValue]*8
+             andUpload:[[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"qos_rate_max_up"] intValue]
+             ];
+        }
+    }
+    else if(alertView.tag == 7){
+        if(buttonIndex>0){
+            [unifiSystemResource
+             setGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
                   [self loadSettingInfoWithLoading:NO];
              }
-             withHandleError:^(NSError *error) {
-                 
-             }
+             withHandleError:handleError
              fromId:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"_id"]
              withName:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"name"]
              andDownload:[[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"qos_rate_max_down"] intValue]
              andUpload:[alertField.text intValue]*8
              ];
+        }
+    }
+    else if(alertView.tag == 8){
+        if(buttonIndex>0){
+            [unifiSystemResource
+                 deleteGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+                     NSLog(@"%@",responseNSString);
+                     [self loadSettingInfoWithLoading:NO];
+                 }
+                 withHandleError:handleError
+                 fromId:[[[ settingsData valueForKey:@"usergroup"]objectAtIndex:groupIndex] valueForKey:@"_id"]
+            ];
         }
     }
 }
