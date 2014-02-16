@@ -15,7 +15,10 @@
 +(void)getMapList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback;
 +(void)getMapApList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromMapId:(NSString *)id;
 +(void)getSettingsInformation:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromTokenId:(NSString *)tokenId;
-+(void)getAlarm:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback withType:(bool)type fromStart:(NSInteger)start toLength:(NSInteger)length ;
+
++(void)setNotification:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback withTokenId:(NSString *)tokenId;
++(void)getNotification:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback withTokenId:(NSString *)tokenId;
++(void)getNotificationList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length withTokenId:(NSString *)tokenId;
 
 +(void)setGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id withName:(NSString *)name andDownload:(NSInteger)download andUpload:(NSInteger)upload;
 +(void)deleteGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id ;

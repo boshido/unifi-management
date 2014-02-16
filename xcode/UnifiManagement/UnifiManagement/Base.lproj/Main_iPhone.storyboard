@@ -1346,7 +1346,7 @@ summarize</string>
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="148"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x7E-fz-blK">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x7E-fz-blK">
                                         <rect key="frame" x="15" y="38" width="95" height="94"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
@@ -1376,12 +1376,16 @@ summarize</string>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.10588236149999999" green="0.71764707569999997" blue="0.65098041299999998" alpha="1" colorSpace="deviceRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <inset key="contentEdgeInsets" minX="-7" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <inset key="titleEdgeInsets" minX="-9" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" title="Notfication (50)">
+                                        <state key="normal" title="0   Notfication">
                                             <color key="titleShadowColor" red="0.62755102039999999" green="0.61746589350000003" blue="0.6250297387" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
-                                            <action selector="restartAp:" destination="i5g-hI-Uu8" eventType="touchUpInside" id="097-bA-EdE"/>
+                                            <action selector="showNotification:" destination="Bna-0o-ING" eventType="touchUpInside" id="AQT-Xk-Z4H"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yOG-GI-Ztf" userLabel="Back">
@@ -1393,8 +1397,10 @@ summarize</string>
                                         <state key="normal" title="Signout">
                                             <color key="titleShadowColor" red="0.62755102039999999" green="0.61746589350000003" blue="0.6250297387" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
-                                            <action selector="restartAp:" destination="i5g-hI-Uu8" eventType="touchUpInside" id="vbB-FF-GsH"/>
                                             <action selector="signOut:" destination="Bna-0o-ING" eventType="touchUpInside" id="UHA-3Z-4u1"/>
                                         </connections>
                                     </button>
@@ -1428,6 +1434,7 @@ summarize</string>
                     <connections>
                         <outlet property="email" destination="Gmx-p4-HV0" id="cuL-Np-TUT"/>
                         <outlet property="name" destination="FMY-37-4pT" id="Fr7-ba-Tsj"/>
+                        <outlet property="notification" destination="Ho9-Sz-328" id="bZe-MB-C2g"/>
                         <outlet property="permission" destination="dun-Ip-Rdk" id="Hre-OW-ymh"/>
                         <outlet property="profilePicture" destination="x7E-fz-blK" id="V61-Zs-Kv6"/>
                         <outlet property="scrollView" destination="iJr-6w-rHv" id="gSo-So-q0Q"/>
@@ -2052,6 +2059,7 @@ summarize</string>
         <scene sceneID="wwX-bx-Alf">
             <objects>
                 <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="0Ns-Gn-0Xn" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Topology" image="DiagramIcon.png" id="f6Z-YT-gBa"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="mRw-Iw-xan">
                         <autoresizingMask key="autoresizingMask"/>
@@ -2114,6 +2122,7 @@ EFRvcG9sb2d5A
                             <constraint firstAttribute="trailing" secondItem="86x-OR-mQw" secondAttribute="trailing" id="tsT-fP-5Hq"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Pc0-tW-xXG"/>
                     <connections>
                         <outlet property="mapTable" destination="xEc-Nh-WvE" id="mkl-gH-WSC"/>
@@ -2212,6 +2221,7 @@ EFRvcG9sb2d5A
                             <constraint firstItem="t2f-lu-emF" firstAttribute="top" secondItem="mha-3U-beo" secondAttribute="top" id="vPA-ig-2WJ"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="cQt-Wx-I7a"/>
                     <connections>
                         <outlet property="apCount" destination="K75-F1-O5S" id="5Uo-dw-bFn"/>
@@ -2415,6 +2425,7 @@ EFRvcG9sb2d5A
                             <constraint firstAttribute="trailing" secondItem="YaV-1A-fWN" secondAttribute="trailing" id="vya-Vl-asu"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="dZ6-CW-19W"/>
                     <connections>
                         <outlet property="apImage" destination="WmY-To-Kna" id="8tF-zm-niI"/>
@@ -2570,6 +2581,76 @@ EFRvcG9sb2d5A
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="2110" y="1294"/>
+        </scene>
+        <!--Unifi Notification View Controller-->
+        <scene sceneID="Vqu-8b-M4S">
+            <objects>
+                <viewController storyboardIdentifier="unifiNotificationViewController" id="i7u-Yi-xN2" customClass="unifiNotificationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SlI-oO-gnI"/>
+                        <viewControllerLayoutGuide type="bottom" id="3qt-c1-r4Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="VN5-rf-WTd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bYt-6i-z1z">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="71"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Notification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gu-Yk-iEL" userLabel="Header">
+                                        <rect key="frame" x="86" y="30" width="148" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gp-Yu-76e" userLabel="Back">
+                                        <rect key="frame" x="0.0" y="20" width="70" height="45"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <inset key="titleEdgeInsets" minX="-9" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title=" Back" image="Backward2Icon.png">
+                                            <color key="titleShadowColor" red="0.62755102039999999" green="0.61746589350000003" blue="0.6250297387" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backToParent:" destination="i7u-Yi-xN2" eventType="touchUpInside" id="QCk-Xm-55z"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.16078431900000001" green="0.16078431900000001" blue="0.16078431900000001" alpha="1" colorSpace="deviceRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="NZv-ZP-M3J"/>
+                                    <constraint firstAttribute="height" constant="71" id="qQg-Cz-Seh"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BhT-Xs-TDX">
+                                <rect key="frame" x="0.0" y="71" width="320" height="409"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="BhT-Xs-TDX" secondAttribute="trailing" id="DMl-qa-aam"/>
+                            <constraint firstAttribute="trailing" secondItem="bYt-6i-z1z" secondAttribute="trailing" id="Jkt-EC-6bn"/>
+                            <constraint firstItem="BhT-Xs-TDX" firstAttribute="leading" secondItem="VN5-rf-WTd" secondAttribute="leading" id="QzP-bI-hmR"/>
+                            <constraint firstItem="bYt-6i-z1z" firstAttribute="top" secondItem="VN5-rf-WTd" secondAttribute="top" id="TXQ-ba-jwI"/>
+                            <constraint firstItem="bYt-6i-z1z" firstAttribute="leading" secondItem="VN5-rf-WTd" secondAttribute="leading" id="Yya-tG-LxZ"/>
+                            <constraint firstItem="BhT-Xs-TDX" firstAttribute="top" secondItem="bYt-6i-z1z" secondAttribute="bottom" id="i9A-lv-jcA"/>
+                            <constraint firstItem="3qt-c1-r4Y" firstAttribute="top" secondItem="BhT-Xs-TDX" secondAttribute="bottom" id="iJs-lh-S5m"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="uHh-jY-Oc9"/>
+                    <connections>
+                        <outlet property="deviceTable" destination="BhT-Xs-TDX" id="9Iw-oy-cvb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8nz-Ob-TNJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="UlH-yc-BAW"/>
+            </objects>
+            <point key="canvasLocation" x="2110" y="1918"/>
         </scene>
     </scenes>
     <resources>

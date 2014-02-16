@@ -34,25 +34,39 @@
     [object loadGetData];
 }
 +(void)getSettingsInformation:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromTokenId:(NSString *)tokenId{
+    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/settings-information?token_id=%@",ApiServerAddress,tokenId]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/settings-information?token_id=%@",ApiServerAddress,tokenId] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
-+(void)getAlarm:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback withType:(bool)type fromStart:(NSInteger)start toLength:(NSInteger)length {
-    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/alarm?type=%@&start=%i&length=%i",ApiServerAddress,type ? @"true" : @"false",start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
++(void)setNotification:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback withTokenId:(NSString *)tokenId {
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/notification",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback  andData:[NSString stringWithFormat:@"token_id=%@",tokenId]];
+    
+    [object loadPostData];
+}
++(void)getNotification:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback withTokenId:(NSString *)tokenId {
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/notification?token_id=%@",ApiServerAddress,tokenId] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
+
++(void)getNotificationList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length withTokenId:(NSString *)tokenId{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/notification-list?token_id=%@&start=%i&length=%i",ApiServerAddress,tokenId,start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
 
 +(void)setIosToken:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromTokenId:(NSString *)tokenId isEnabled:(NSString *) flag{
+    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/ios-token",ApiServerAddress ]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/ios-token",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"token_id=%@&enabled=%@",tokenId,flag != nil ? flag : @""]];
     
     [object loadPostData];
 }
 +(void)setGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id withName:(NSString *)name andDownload:(NSInteger)download andUpload:(NSInteger)upload {
+    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/group",ApiServerAddress ]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/group",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"id=%@&name=%@&qos_rate_max_down=%i&qos_rate_max_up=%i",id,name,download,upload]];
     
     [object loadPostData];
 }
 +(void)deleteGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id {
+     NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/delete-group",ApiServerAddress ]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/delete-group",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"id=%@",id]];
     
     [object loadPostData];

@@ -20,7 +20,6 @@
 @property(retain,nonatomic) IBOutlet UIScrollView *scrollView;
 @property(retain,nonatomic) IBOutlet UIButton *hourlyButton,*dateButton,*chartType;
 @property(retain,nonatomic) IBOutlet UILabel *average,*date;
-@property(retain,nonatomic) NSJSONSerialization *statistic;
 @property double time;
 
 -(IBAction)backToParent:(id)sender;

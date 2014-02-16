@@ -120,6 +120,19 @@
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
 	NSLog(@"Failed to get token, error: %@", error);
+    [unifiGlobalVariable sharedGlobalData].iosToken = @"27216b1263b9fa530b2033e6f1c83d3d23e312347ae5d68fef5b630ade49484f";//deviceTokenString;
+    
+    [unifiSystemResource
+     setIosToken:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+         NSLog(@"%@",responseNSString);
+     }
+     withHandleError:^(NSError *error) {
+         
+     }
+     fromTokenId:@"27216b1263b9fa530b2033e6f1c83d3d23e312347ae5d68fef5b630ade49484f"
+     isEnabled:nil
+     ];
+
 }
 
 @end

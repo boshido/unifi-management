@@ -36,7 +36,6 @@
     
 }
 -(void)viewDidAppear:(BOOL)animated{
-    NSLog(@"haha");
     [unifiSystemResource
         getMapList:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
             mapList = [responseJSON valueForKey:@"data"];
@@ -63,7 +62,7 @@
         cell = [[unifiTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:simpleTableIdentifier];
     }
     
-    [cell setCellStyle:TextWithTreeDetailStyle];
+    [cell setCellStyle:TextWithTreeDetailColumnStyle];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
     NSJSONSerialization *json = [mapList objectAtIndex:indexPath.row];
@@ -72,7 +71,9 @@
     if([json valueForKey:@"file_id"] != nil)
         
         [cell.imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/unifi/map?id=%@",ApiServerAddress,[json valueForKey:@"file_id"]]]
-                       placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
+                       placeholderImage:[UIImage imageNamed:@"profile.jpg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                           
+                       }];
     else
         cell.imageView.image = [UIImage imageNamed:@"profile.jpg"];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"Devices : %i",[[json valueForKey:@"device_count"] intValue]];

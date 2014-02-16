@@ -8,6 +8,8 @@
 
 #import "unifiTabViewController.h"
 #import "unifiGlobalVariable.h"
+#import "unifiSystemResource.h"
+#import "unifiGlobalVariable.h"
 @interface unifiTabViewController ()
 
 @end
@@ -40,7 +42,8 @@
 //    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
 //    [self.view addGestureRecognizer:swipeRight];
 //    swipeRight.delegate = self;
-    
+    [self loadNotification];
+    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNotification) userInfo:nil repeats:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,9 +52,22 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)loadNotification{
+    [unifiSystemResource
+     getNotification:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+         
+         NSLog(@"%@",[[responseJSON valueForKey:@"data"] valueForKey:@"notification"]);
+         [[[[self tabBar] items] objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%i",[[[responseJSON valueForKey:@"data"] valueForKey:@"notification"] intValue]]];
+     }
+     withHandleError:^(NSError *error) {
+         
+     }
+     withTokenId:[unifiGlobalVariable sharedGlobalData].iosToken
+     ];
+}
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
     NSLog(@"Change Tab");
-    
+    [tabBarController.selectedViewController.navigationController popToRootViewControllerAnimated:NO];
     NSArray *tabViewControllers = tabBarController.viewControllers;
     UIView * fromView = tabBarController.selectedViewController.view;
     UIView * toView = viewController.view;
@@ -67,6 +83,7 @@
                     completion:^(BOOL finished) {
                         if (finished) {
                             tabBarController.selectedIndex = toIndex;
+                            
                         }
                     }];
     

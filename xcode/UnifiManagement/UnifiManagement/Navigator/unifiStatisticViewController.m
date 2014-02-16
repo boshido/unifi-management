@@ -22,7 +22,7 @@
 @implementation unifiStatisticViewController{
     ApiErrorCallback handleError;
 }
-@synthesize chart,statusView,coverView,scrollView,hourlyButton,dateButton,average,date,statistic,time,chartType;
+@synthesize chart,statusView,coverView,scrollView,hourlyButton,dateButton,average,date,time,chartType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -120,7 +120,6 @@
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     ApiCompleteCallback completeCallback = ^(NSJSONSerialization *responseJSON,NSString *responseNSString){
-        statistic = responseJSON;
 //        [chart performSelectorOnMainThread:@selector(stringByEvaluatingJavaScriptFromString:) withObject:[NSString stringWithFormat:@"setValue(%@,\"%@\",%@)", responseNSString,timeType,isTraffic ? @"true" : @"false"] waitUntilDone:NO];
 //        NSString* jsString = [NSString stringWithFormat:@
 //                              "window.setTimeout(function() { \n"
@@ -128,59 +127,67 @@
 //                              "},0.5);",responseNSString,timeType,isTraffic ? @"true" : @"false"];
 //        
 //        [ chart stringByEvaluatingJavaScriptFromString:jsString];
-        NSMutableArray *dataSource = [[NSMutableArray alloc] init];
-        long long max=0;
-        if(isTraffic){
-            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-                [dataSource addObject: @{
-                                         @"date":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]*1000 ],
-                                         @"traffic":[ NSNumber numberWithLongLong:[[json valueForKey:@"bytes"] longLongValue]],
-                                         @"tag":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]]
-                                         }];
-                if(max < [[json valueForKey:@"bytes"] longLongValue])max = [[json valueForKey:@"bytes"] longLongValue];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+            
+            NSString *_average;
+            NSInteger plotCount=0;
+            float averageTraffic=0.0f;
+            
+            for(NSJSONSerialization *json in [responseJSON valueForKey:@"data"]){
+                averageTraffic += [[json valueForKey:@"bytes"] floatValue];
+                plotCount++;
             }
-        }
-        else{
-            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-                [dataSource addObject: @{
-                                         @"date":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]*1000 ],
-                                         @"deviceCount":[ NSNumber numberWithLongLong:[[json valueForKey:@"user_count"] intValue] ],
-                                         @"tag":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]]
-                                         }];
-                if(max < [[json valueForKey:@"bytes"] longLongValue])max = [[json valueForKey:@"bytes"] longLongValue];
+            averageTraffic /= plotCount;
+            if((NSInteger)(averageTraffic/1073741824) != 0){
+                _average = [NSString stringWithFormat:@"%1.2f %@",averageTraffic/1073741824,@"GigaBytes"];
             }
-        }
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dataSource
-                                                           options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
-                                                             error:nil];
-        if (jsonData) {
-           
+            else if((NSInteger)(averageTraffic / 1048576) != 0){
+                _average = [NSString stringWithFormat:@"%1.2f %@",averageTraffic/1048576,@"MegaBytes"];
+            }
+            else if((NSInteger)(averageTraffic / 1024) != 0){
+                _average = [NSString stringWithFormat:@"%1.2f %@",averageTraffic/1024,@"KiloBytes"];
+            }
+            else{
+                _average = [NSString stringWithFormat:@"%1.2f %@",averageTraffic,@"Bytes"];
+            }
+            
+            long long max=0;
+            if(isTraffic){
+                for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+                    [dataSource addObject: @{
+                                             @"date":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]*1000 ],
+                                             @"traffic":[ NSNumber numberWithLongLong:[[json valueForKey:@"bytes"] longLongValue]],
+                                             @"tag":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]]
+                                             }];
+                    if(max < [[json valueForKey:@"bytes"] longLongValue])max = [[json valueForKey:@"bytes"] longLongValue];
+                }
+            }
+            else{
+                for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+                    [dataSource addObject: @{
+                                             @"date":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]*1000 ],
+                                             @"deviceCount":[ NSNumber numberWithLongLong:[[json valueForKey:@"user_count"] intValue] ],
+                                             @"tag":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]]
+                                             }];
+                    if(max < [[json valueForKey:@"bytes"] longLongValue])max = [[json valueForKey:@"bytes"] longLongValue];
+                }
+            }
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dataSource
+                                                               options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                                 error:nil];
             NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-            [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,%lld,\"%@\",%@)", jsonString,max,timeType,isTraffic ? @"true" : @"false"]];
-        }
-        
-        
-        [DejalBezelActivityView removeViewAnimated:YES];
-        NSInteger plotCount=0;
-        float averageTraffic=0.0f;
-        for(NSJSONSerialization *json in [statistic valueForKey:@"data"]){
-            averageTraffic += [[json valueForKey:@"bytes"] floatValue];
-            plotCount++;
-        }
-        averageTraffic /= plotCount;
-        if((NSInteger)(averageTraffic/1073741824) != 0){
-            average.text = [NSString stringWithFormat:@"%1.2f %@",averageTraffic/1073741824,@"GigaBytes"];
-        }
-        else if((NSInteger)(averageTraffic / 1048576) != 0){
-            average.text = [NSString stringWithFormat:@"%1.2f %@",averageTraffic/1048576,@"MegaBytes"];
-        }
-        else if((NSInteger)(averageTraffic / 1024) != 0){
-            average.text = [NSString stringWithFormat:@"%1.2f %@",averageTraffic/1024,@"KiloBytes"];
-        }
-        else{
-            average.text = [NSString stringWithFormat:@"%1.2f %@",averageTraffic,@"Bytes"];
-        }
-        
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                
+                if (jsonData) {
+                    average.text = _average;
+                    
+                    [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,%lld,\"%@\",%@)", jsonString,max,timeType,isTraffic ? @"true" : @"false"]];
+                }
+                [DejalBezelActivityView removeViewAnimated:YES];
+            });
+        });
     };
     
     [unifiSystemResource getTrafficReport:completeCallback withHandleError:handleError fromStartTime:[[NSDate date] timeIntervalSince1970]+time andType:timeType];

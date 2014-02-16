@@ -14,6 +14,7 @@
     IBOutlet UILabel *name;
     IBOutlet UILabel *email;
     IBOutlet UIScrollView *scrollView;
+    IBOutlet UIButton *notification;
     NSString *url;
     TJSpinner *spinner;
     IBOutlet UIImageView *profilePicture;

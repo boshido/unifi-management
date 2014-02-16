@@ -16,7 +16,9 @@
 
 @end
 
-@implementation unifiDashboardViewController
+@implementation unifiDashboardViewController{
+    bool loadingFlag;
+}
 @synthesize dashboardChart,apMapChart,apLabel,deviceLabel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,6 +34,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     webFlag = FALSE;
+    loadingFlag = true;
     
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"dashboardchart" ofType:@"html"]]];
     dashboardChart.delegate = self;
@@ -44,11 +47,12 @@
     apMapChart.scrollView.bounces = NO;
     [apMapChart loadRequest:urlRequest];
     
-    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    
     [self loadDashBoardInfo];
+    loadingFlag = false;
      autoLoad = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadDashBoardInfo) userInfo:nil repeats:YES];
 }
 -(void)viewDidDisappear:(BOOL)animated{
@@ -67,6 +71,10 @@
 
 -(void)loadDashBoardInfo{
     NSLog(@"Still Here");
+    if (loadingFlag) {
+        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+    }
     __block bool flag1 = NO,flag2 = NO,flag3 = NO;
     
     __block float devicePercentage,apPercentage,connected,disconnected,authorized,non_authorized;
@@ -115,7 +123,9 @@
     };
     
     ApiErrorCallback errorHandle = ^(NSError *error) {
-        [DejalBezelActivityView removeViewAnimated:YES];
+        if (loadingFlag) {
+            [DejalBezelActivityView removeViewAnimated:YES];
+        }
         unifiFailureViewController *failureController = [[self storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
         [[self navigationController] presentViewController:failureController animated:YES completion:nil];
     };
@@ -132,9 +142,9 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     if(webFlag==TRUE){
-        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
-        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+        loadingFlag=true;
         [self loadDashBoardInfo];
+        loadingFlag=false;
     };
     webFlag=TRUE;
 }

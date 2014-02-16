@@ -11,7 +11,8 @@
 NS_ENUM(NSInteger, CellStyle) {
         ImageWithTextStyle,
         TextWithDetailStyle,
-        TextWithTreeDetailStyle
+        TextWithTreeDetailColumnStyle,
+        TextWithTreeDetailRowStyle
 };
 
 @interface unifiTableViewCell : UITableViewCell{

@@ -85,74 +85,94 @@ static NSInteger TimePlus = 60*60*24*5;
 -(void)loadDevice{
     [unifiDeviceResource
      getDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-         NSJSONSerialization *json  = [responseJSON valueForKey:@"data"];
-         hostname.text = [json valueForKey:@"hostname"] == [NSNull null] ? @"No Hostname" : [json valueForKey:@"hostname"];
-         mac.text = [json valueForKey:@"mac"];
-         
-         if([[json valueForKey:@"blocked"] boolValue]){
-             [blockBtn setSelected:YES];
-         }
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            NSJSONSerialization *json  = [responseJSON valueForKey:@"data"];
+            NSString *_hostname,*_deviceImg,*_statusImg,*_download,*_upload,*_activity,*_ip,*_wlan,*_signal,*_signalImg;
+            _hostname = [json valueForKey:@"hostname"] == [NSNull null] ? @"No Hostname" : [json valueForKey:@"hostname"];
+            
+            
 //         if([[json valueForKey:@"is_auth"] boolValue]){
 //             [authorizeBtn setSelected:YES];
 //         }
-         NSRange search = [hostname.text rangeOfString:@"iphone" options:NSCaseInsensitiveSearch];
-         if(search.location != NSNotFound)
-             [deviceImg setImage:[UIImage imageNamed:@"Apple.png"]];
-         else{
-             search = [hostname.text rangeOfString:@"ipad" options:NSCaseInsensitiveSearch];
-             if(search.location != NSNotFound)
-                 [deviceImg setImage:[UIImage imageNamed:@"Apple.png"]];
-             else{
-                 search = [hostname.text  rangeOfString:@"android" options:NSCaseInsensitiveSearch];
-                 if(search.location != NSNotFound)
-                     [deviceImg setImage:[UIImage imageNamed:@"Android.png"]];
-                 else{
-                     search = [hostname.text  rangeOfString:@"windows" options:NSCaseInsensitiveSearch];
-                     if(search.location != NSNotFound)
-                         [deviceImg setImage:[UIImage imageNamed:@"Windows.png"]];
-                     else
-                         [deviceImg setImage:[UIImage imageNamed:@"PC.png"]];
-                 }
-             }
-         }
+            
+            NSRange search = [_hostname rangeOfString:@"iphone" options:NSCaseInsensitiveSearch];
+            if(search.location != NSNotFound)
+                _deviceImg =@"Apple.png";
+            else{
+                search = [_hostname rangeOfString:@"ipad" options:NSCaseInsensitiveSearch];
+                if(search.location != NSNotFound)
+                    _deviceImg =@"Apple.png";
+                else{
+                    search = [_hostname  rangeOfString:@"android" options:NSCaseInsensitiveSearch];
+                    if(search.location != NSNotFound)
+                        _deviceImg =@"Android.png";
+                    else{
+                        search = [_hostname  rangeOfString:@"windows" options:NSCaseInsensitiveSearch];
+                        if(search.location != NSNotFound)
+                            _deviceImg =@"Windows.png";
+                        else
+                            _deviceImg =@"PC.png";
+                    }
+                }
+            }
+            
+            if([[responseJSON valueForKey:@"code"] intValue] == 200){
+                _statusImg = @"Dotted.png";
+                
+                _download =  [self getValueWithUnit:[[json valueForKey:@"rx_bytes"] floatValue]];
+                _upload = [self getValueWithUnit:[[json valueForKey:@"tx_bytes"] floatValue]];
+                _activity = [NSString stringWithFormat:@"%@/Sec",[self getValueWithUnit:[[json valueForKey:@"bytes.r"] floatValue]]];
+                _ip = [json valueForKey:@"ip"];
+                _wlan = [json valueForKey:@"essid"];
+                
+                NSInteger quality;
+                if([[json valueForKey:@"signal"] intValue] <= -100)
+                    quality=0;
+                else if([[json valueForKey:@"signal"] intValue] >= -50)quality = 100;
+                else quality = 2 * ([[json valueForKey:@"signal"] intValue] + 100);
+                
+                _signal = [NSString stringWithFormat:@"%i%%",quality];
+                
+                if(quality > 80)_signalImg = @"WirelessBest.png";
+                else if(quality > 40)_signalImg = @"WirelessGood.png";
+                else _signalImg = @"WirelessBad.png";
+            }
+            else{
+                
+                if([[json valueForKey:@"blocked"] boolValue]){
+                    [blockBtn setSelected:YES];
+                }
+                _statusImg = @"DottedSelected.png";
+                _download = @"-";
+                _upload = @"-";
+                _activity = @"-";
+                _ip = @"-";
+                _wlan = @"-";
+                _signal = @"-";
+                _signalImg = @"WirelessWorst.png";
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                [deviceImg setImage:[UIImage imageNamed:_deviceImg]];
+                hostname.text = _hostname;
+                mac.text = [json valueForKey:@"mac"];
+                statusImg.image = [UIImage imageNamed:_statusImg];
+                download.text = _download;
+                upload.text = _upload;
+                activity.text = _activity;
+                ip.text = _ip;
+                wlan.text = _wlan;
+                signal.text = _signal;
+                signalImg.image = [UIImage imageNamed:_signalImg];
+                
+                if(!isFirstLoad){
+                    [DejalBezelActivityView removeViewAnimated:YES];
+                }
+                isFirstLoad=false;
+            });
+        });
+        
          
-         if([[responseJSON valueForKey:@"code"] intValue] == 200){
-             statusImg.image = [UIImage imageNamed:@"Dotted.png"];
-             
-             download.text = [self getValueWithUnit:[[json valueForKey:@"rx_bytes"] floatValue]];
-             upload.text = [self getValueWithUnit:[[json valueForKey:@"tx_bytes"] floatValue]];
-             activity.text = [NSString stringWithFormat:@"%@/Sec",[self getValueWithUnit:[[json valueForKey:@"bytes.r"] floatValue]]];
-             ip.text = [json valueForKey:@"ip"];
-             wlan.text = [json valueForKey:@"essid"];
-             
-             NSInteger quality;
-             if([[json valueForKey:@"signal"] intValue] <= -100)
-                 quality=0;
-             else if([[json valueForKey:@"signal"] intValue] >= -50)quality = 100;
-             else quality = 2 * ([[json valueForKey:@"signal"] intValue] + 100);
-             
-             signal.text = [NSString stringWithFormat:@"%i%%",quality];
-             
-             if(quality > 80)signalImg.image = [UIImage imageNamed:@"WirelessBest.png"];
-             else if(quality > 40)signalImg.image = [UIImage imageNamed:@"WirelessGood.png"];
-             else signalImg.image = [UIImage imageNamed:@"WirelessBad.png"];
-         }
-         else{
-             download.text = @"-";
-             upload.text = @"-";
-             activity.text = @"-";
-             ip.text = @"-";
-             wlan.text = @"-";
-             signal.text = @"-";
-             signalImg.image = [UIImage imageNamed:@"WirelessWorst.png"];
-             
-             statusImg.image = [UIImage imageNamed:@"DottedSelected.png"];
-         
-         }
-         if(!isFirstLoad){
-             [DejalBezelActivityView removeViewAnimated:YES];
-         }
-         isFirstLoad=false;
      }
      withHandleError:handleError
      fromMac:deviceMac
@@ -166,31 +186,34 @@ static NSInteger TimePlus = 60*60*24*5;
     
     [unifiDeviceResource
          getDeviceDailyStatistic:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-             NSMutableArray *dataSource = [[NSMutableArray alloc] init];
-             long long max=0;
-             for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-                 [dataSource addObject: @{
-                                          @"date":[ NSNumber numberWithLongLong:[[json valueForKey:@"date"] longLongValue]*1000 ],
-                                          @"download":[ NSNumber numberWithLongLong:[[json valueForKey:@"tx_bytes"] longLongValue]],
-                                          @"upload":[ NSNumber numberWithLongLong:[[json valueForKey:@"rx_bytes"] longLongValue]]
-                                          }];
-                 if(max < [[json valueForKey:@"tx_bytes"] longLongValue])max = [[json valueForKey:@"tx_bytes"] longLongValue];
-                 if(max < [[json valueForKey:@"rx_bytes"] longLongValue])max = [[json valueForKey:@"rx_bytes"] longLongValue];
-             }
-             
-             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dataSource
-                                                                options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
-                                                                  error:nil];
-             if (jsonData) {
-                 NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                 [statisticChart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,%lld)",jsonString,max]];
-             }
-             
-             
-             if(!isFirstLoad){
-                 [DejalBezelActivityView removeViewAnimated:YES];
-             }
-             isFirstLoad=false;
+             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                 NSMutableArray *dataSource = [[NSMutableArray alloc] init];
+                 long long max=0;
+                 for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+                     [dataSource addObject: @{
+                                              @"date":[ NSNumber numberWithLongLong:[[json valueForKey:@"date"] longLongValue]*1000 ],
+                                              @"download":[ NSNumber numberWithLongLong:[[json valueForKey:@"tx_bytes"] longLongValue]],
+                                              @"upload":[ NSNumber numberWithLongLong:[[json valueForKey:@"rx_bytes"] longLongValue]]
+                                              }];
+                     if(max < [[json valueForKey:@"tx_bytes"] longLongValue])max = [[json valueForKey:@"tx_bytes"] longLongValue];
+                     if(max < [[json valueForKey:@"rx_bytes"] longLongValue])max = [[json valueForKey:@"rx_bytes"] longLongValue];
+                 }
+                 
+                 NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dataSource
+                                                                    options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                                      error:nil];
+                 
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    if (jsonData) {
+                        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+                        [statisticChart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,%lld)",jsonString,max]];
+                    }
+                    if(!isFirstLoad){
+                        [DejalBezelActivityView removeViewAnimated:YES];
+                    }
+                    isFirstLoad=false;
+                });
+             });
          }
          withHandleError:handleError
          fromStartTime:[[NSDate date] timeIntervalSince1970]+timeStart

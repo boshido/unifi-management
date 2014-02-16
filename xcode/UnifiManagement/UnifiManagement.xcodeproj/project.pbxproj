@@ -25,6 +25,9 @@
 		0E2032CA185706D100D949E4 /* BackwardIconPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C6185706D100D949E4 /* BackwardIconPressed.png */; };
 		0E2032CB185706D100D949E4 /* BackwardIconPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032C7185706D100D949E4 /* BackwardIconPressed@2x.png */; };
 		0E2032CD185794AF00D949E4 /* jquery.mobile-1.3.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E2032CC185794AF00D949E4 /* jquery.mobile-1.3.2.min.js */; };
+		0E3A67C018AFDD5100B1B93F /* EditIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67BD18AFDD5100B1B93F /* EditIcon@2x.png */; };
+		0E3A67C118AFDD5100B1B93F /* AddIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67BE18AFDD5100B1B93F /* AddIcon@2x.png */; };
+		0E3A67C218AFDD5100B1B93F /* DeleteIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67BF18AFDD5100B1B93F /* DeleteIcon@2x.png */; };
 		0E488D85183C4FE4004FF995 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D84183C4FE4004FF995 /* Foundation.framework */; };
 		0E488D87183C4FE4004FF995 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D86183C4FE4004FF995 /* CoreGraphics.framework */; };
 		0E488D89183C4FE4004FF995 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D88183C4FE4004FF995 /* UIKit.framework */; };
@@ -108,6 +111,8 @@
 		0EBCF1621843C61B00D11BFD /* UserIcon2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EBCF1571843C61B00D11BFD /* UserIcon2@2x.png */; };
 		0EBF867F1872B93600F2B49D /* unifiUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF867E1872B93600F2B49D /* unifiUserProfileViewController.m */; };
 		0EC8D44018A3CBDC001DE953 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC8D43F18A3CBDC001DE953 /* SDWebImage.framework */; };
+		0ED0534C18AFBE5F0033EFF8 /* unifiNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0534B18AFBE5F0033EFF8 /* unifiNotificationViewController.m */; };
+		0ED0535218AFC9F30033EFF8 /* NotificationDotted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0535118AFC9F30033EFF8 /* NotificationDotted.png */; };
 		0ED0F00418A9D665002972DB /* UnifiOfflineGrowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0F00018A9D665002972DB /* UnifiOfflineGrowIcon.png */; };
 		0ED0F00618A9D665002972DB /* UnifiOnlineGrowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0F00218A9D665002972DB /* UnifiOnlineGrowIcon.png */; };
 		0ED0F00A18A9D7C7002972DB /* UnifiOfflineIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0F00818A9D7C7002972DB /* UnifiOfflineIcon.png */; };
@@ -220,6 +225,9 @@
 		0E2032C6185706D100D949E4 /* BackwardIconPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackwardIconPressed.png; sourceTree = "<group>"; };
 		0E2032C7185706D100D949E4 /* BackwardIconPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BackwardIconPressed@2x.png"; sourceTree = "<group>"; };
 		0E2032CC185794AF00D949E4 /* jquery.mobile-1.3.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery.mobile-1.3.2.min.js"; sourceTree = "<group>"; };
+		0E3A67BD18AFDD5100B1B93F /* EditIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EditIcon@2x.png"; sourceTree = "<group>"; };
+		0E3A67BE18AFDD5100B1B93F /* AddIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddIcon@2x.png"; sourceTree = "<group>"; };
+		0E3A67BF18AFDD5100B1B93F /* DeleteIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteIcon@2x.png"; sourceTree = "<group>"; };
 		0E488D81183C4FE4004FF995 /* UnifiManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnifiManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E488D84183C4FE4004FF995 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E488D86183C4FE4004FF995 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -323,6 +331,9 @@
 		0EBF867D1872B93600F2B49D /* unifiUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiUserProfileViewController.h; path = Navigator/unifiUserProfileViewController.h; sourceTree = "<group>"; };
 		0EBF867E1872B93600F2B49D /* unifiUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiUserProfileViewController.m; path = Navigator/unifiUserProfileViewController.m; sourceTree = "<group>"; };
 		0EC8D43F18A3CBDC001DE953 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDWebImage.framework; sourceTree = "<group>"; };
+		0ED0534A18AFBE5F0033EFF8 /* unifiNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiNotificationViewController.h; sourceTree = "<group>"; };
+		0ED0534B18AFBE5F0033EFF8 /* unifiNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiNotificationViewController.m; sourceTree = "<group>"; };
+		0ED0535118AFC9F30033EFF8 /* NotificationDotted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationDotted.png; sourceTree = "<group>"; };
 		0ED0F00018A9D665002972DB /* UnifiOfflineGrowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnifiOfflineGrowIcon.png; sourceTree = "<group>"; };
 		0ED0F00218A9D665002972DB /* UnifiOnlineGrowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnifiOnlineGrowIcon.png; sourceTree = "<group>"; };
 		0ED0F00818A9D7C7002972DB /* UnifiOfflineIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnifiOfflineIcon.png; sourceTree = "<group>"; };
@@ -444,6 +455,7 @@
 		0E022CC418AF239E00C7BCF6 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				0ED0534918AFBE470033EFF8 /* Notification */,
 				0E022CC518AF243400C7BCF6 /* BandwidthGroup */,
 				0EE341D8184C325A00C8814A /* unifiSettingViewController.h */,
 				0EE341D9184C325A00C8814A /* unifiSettingViewController.m */,
@@ -635,6 +647,10 @@
 		0E488D8B183C4FE4004FF995 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0ED0535118AFC9F30033EFF8 /* NotificationDotted.png */,
+				0E3A67BD18AFDD5100B1B93F /* EditIcon@2x.png */,
+				0E3A67BE18AFDD5100B1B93F /* AddIcon@2x.png */,
+				0E3A67BF18AFDD5100B1B93F /* DeleteIcon@2x.png */,
 				0E022CBB18AD463900C7BCF6 /* AddIcon.png */,
 				0E022CBC18AD463900C7BCF6 /* EditIcon.png */,
 				0E022CBD18AD463900C7BCF6 /* DeleteIcon.png */,
@@ -803,6 +819,15 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		0ED0534918AFBE470033EFF8 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				0ED0534A18AFBE5F0033EFF8 /* unifiNotificationViewController.h */,
+				0ED0534B18AFBE5F0033EFF8 /* unifiNotificationViewController.m */,
+			);
+			name = Notification;
+			sourceTree = "<group>";
+		};
 		0ED0FF3E18466AC300349D39 /* Google */ = {
 			isa = PBXGroup;
 			children = (
@@ -952,6 +977,7 @@
 				0EFDF65A188EBF7700134B21 /* LineIcon@2x.png in Resources */,
 				0E7246DB188C24770087DEF2 /* WirelessBad.png in Resources */,
 				0EBCF15E1843C61B00D11BFD /* TWIcon3@2x.png in Resources */,
+				0ED0535218AFC9F30033EFF8 /* NotificationDotted.png in Resources */,
 				0EBCF15D1843C61B00D11BFD /* TWIcon3.png in Resources */,
 				0E7246D8188C24770087DEF2 /* Activity.png in Resources */,
 				0EB4200D188533890013D6B5 /* DottedSelected.png in Resources */,
@@ -994,6 +1020,7 @@
 				0E7246CE188C1EF50087DEF2 /* UploadIcon.png in Resources */,
 				0EAC5BAC1860E36100FCC28B /* BlackBG.png in Resources */,
 				0EFDF65B188EBF7700134B21 /* LineIconPressed.png in Resources */,
+				0E3A67C218AFDD5100B1B93F /* DeleteIcon@2x.png in Resources */,
 				0EEAB766188A14AE00DF66A5 /* CloseIcon.png in Resources */,
 				0EAC5BAE1860E9D600FCC28B /* BlackBG2.png in Resources */,
 				0E488DA0183C4FE5004FF995 /* Images.xcassets in Resources */,
@@ -1027,12 +1054,14 @@
 				0EEAB765188A14AE00DF66A5 /* CloseIcon@2x.png in Resources */,
 				0EB4200B188533890013D6B5 /* Dotted.png in Resources */,
 				0EEAB770188A625F00DF66A5 /* PC.png in Resources */,
+				0E3A67C118AFDD5100B1B93F /* AddIcon@2x.png in Resources */,
 				0EFDF679188EC02600134B21 /* DateIcon.png in Resources */,
 				0EFDF654188EBF6500134B21 /* PieIconPressed@2x.png in Resources */,
 				0EFDF653188EBF6500134B21 /* PieIconPressed.png in Resources */,
 				0EFDF651188EBF6500134B21 /* PieIcon.png in Resources */,
 				0EFDF663188EBFAE00134B21 /* UserIconPressed.png in Resources */,
 				0E7246CB188C1EF50087DEF2 /* UploadIcon@2x.png in Resources */,
+				0E3A67C018AFDD5100B1B93F /* EditIcon@2x.png in Resources */,
 				0EBCF1411843C5FC00D11BFD /* Logo.png in Resources */,
 				0EEAB77D188ABD5F00DF66A5 /* MiniCloseIcon@2x.png in Resources */,
 				0EBCF14C1843C5FC00D11BFD /* TreeIcon.png in Resources */,
@@ -1096,6 +1125,7 @@
 				0ED0FED71844AB4A00349D39 /* unifiGlobalVariable.m in Sources */,
 				0EB9E9D2185EC7A7002FB1B3 /* unifiUITapGestureRecognizer.m in Sources */,
 				0EEAB780188AD79D00DF66A5 /* unifiFailureViewController.m in Sources */,
+				0ED0534C18AFBE5F0033EFF8 /* unifiNotificationViewController.m in Sources */,
 				0ED16A5D18A94D5800C0E524 /* unifiApProfileViewController.m in Sources */,
 				0E4FD692184732E8009383C6 /* unifiGoogleResource.m in Sources */,
 				0E022CC818AF247500C7BCF6 /* unifiAddBandwidthViewController.m in Sources */,
@@ -1240,8 +1270,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Watchrapong Agsonchu (Y7F4AUP26U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Watchrapong Agsonchu (Y7F4AUP26U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/boshido/Desktop/Git/unifi-management/xcode/UnifiManagement",
@@ -1252,7 +1282,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D7C132BA-AFBD-45DB-A937-873ED2771BE4";
+				PROVISIONING_PROFILE = "8D6A435A-6AD5-4547-8F2F-17CC99A4F4B3";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1263,8 +1293,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Watchrapong Agsonchu (Y7F4AUP26U)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Watchrapong Agsonchu (Y7F4AUP26U)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/boshido/Desktop/Git/unifi-management/xcode/UnifiManagement",
@@ -1275,7 +1305,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D7C132BA-AFBD-45DB-A937-873ED2771BE4";
+				PROVISIONING_PROFILE = "8D6A435A-6AD5-4547-8F2F-17CC99A4F4B3";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

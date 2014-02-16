@@ -52,17 +52,17 @@
     [self initialize];
 }
 -(void)initialize{
-    spinner = [[TJSpinner alloc] initWithSpinnerType:kTJSpinnerTypeActivityIndicator];
-    [spinner setColor:[UIColor colorWithRed:17/255.00 green:181/255.00 blue:255.00/255.00 alpha:1.0]];
-    [spinner setStrokeWidth:20];
-    [spinner setInnerRadius:6];
-    [spinner setOuterRadius:15];
-    [spinner setNumberOfStrokes:8];
-    spinner.hidesWhenStopped = YES;
-    [spinner setPatternStyle:TJActivityIndicatorPatternStylePetal];
-    spinner.center = CGPointMake(62, 85);
-    [spinner startAnimating];
-    [self.view addSubview:spinner];
+//    spinner = [[TJSpinner alloc] initWithSpinnerType:kTJSpinnerTypeActivityIndicator];
+//    [spinner setColor:[UIColor colorWithRed:17/255.00 green:181/255.00 blue:255.00/255.00 alpha:1.0]];
+//    [spinner setStrokeWidth:20];
+//    [spinner setInnerRadius:6];
+//    [spinner setOuterRadius:15];
+//    [spinner setNumberOfStrokes:8];
+//    spinner.hidesWhenStopped = YES;
+//    [spinner setPatternStyle:TJActivityIndicatorPatternStylePetal];
+//    spinner.center = CGPointMake(62, 85);
+//    [spinner startAnimating];
+//    [self.view addSubview:spinner];
     // border radius
     [profilePicture.layer setCornerRadius:47.5f];
     [profilePicture.layer setMasksToBounds: YES];
@@ -70,29 +70,15 @@
     [profilePicture.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [profilePicture.layer setBorderWidth:0.3f];
     
-    __weak typeof(profilePicture) profilePictureWeak = profilePicture;
-    __weak typeof(spinner) spinnerWeak = spinner;
-    
     name.text = [NSString stringWithFormat:@"%@ %@",[unifiGlobalVariable sharedGlobalData].name,[unifiGlobalVariable sharedGlobalData].surname];
     permission.text = [unifiGlobalVariable sharedGlobalData].permissionName;
     email.text  = [unifiGlobalVariable sharedGlobalData].email;
+   
     [profilePicture setImageWithURL:[NSURL URLWithString:[ unifiGlobalVariable sharedGlobalData].profilePicture]
-                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                              
-                              [UIView animateWithDuration:0.5
-                                                    delay:0.0  /* do not add a delay because we will use performSelector. */
-                                                  options:UIViewAnimationOptionCurveEaseOut
-                                               animations:^ {
-                                                   profilePictureWeak.alpha = 1.0;
-                                               }
-                                               completion:^(BOOL finished) {
-                                                   // [myLabel1 removeFromSuperview];
-                                               }];
-                              
-                              [spinnerWeak stopAnimating];
-                          }
+        placeholderImage:[UIImage imageNamed:@"profile.jpg"]
      ];
     [self loadSettingInfoWithLoading:YES];
+
 }
 - (void)didReceiveMemoryWarning
 {
@@ -110,8 +96,14 @@
                 [DejalBezelActivityView removeViewAnimated:YES];
                 
                 settingsData = [responseJSON valueForKey:@"data"];
-                [scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
+                if([[settingsData valueForKey:@"unread"] intValue]<100)
+                    [notification setTitle:[NSString stringWithFormat:@"%i   Notification",[[settingsData valueForKey:@"notification"] intValue]] forState:UIControlStateNormal];
+                else
+                   [notification setTitle:@"99+   Notification" forState:UIControlStateNormal];
                 
+                
+                [scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
                 // General Settings
                 unifiSettingsView *generalView = [[unifiSettingsView alloc] initWithFrame:CGRectMake(10, 10, 300, 0)];
                 generalView.header.text = @"General Settings";
@@ -158,8 +150,11 @@
 
                     
                     UIButton *nameButton = [unifiSettingsView generateUIButtonWithTitle:[group valueForKey:@"name"]];
+                    [nameButton setImage:[UIImage imageNamed:@"EditIcon.png"] forState:UIControlStateNormal];
                     nameButton.tag=index;
-                    [nameButton setTitleColor:[UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0] forState:UIControlStateNormal];
+                    [nameButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, 3.0f, 0.0f, 0.0f)];
+                    
+                    [nameButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];//colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0
                     nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
                     [nameButton addTarget:self action:@selector(addUserToGroup:) forControlEvents:UIControlEventTouchUpInside];
                     
@@ -171,7 +166,6 @@
                     upButton.tag=index;
                     [upButton addTarget:self action:@selector(setGroupUpload:) forControlEvents:UIControlEventTouchUpInside];
                     
-                    NSLog(@"%i",groupView.contentSize);
                     UIButton *deleteGroup = [unifiSettingsView generateAccessoryUIButtonWithImagedName:@"DeleteIcon.png"];
                     deleteGroup.tag=index;
                     
@@ -198,7 +192,7 @@
             }
         }
         withHandleError:handleError
-        fromTokenId:@"27216b1263b9fa530b2033e6f1c83d3d23e312347ae5d68fef5b630ade49484f"
+        fromTokenId:[unifiGlobalVariable sharedGlobalData].iosToken
     ];
     NSLog(@"%@",[unifiGlobalVariable sharedGlobalData].iosToken);
 }
@@ -424,7 +418,7 @@
                      [self loadSettingInfoWithLoading:NO];
                  }
                  withHandleError:handleError
-                 fromTokenId:@"27216b1263b9fa530b2033e6f1c83d3d23e312347ae5d68fef5b630ade49484f" isEnabled:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"false":@"true"
+                 fromTokenId:[unifiGlobalVariable sharedGlobalData].iosToken isEnabled:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"0":@"1"
             ];
         }
     }
@@ -436,7 +430,7 @@
                  }
                  withHandleError:handleError
                  withMaxUser:[alertField.text intValue]
-                 isEnabled:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"true":@"false"
+                 isEnabled:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"1":@"0"
             ];
         }
     }
@@ -448,7 +442,7 @@
                 }
                 withHandleError:handleError
                 withMaxUser:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"max_sta"] intValue]
-                isEnabled:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"false":@"true"
+                isEnabled:[[[settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"0":@"1"
             ];
         }
     }
@@ -498,7 +492,6 @@
         if(buttonIndex>0){
             [unifiSystemResource
                  deleteGroup:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-                     NSLog(@"%@",responseNSString);
                      [self loadSettingInfoWithLoading:NO];
                  }
                  withHandleError:handleError
@@ -508,6 +501,11 @@
     }
 }
 
+-(IBAction)showNotification:(id)sender{
+    
+    [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiNotificationViewController"] animated:YES];
+    
+}
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;
 }

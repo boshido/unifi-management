@@ -65,63 +65,79 @@
     UIImageView *tmpImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 400, 400)];
     tmpImage.alpha=0;
     [tmpImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/unifi/map?id=%@",ApiServerAddress,mapPictureId]]
-        placeholderImage:[UIImage imageNamed:@"map.png"] options:SDWebImageRefreshCached
+        placeholderImage:[UIImage imageNamed:@"map.png"]
         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-            NSLog(@"image :%@",image);
+            NSLog(@"%i",cacheType);
+            if(image){
             [scrollView displayImage:image];
             [unifiSystemResource
                  getMapApList:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
                      if([[responseJSON valueForKey:@"code"] intValue] == 200){
-                         [[self.scrollView.zoomView subviews]
-                          makeObjectsPerformSelector:@selector(removeFromSuperview)];
-                         NSInteger apOnline=0,apOffline=0,mapCount=0;
-                         for(NSJSONSerialization *json in [[[responseJSON valueForKey:@"data"] objectAtIndex:0] valueForKey:@"ap"]){
-                             
-                             NSString *unifiPicture;
-                             if([[json valueForKey:@"state"] intValue] == 1){
-                                 unifiPicture=@"UnifiOnlineGrowIcon";
-                                 apOnline++;
-                                 mapCount+=[[json valueForKey:@"num_sta"] intValue];
+                         
+                         [[self.scrollView.zoomView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+                         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+                             //Background Thread
+                             NSInteger apOnline=0,apOffline=0,mapCount=0;
+                             for(NSJSONSerialization *json in [[[responseJSON valueForKey:@"data"] objectAtIndex:0] valueForKey:@"ap"]){
+                                 
+                                 NSString *unifiPicture;
+                                 if([[json valueForKey:@"state"] intValue] == 1){
+                                     unifiPicture=@"UnifiOnlineGrowIcon";
+                                     apOnline++;
+                                     mapCount+=[[json valueForKey:@"num_sta"] intValue];
+                                 }
+                                 else {unifiPicture=@"UnifiOfflineGrowIcon";apOffline++;}
+                                 
+                                 unifiButton *unifi = [[unifiButton alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+                                 unifi.center = CGPointMake([[json valueForKey:@"x"] floatValue], [[json valueForKey:@"y"] floatValue]);
+                                 [unifi setImage:[self imageWithImage:[UIImage imageNamed:unifiPicture] scaledToSize:CGSizeMake(200, 200)] forState:UIControlStateNormal];
+                                 
+                                 [unifi initParameter];
+                                 [unifi setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
+                                 
+                                 [unifi addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
+                                
+                                 
+                                 
+                                 
+                                 dispatch_async(dispatch_get_main_queue(), ^(void){
+                                     //Run UI Updates
+                                     [self.scrollView.zoomView addSubview:unifi];
+                                     UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 600, 200)];
+                                     deviceName.center = CGPointMake([[json valueForKey:@"x"] floatValue], [[json valueForKey:@"y"] floatValue]+110);
+                                     deviceName.text = [json valueForKey:@"name"];
+                                     deviceName.backgroundColor = [UIColor clearColor];
+                                     deviceName.font = [UIFont systemFontOfSize:50];
+                                     deviceName.textAlignment = NSTextAlignmentCenter;
+                                     [self.scrollView.zoomView addSubview:deviceName];
+                                     
+                                     
+                                     UILabel *count = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 600, 200)];
+                                     count.center = CGPointMake([[json valueForKey:@"x"] floatValue], [[json valueForKey:@"y"] floatValue]);
+                                     count.text = [NSString stringWithFormat:@"%i",[[json valueForKey:@"state"] intValue] == 1 ? [[json valueForKey:@"num_sta"] intValue] : 0];
+                                     count.backgroundColor = [UIColor clearColor];
+                                     count.font = [UIFont systemFontOfSize:50];
+                                     count.textAlignment = NSTextAlignmentCenter;
+                                     
+                                     [self.scrollView.zoomView addSubview:count];
+                                 });
+                                 
                              }
-                             else {unifiPicture=@"UnifiOfflineGrowIcon";apOffline++;}
                              
-                             unifiButton *unifi = [[unifiButton alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-                             unifi.center = CGPointMake([[json valueForKey:@"x"] floatValue], [[json valueForKey:@"y"] floatValue]);
-                             [unifi setImage:[self imageWithImage:[UIImage imageNamed:unifiPicture] scaledToSize:CGSizeMake(200, 200)] forState:UIControlStateNormal];
-                             
-                             [unifi initParameter];
-                             [unifi setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
-                             
-                             [unifi addTarget:self action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
-                             [self.scrollView.zoomView addSubview:unifi];
-                             
-                             UILabel *deviceName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 600, 200)];
-                             deviceName.center = CGPointMake([[json valueForKey:@"x"] floatValue], [[json valueForKey:@"y"] floatValue]+110);
-                             deviceName.text = [json valueForKey:@"name"];
-                             deviceName.backgroundColor = [UIColor clearColor];
-                             deviceName.font = [UIFont systemFontOfSize:50];
-                             deviceName.textAlignment = NSTextAlignmentCenter;
-                             
-                             [self.scrollView.zoomView addSubview:deviceName];
-                             
-                             UILabel *count = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 600, 200)];
-                             count.center = CGPointMake([[json valueForKey:@"x"] floatValue], [[json valueForKey:@"y"] floatValue]);
-                             count.text = [NSString stringWithFormat:@"%i",[[json valueForKey:@"state"] intValue] == 1 ? [[json valueForKey:@"num_sta"] intValue] : 0];
-                             count.backgroundColor = [UIColor clearColor];
-                             count.font = [UIFont systemFontOfSize:50];
-                             count.textAlignment = NSTextAlignmentCenter;
-                             
-                             [self.scrollView.zoomView addSubview:count];
-                             
-                         }
-                         deviceCount.text = [NSString stringWithFormat:@"Devices : %i",mapCount];
-                         apCount.text = [NSString stringWithFormat:@"AP : %i/%i",apOnline,apOnline+apOffline];
+                             dispatch_async(dispatch_get_main_queue(), ^(void){
+                                 deviceCount.text = [NSString stringWithFormat:@"Devices : %i",mapCount];
+                                 apCount.text = [NSString stringWithFormat:@"AP : %i/%i",apOnline,apOnline+apOffline];
+                                 [DejalBezelActivityView removeViewAnimated:YES];
+                             });
+                         });
+            
                      }
-                     [DejalBezelActivityView removeViewAnimated:YES];
+                     
                  }
                  withHandleError:handleError
                  fromMapId:mapId
              ];
+            }
         }
     ];
     [self.view addSubview:tmpImage];
