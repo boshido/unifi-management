@@ -241,20 +241,20 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    unifiUserProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiUserProfileViewController"];
-    
-    if(isSearched){
-        [profile setUserData:[deviceSearch objectAtIndex:indexPath.row]];
-    }
-    else if(filterState==1){
-        [profile setUserData:[deviceGroup objectAtIndex:indexPath.row]];
-    }
-    else{
-        [profile setUserData:[deviceAdd objectAtIndex:indexPath.row]];
-    }
-    
-    [[self navigationController] pushViewController:profile animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+//    unifiUserProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiUserProfileViewController"];
+//    
+//    if(isSearched){
+//        [profile setUserData:[deviceSearch objectAtIndex:indexPath.row]];
+//    }
+//    else if(filterState==1){
+//        [profile setUserData:[deviceGroup objectAtIndex:indexPath.row]];
+//    }
+//    else{
+//        [profile setUserData:[deviceAdd objectAtIndex:indexPath.row]];
+//    }
+//    
+//    [[self navigationController] pushViewController:profile animated:YES];
 }
 
 - (void) dismissKeyboard

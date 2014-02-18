@@ -6,13 +6,13 @@
 //  Copyright (c) 2557 KMUTNB. All rights reserved.
 //
 
-#import "unifiSettingsView.h"
+#import "unifiTableList.h"
 const NSInteger subjectColumnX = 10;
 const NSInteger firstColumnX = 145;
 const NSInteger secondColumnX = 220;
 const NSInteger gapBetweenRow = 18;
 
-@implementation unifiSettingsView{
+@implementation unifiTableList{
     
 }
 @synthesize header,firstColumn,secondColumn,line,contentSize;
@@ -95,6 +95,18 @@ const NSInteger gapBetweenRow = 18;
     // Drawing code
 }
 */
+
++(UILabel*)generateUILabelWithTitle:(NSString *)title{
+    
+    UILabel *subjectView =[[UILabel alloc] init];
+    subjectView.font = [UIFont systemFontOfSize:12];
+    subjectView.textColor = [UIColor whiteColor];
+    subjectView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
+    subjectView.textAlignment = NSTextAlignmentLeft;
+    subjectView.text=title;
+    
+    return subjectView;
+}
 +(UIButton*)generateUIButtonWithTitle:(NSString *)title{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.adjustsImageWhenHighlighted=true;

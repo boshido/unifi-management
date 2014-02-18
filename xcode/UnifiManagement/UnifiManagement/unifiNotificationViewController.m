@@ -58,7 +58,7 @@
     };
     
     [unifiSystemResource setNotification:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-        [[[[self.tabBarController tabBar] items] objectAtIndex:2] setBadgeValue:@"0"];
+        [[[[self.tabBarController tabBar] items] objectAtIndex:2] setBadgeValue:Nil];
     } withHandleError:handleError withTokenId:[unifiGlobalVariable sharedGlobalData].iosToken];
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -121,7 +121,7 @@
     [dateFormat setDateFormat:@"dd/MM/yyyy HH:mm:ss"];
 
     cell.textLabel.text = [NSString stringWithFormat:@"Date Time : %@",[dateFormat stringFromDate:today]];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"Message : Access Point %@ was disconnected",[json valueForKey:@"ap_name"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Message : %@ AP was disconnected",[json valueForKey:@"ap_name"]];
     cell.secondDetailTextLabel.text = [NSString stringWithFormat:@"Access Point Mac Address : %@",[json valueForKey:@"ap"]];
     
     return cell;

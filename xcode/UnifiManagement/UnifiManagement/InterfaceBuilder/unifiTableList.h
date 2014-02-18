@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface unifiSettingsView : UIView
+@interface unifiTableList : UIView
 @property(retain,nonatomic) UILabel *header,*firstColumn,*secondColumn;
 @property(retain,nonatomic) UIView *line;
 @property NSInteger contentSize;
@@ -17,6 +17,7 @@
 -(void)addRowWithSubjectString:(NSString *)subject andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView;
 -(void)addRowWithSubjectView:(UIView*)subjectView andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView;
 
++(UILabel*)generateUILabelWithTitle:(NSString *)title;
 +(UIButton*)generateUIButtonWithTitle:(NSString *)title;
 +(UIButton*)generateAccessoryUIButtonWithImagedName:(NSString *)imagename;
 @end

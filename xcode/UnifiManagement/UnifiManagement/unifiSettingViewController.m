@@ -13,7 +13,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DejalActivityView.h"
 #import "unifiSystemResource.h"
-#import "unifiSettingsView.h"
+#import "unifiTableList.h"
 #import "unifiButton.h"
 #import "unifiAddBandwidthViewController.h"
 
@@ -105,31 +105,31 @@
                 
                 [scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
                 // General Settings
-                unifiSettingsView *generalView = [[unifiSettingsView alloc] initWithFrame:CGRectMake(10, 10, 300, 0)];
+                unifiTableList *generalView = [[unifiTableList alloc] initWithFrame:CGRectMake(10, 10, 300, 0)];
                 generalView.header.text = @"General Settings";
                 generalView.firstColumn.text = @"Unit";
                 generalView.secondColumn.text= @"Enabled";
                 
-                UIButton *notificationEnabled = [unifiSettingsView generateUIButtonWithTitle:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"On":@"Off"];
+                UIButton *notificationEnabled = [unifiTableList generateUIButtonWithTitle:[[[settingsData valueForKey:@"token"] valueForKey:@"enabled"] boolValue] ? @"On":@"Off"];
                 [notificationEnabled addTarget:self action:@selector(setNotificationEnabled:) forControlEvents:UIControlEventTouchUpInside];
                 [generalView addRowWithSubjectString:@"Push Notification" andFirstColumnView:nil andSecondColumnView:notificationEnabled];
                 
-                UIButton *loadMetric = [unifiSettingsView generateUIButtonWithTitle: [NSString stringWithFormat:@"%i per AP",[[[ settingsData valueForKey:@"load_balance"] valueForKey:@"max_sta"] intValue]]];
+                UIButton *loadMetric = [unifiTableList generateUIButtonWithTitle: [NSString stringWithFormat:@"%i per AP",[[[ settingsData valueForKey:@"load_balance"] valueForKey:@"max_sta"] intValue]]];
                 [loadMetric addTarget:self action:@selector(setLoadMetric:) forControlEvents:UIControlEventTouchUpInside];
                 
-                UIButton *loadEnabled = [unifiSettingsView generateUIButtonWithTitle: [[[ settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"On":@"Off"];
+                UIButton *loadEnabled = [unifiTableList generateUIButtonWithTitle: [[[ settingsData valueForKey:@"load_balance"] valueForKey:@"enabled"] boolValue] ? @"On":@"Off"];
                 [loadEnabled addTarget:self action:@selector(setLoadEnabled:) forControlEvents:UIControlEventTouchUpInside];
                 [generalView addRowWithSubjectString:@"Users Load Balancing" andFirstColumnView:loadMetric andSecondColumnView:loadEnabled];
     
                 [scrollView addSubview:generalView];
                 
                 // Bandwidth Group Settings
-                unifiSettingsView *groupView = [[unifiSettingsView alloc] initWithFrame:CGRectMake(10, generalView.frame.size.height+5, 300, 0)];
+                unifiTableList *groupView = [[unifiTableList alloc] initWithFrame:CGRectMake(10, generalView.frame.size.height+5, 300, 0)];
                 groupView.header.text = @"Bandwidth Groups";
                 groupView.firstColumn.text = @"Down";
                 groupView.secondColumn.text= @"Up";
                 
-                UIButton *addGroup = [unifiSettingsView generateAccessoryUIButtonWithImagedName:@"AddIcon.png"];
+                UIButton *addGroup = [unifiTableList generateAccessoryUIButtonWithImagedName:@"AddIcon.png"];
                 addGroup.frame = CGRectMake(105, 0, 20, 20);
                 [addGroup addTarget:self action:@selector(addGroup:) forControlEvents:UIControlEventTouchUpInside];
                 [groupView addSubview:addGroup];
@@ -149,7 +149,7 @@
                         upString = @"No Limit";
 
                     
-                    UIButton *nameButton = [unifiSettingsView generateUIButtonWithTitle:[group valueForKey:@"name"]];
+                    UIButton *nameButton = [unifiTableList generateUIButtonWithTitle:[group valueForKey:@"name"]];
                     [nameButton setImage:[UIImage imageNamed:@"EditIcon.png"] forState:UIControlStateNormal];
                     nameButton.tag=index;
                     [nameButton setTitleEdgeInsets:UIEdgeInsetsMake(0.0f, 3.0f, 0.0f, 0.0f)];
@@ -158,15 +158,15 @@
                     nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
                     [nameButton addTarget:self action:@selector(addUserToGroup:) forControlEvents:UIControlEventTouchUpInside];
                     
-                    UIButton *downButton = [unifiSettingsView generateUIButtonWithTitle:downString];
+                    UIButton *downButton = [unifiTableList generateUIButtonWithTitle:downString];
                     downButton.tag=index;
                     [downButton addTarget:self action:@selector(setGroupDownload:) forControlEvents:UIControlEventTouchUpInside];
                     
-                    UIButton *upButton = [unifiSettingsView generateUIButtonWithTitle:upString];
+                    UIButton *upButton = [unifiTableList generateUIButtonWithTitle:upString];
                     upButton.tag=index;
                     [upButton addTarget:self action:@selector(setGroupUpload:) forControlEvents:UIControlEventTouchUpInside];
                     
-                    UIButton *deleteGroup = [unifiSettingsView generateAccessoryUIButtonWithImagedName:@"DeleteIcon.png"];
+                    UIButton *deleteGroup = [unifiTableList generateAccessoryUIButtonWithImagedName:@"DeleteIcon.png"];
                     deleteGroup.tag=index;
                     
                     if(![[group valueForKey:@"attr_no_delete"] boolValue]){

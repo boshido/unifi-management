@@ -56,8 +56,11 @@
     [unifiSystemResource
      getNotification:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
          
-         NSLog(@"%@",[[responseJSON valueForKey:@"data"] valueForKey:@"notification"]);
-         [[[[self tabBar] items] objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%i",[[[responseJSON valueForKey:@"data"] valueForKey:@"notification"] intValue]]];
+         NSLog(@"Notification : %@",[[responseJSON valueForKey:@"data"] valueForKey:@"notification"]);
+         if([[[responseJSON valueForKey:@"data"] valueForKey:@"notification"] intValue] > 0)
+             [[[[self tabBar] items] objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%i",[[[responseJSON valueForKey:@"data"] valueForKey:@"notification"] intValue]]];
+         else
+             [[[[self tabBar] items] objectAtIndex:2] setBadgeValue:nil];
      }
      withHandleError:^(NSError *error) {
          

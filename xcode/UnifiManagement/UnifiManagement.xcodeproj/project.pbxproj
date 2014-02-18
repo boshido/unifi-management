@@ -8,11 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0E022CAA18AC943400C7BCF6 /* unifiAlertTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E022CA918AC943400C7BCF6 /* unifiAlertTableView.m */; };
-		0E022CAC18ACB0B700C7BCF6 /* InfoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CAB18ACB0B700C7BCF6 /* InfoIcon.png */; };
 		0E022CBE18AD463900C7BCF6 /* AddIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CBB18AD463900C7BCF6 /* AddIcon.png */; };
 		0E022CBF18AD463900C7BCF6 /* EditIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CBC18AD463900C7BCF6 /* EditIcon.png */; };
 		0E022CC018AD463900C7BCF6 /* DeleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E022CBD18AD463900C7BCF6 /* DeleteIcon.png */; };
-		0E022CC318AE17D800C7BCF6 /* unifiSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E022CC218AE17D800C7BCF6 /* unifiSettingsView.m */; };
+		0E022CC318AE17D800C7BCF6 /* unifiTableList.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E022CC218AE17D800C7BCF6 /* unifiTableList.m */; };
 		0E022CC818AF247500C7BCF6 /* unifiAddBandwidthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E022CC718AF247500C7BCF6 /* unifiAddBandwidthViewController.m */; };
 		0E1E4659183CE74000624634 /* unifiApiConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E4658183CE74000624634 /* unifiApiConnector.m */; };
 		0E1E465D183CEDC800624634 /* unifiApResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1E465C183CEDC800624634 /* unifiApResource.m */; };
@@ -28,6 +27,9 @@
 		0E3A67C018AFDD5100B1B93F /* EditIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67BD18AFDD5100B1B93F /* EditIcon@2x.png */; };
 		0E3A67C118AFDD5100B1B93F /* AddIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67BE18AFDD5100B1B93F /* AddIcon@2x.png */; };
 		0E3A67C218AFDD5100B1B93F /* DeleteIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67BF18AFDD5100B1B93F /* DeleteIcon@2x.png */; };
+		0E3A67C518B22ABD00B1B93F /* UnifiOnlineIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67C318B22ABD00B1B93F /* UnifiOnlineIcon.png */; };
+		0E3A67C618B22ABD00B1B93F /* UnifiOnlineIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67C418B22ABD00B1B93F /* UnifiOnlineIcon@2x.png */; };
+		0E3A67C818B22B4700B1B93F /* UnifiOfflineIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A67C718B22B4700B1B93F /* UnifiOfflineIcon@2x.png */; };
 		0E488D85183C4FE4004FF995 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D84183C4FE4004FF995 /* Foundation.framework */; };
 		0E488D87183C4FE4004FF995 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D86183C4FE4004FF995 /* CoreGraphics.framework */; };
 		0E488D89183C4FE4004FF995 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E488D88183C4FE4004FF995 /* UIKit.framework */; };
@@ -116,7 +118,6 @@
 		0ED0F00418A9D665002972DB /* UnifiOfflineGrowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0F00018A9D665002972DB /* UnifiOfflineGrowIcon.png */; };
 		0ED0F00618A9D665002972DB /* UnifiOnlineGrowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0F00218A9D665002972DB /* UnifiOnlineGrowIcon.png */; };
 		0ED0F00A18A9D7C7002972DB /* UnifiOfflineIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0F00818A9D7C7002972DB /* UnifiOfflineIcon.png */; };
-		0ED0F00B18A9D7C7002972DB /* UnifiOnlineIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0F00918A9D7C7002972DB /* UnifiOnlineIcon.png */; };
 		0ED0F01118AB37E3002972DB /* Time.png in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0F01018AB37E3002972DB /* Time.png */; };
 		0ED0FED11844867900349D39 /* trafficchart.html in Resources */ = {isa = PBXBuildFile; fileRef = 0ED0FED01844867900349D39 /* trafficchart.html */; };
 		0ED0FED418448A7600349D39 /* unifiDashboardViewControllerDep.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED0FED318448A7600349D39 /* unifiDashboardViewControllerDep.m */; };
@@ -202,12 +203,11 @@
 /* Begin PBXFileReference section */
 		0E022CA818AC943400C7BCF6 /* unifiAlertTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "unifi\U0010AlertTableView.h"; path = "InterfaceBuilder/unifi\U0010AlertTableView.h"; sourceTree = "<group>"; };
 		0E022CA918AC943400C7BCF6 /* unifiAlertTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "unifi\U0010AlertTableView.m"; path = "InterfaceBuilder/unifi\U0010AlertTableView.m"; sourceTree = "<group>"; };
-		0E022CAB18ACB0B700C7BCF6 /* InfoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = InfoIcon.png; sourceTree = "<group>"; };
 		0E022CBB18AD463900C7BCF6 /* AddIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddIcon.png; sourceTree = "<group>"; };
 		0E022CBC18AD463900C7BCF6 /* EditIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EditIcon.png; sourceTree = "<group>"; };
 		0E022CBD18AD463900C7BCF6 /* DeleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteIcon.png; sourceTree = "<group>"; };
-		0E022CC118AE17D800C7BCF6 /* unifiSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiSettingsView.h; path = InterfaceBuilder/unifiSettingsView.h; sourceTree = "<group>"; };
-		0E022CC218AE17D800C7BCF6 /* unifiSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiSettingsView.m; path = InterfaceBuilder/unifiSettingsView.m; sourceTree = "<group>"; };
+		0E022CC118AE17D800C7BCF6 /* unifiTableList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiTableList.h; path = InterfaceBuilder/unifiTableList.h; sourceTree = "<group>"; };
+		0E022CC218AE17D800C7BCF6 /* unifiTableList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unifiTableList.m; path = InterfaceBuilder/unifiTableList.m; sourceTree = "<group>"; };
 		0E022CC618AF247500C7BCF6 /* unifiAddBandwidthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiAddBandwidthViewController.h; sourceTree = "<group>"; };
 		0E022CC718AF247500C7BCF6 /* unifiAddBandwidthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = unifiAddBandwidthViewController.m; sourceTree = "<group>"; };
 		0E17314D185F1309004CD0A1 /* unifiUserViewControllerDep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unifiUserViewControllerDep.h; path = Navigator/unifiUserViewControllerDep.h; sourceTree = "<group>"; };
@@ -228,6 +228,9 @@
 		0E3A67BD18AFDD5100B1B93F /* EditIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EditIcon@2x.png"; sourceTree = "<group>"; };
 		0E3A67BE18AFDD5100B1B93F /* AddIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AddIcon@2x.png"; sourceTree = "<group>"; };
 		0E3A67BF18AFDD5100B1B93F /* DeleteIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteIcon@2x.png"; sourceTree = "<group>"; };
+		0E3A67C318B22ABD00B1B93F /* UnifiOnlineIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnifiOnlineIcon.png; sourceTree = "<group>"; };
+		0E3A67C418B22ABD00B1B93F /* UnifiOnlineIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UnifiOnlineIcon@2x.png"; sourceTree = "<group>"; };
+		0E3A67C718B22B4700B1B93F /* UnifiOfflineIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UnifiOfflineIcon@2x.png"; sourceTree = "<group>"; };
 		0E488D81183C4FE4004FF995 /* UnifiManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnifiManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E488D84183C4FE4004FF995 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E488D86183C4FE4004FF995 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -337,7 +340,6 @@
 		0ED0F00018A9D665002972DB /* UnifiOfflineGrowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnifiOfflineGrowIcon.png; sourceTree = "<group>"; };
 		0ED0F00218A9D665002972DB /* UnifiOnlineGrowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnifiOnlineGrowIcon.png; sourceTree = "<group>"; };
 		0ED0F00818A9D7C7002972DB /* UnifiOfflineIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnifiOfflineIcon.png; sourceTree = "<group>"; };
-		0ED0F00918A9D7C7002972DB /* UnifiOnlineIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnifiOnlineIcon.png; sourceTree = "<group>"; };
 		0ED0F01018AB37E3002972DB /* Time.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Time.png; sourceTree = "<group>"; };
 		0ED0FED01844867900349D39 /* trafficchart.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = trafficchart.html; sourceTree = "<group>"; };
 		0ED0FED218448A7600349D39 /* unifiDashboardViewControllerDep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifiDashboardViewControllerDep.h; sourceTree = "<group>"; };
@@ -647,6 +649,8 @@
 		0E488D8B183C4FE4004FF995 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0E3A67C318B22ABD00B1B93F /* UnifiOnlineIcon.png */,
+				0E3A67C418B22ABD00B1B93F /* UnifiOnlineIcon@2x.png */,
 				0ED0535118AFC9F30033EFF8 /* NotificationDotted.png */,
 				0E3A67BD18AFDD5100B1B93F /* EditIcon@2x.png */,
 				0E3A67BE18AFDD5100B1B93F /* AddIcon@2x.png */,
@@ -654,10 +658,9 @@
 				0E022CBB18AD463900C7BCF6 /* AddIcon.png */,
 				0E022CBC18AD463900C7BCF6 /* EditIcon.png */,
 				0E022CBD18AD463900C7BCF6 /* DeleteIcon.png */,
-				0E022CAB18ACB0B700C7BCF6 /* InfoIcon.png */,
 				0ED0F01018AB37E3002972DB /* Time.png */,
 				0ED0F00818A9D7C7002972DB /* UnifiOfflineIcon.png */,
-				0ED0F00918A9D7C7002972DB /* UnifiOnlineIcon.png */,
+				0E3A67C718B22B4700B1B93F /* UnifiOfflineIcon@2x.png */,
 				0ED0F00018A9D665002972DB /* UnifiOfflineGrowIcon.png */,
 				0ED0F00218A9D665002972DB /* UnifiOnlineGrowIcon.png */,
 				0E8433BF18A8A0A200BA8C1C /* map.png */,
@@ -770,8 +773,8 @@
 				0ED16A6918A9C6F300C0E524 /* unifiButton.m */,
 				0E022CA818AC943400C7BCF6 /* unifiAlertTableView.h */,
 				0E022CA918AC943400C7BCF6 /* unifiAlertTableView.m */,
-				0E022CC118AE17D800C7BCF6 /* unifiSettingsView.h */,
-				0E022CC218AE17D800C7BCF6 /* unifiSettingsView.m */,
+				0E022CC118AE17D800C7BCF6 /* unifiTableList.h */,
+				0E022CC218AE17D800C7BCF6 /* unifiTableList.m */,
 			);
 			name = InterfaceBuilder;
 			sourceTree = "<group>";
@@ -968,7 +971,6 @@
 				0E7246DF188C24770087DEF2 /* Activity@2x.png in Resources */,
 				0ED0F00618A9D665002972DB /* UnifiOnlineGrowIcon.png in Resources */,
 				0EF4E93F1854C1360097FACB /* WhiteBG.png in Resources */,
-				0E022CAC18ACB0B700C7BCF6 /* InfoIcon.png in Resources */,
 				0E022CBE18AD463900C7BCF6 /* AddIcon.png in Resources */,
 				0ED0FED11844867900349D39 /* trafficchart.html in Resources */,
 				0EBCF14D1843C5FC00D11BFD /* TreeIcon@2x.png in Resources */,
@@ -977,6 +979,7 @@
 				0EFDF65A188EBF7700134B21 /* LineIcon@2x.png in Resources */,
 				0E7246DB188C24770087DEF2 /* WirelessBad.png in Resources */,
 				0EBCF15E1843C61B00D11BFD /* TWIcon3@2x.png in Resources */,
+				0E3A67C818B22B4700B1B93F /* UnifiOfflineIcon@2x.png in Resources */,
 				0ED0535218AFC9F30033EFF8 /* NotificationDotted.png in Resources */,
 				0EBCF15D1843C61B00D11BFD /* TWIcon3.png in Resources */,
 				0E7246D8188C24770087DEF2 /* Activity.png in Resources */,
@@ -1033,6 +1036,7 @@
 				0EFDF669188EBFD700134B21 /* APIcon.png in Resources */,
 				0EBCF1421843C5FC00D11BFD /* NotificationIcon.png in Resources */,
 				0EF4E9411854C22D0097FACB /* White2BG.png in Resources */,
+				0E3A67C618B22ABD00B1B93F /* UnifiOnlineIcon@2x.png in Resources */,
 				0EFDF673188EC00700134B21 /* HoursIconPressed.png in Resources */,
 				0EF4E94B1854D4C10097FACB /* SettingIcon.png in Resources */,
 				0EFDF659188EBF7700134B21 /* LineIcon.png in Resources */,
@@ -1043,7 +1047,6 @@
 				0EBCF15B1843C61B00D11BFD /* TWIcon2.png in Resources */,
 				0EFDF652188EBF6500134B21 /* PieIcon@2x.png in Resources */,
 				0E488D8F183C4FE4004FF995 /* InfoPlist.strings in Resources */,
-				0ED0F00B18A9D7C7002972DB /* UnifiOnlineIcon.png in Resources */,
 				0EEAB772188A625F00DF66A5 /* Android.png in Resources */,
 				0E7246DA188C24770087DEF2 /* WirelessBest.png in Resources */,
 				0EBCF1451843C5FC00D11BFD /* NotificationIconPressed@2x.png in Resources */,
@@ -1058,6 +1061,7 @@
 				0EFDF679188EC02600134B21 /* DateIcon.png in Resources */,
 				0EFDF654188EBF6500134B21 /* PieIconPressed@2x.png in Resources */,
 				0EFDF653188EBF6500134B21 /* PieIconPressed.png in Resources */,
+				0E3A67C518B22ABD00B1B93F /* UnifiOnlineIcon.png in Resources */,
 				0EFDF651188EBF6500134B21 /* PieIcon.png in Resources */,
 				0EFDF663188EBFAE00134B21 /* UserIconPressed.png in Resources */,
 				0E7246CB188C1EF50087DEF2 /* UploadIcon@2x.png in Resources */,
@@ -1113,7 +1117,7 @@
 				0E66899F183DF1A400434A2F /* unifiUserResource.m in Sources */,
 				0EEAB769188A216B00DF66A5 /* unifiSwitch.m in Sources */,
 				0EB0770C1887C92400521834 /* unifiSelectDeviceViewController.m in Sources */,
-				0E022CC318AE17D800C7BCF6 /* unifiSettingsView.m in Sources */,
+				0E022CC318AE17D800C7BCF6 /* unifiTableList.m in Sources */,
 				0EAEE09A1879A074002D3FB6 /* unifiDashboardViewController.m in Sources */,
 				0E1E4659183CE74000624634 /* unifiApiConnector.m in Sources */,
 				0E488D91183C4FE4004FF995 /* main.m in Sources */,
