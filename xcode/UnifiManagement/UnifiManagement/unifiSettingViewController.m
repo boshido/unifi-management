@@ -147,7 +147,7 @@
                         upString= [NSString stringWithFormat:@"%0.0d KBps",[[group valueForKey:@"qos_rate_max_up"] intValue]/8];
                     else
                         upString = @"No Limit";
-
+                    
                     
                     UIButton *nameButton = [unifiTableList generateUIButtonWithTitle:[group valueForKey:@"name"]];
                     [nameButton setImage:[UIImage imageNamed:@"EditIcon.png"] forState:UIControlStateNormal];
@@ -395,10 +395,11 @@
                 {
                  //TODO: Handle/Log error
                 }
-                [unifiGlobalVariable initialValue];
-                [self.tabBarController dismissViewControllerAnimated:YES completion:^{
-//                  [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
-                }];
+                [unifiGlobalVariable refreshValue];
+                [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:YES completion:nil];
+//                [self.tabBarController dismissViewControllerAnimated:YES completion:^{
+////                  [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"] animated:NO completion:nil];
+//                }];
 
 
 

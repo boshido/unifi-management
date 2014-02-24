@@ -6,28 +6,29 @@
 //  Copyright (c) 2557 KMUTNB. All rights reserved.
 //
 
-#import "unifiUserViewController.h"
+#import "unifiUserListViewController.h"
 #import "unifiUserResource.h"
+#import "unifiDeviceResource.h"
 #import "unifiUserProfileViewController.h"
 #import "unifiTableViewCell.h"
 #import "DejalActivityView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "TJSpinner.h"
 
-@interface unifiUserViewController ()
+@interface unifiUserListViewController ()
 
 @end
 
 #define LoadLength 15
 
-@implementation unifiUserViewController{
+@implementation unifiUserListViewController{
     bool firstLoad;
     unifiApiConnector *searchAPI;
     UITapGestureRecognizer *dismissKeybaordTap;
-    NSInteger onlineStart,offlineStart,onlineLength,offlineLength,searchStart,searchLength;
+    NSInteger userStart,userLength,searchStart,searchLength;
     ApiErrorCallback handleError;
 }
-@synthesize userOnline,userOffline,userSearch,userTable,searchBar,filterBtn,filterState,isSearched;
+@synthesize userList,userSearch,userTable,searchBar,isSearched,deviceHostname,deviceMac;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,31 +60,26 @@
     handleError= ^(NSError *error) {
         [DejalBezelActivityView removeViewAnimated:YES];
         unifiFailureViewController *failureController = [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
-        failureController.delegate = weakSelf;
         [[weakSelf navigationController] presentViewController:failureController animated:YES completion:nil];
     };
-
+    
     
     [self initialize];
     
 }
 -(void)initialize{
-    
-    [filterBtn setSelected:NO];
-    filterState=1;
+
     isSearched=NO;
-    userOnline = [[NSMutableArray alloc] init];
-    userOffline = [[NSMutableArray alloc] init];
+    userList = [[NSMutableArray alloc] init];
+    
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     
     searchStart    = 0;
-    onlineStart   = 0;
-    offlineStart  = 0;
+    userStart   = 0;
     
     searchLength  = LoadLength;
-    onlineLength  = LoadLength;
-    offlineLength = LoadLength;
+    userLength  = LoadLength;
     
     searchAPI = [[unifiApiConnector alloc] initWithUrl:@""
                                   withCompleteCallback:^(NSJSONSerialization *responseJSON,NSString *reponseString){
@@ -98,8 +94,8 @@
                                      withErrorCallback:handleError                 ];
     
     firstLoad=YES;
-    [self loadOnlineUserWithLoadmore:NO];
-    [self loadOfflineUserWithLoadmore:NO];
+    
+    [self loadUserWithLoadmore:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -146,8 +142,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(isSearched)return [userSearch count];
-    else if(filterState==1)return [userOnline count];
-    else return [userOffline count];
+    else return [userList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -166,17 +161,12 @@
         json = [userSearch objectAtIndex:indexPath.row];
         if ([self.userSearch count] >= searchLength && indexPath.row == [self.userSearch count] - 2)
             [self loadSearchUserWithLoadmore:YES];
-
-    }
-    else if(filterState==1){
-        json = [userOnline objectAtIndex:indexPath.row];
-        if ([self.userOnline count] >= onlineLength && indexPath.row == [self.userOnline count] - 2)
-            [self loadOnlineUserWithLoadmore:YES];
+        
     }
     else{
-        json = [userOffline objectAtIndex:indexPath.row];
-        if ([self.userOffline count] >= offlineLength && indexPath.row == [self.userOffline count] - 2)
-            [self loadOfflineUserWithLoadmore:YES];
+        json = [userList objectAtIndex:indexPath.row];
+        if ([self.userList count] >= userLength && indexPath.row == [self.userList count] - 2)
+            [self loadUserWithLoadmore:YES];
     }
     
     if([json valueForKey:@"name"] == NULL || [json valueForKey:@"name"] == [NSNull null])
@@ -186,7 +176,7 @@
     
     if([json valueForKey:@"picture"] != nil)
         [cell.imageView setImageWithURL:[NSURL URLWithString:[json valueForKey:@"picture"]]
-                   placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
+                       placeholderImage:[UIImage imageNamed:@"profile.jpg"] options:SDWebImageRefreshCached];
     else
         cell.imageView.image = [UIImage imageNamed:@"profile.jpg"];
     
@@ -195,19 +185,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    unifiUserProfileViewController * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiUserProfileViewController"];
-    
+
+    NSJSONSerialization *json;
     if(isSearched){
-        [profile setGoogleId:[[userSearch objectAtIndex:indexPath.row] valueForKey:@"google_id"]];
-    }
-    else if(filterState==1){
-        [profile setGoogleId:[[userOnline objectAtIndex:indexPath.row] valueForKey:@"google_id"]];
+        json = [userSearch objectAtIndex:indexPath.row];
     }
     else{
-        [profile setGoogleId:[[userOffline objectAtIndex:indexPath.row] valueForKey:@"google_id"]];
+        json = [userList objectAtIndex:indexPath.row];
     }
-    
-    [[self navigationController] pushViewController:profile animated:YES];
+   
+    [unifiDeviceResource
+     authorizeDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+         [self.navigationController popViewControllerAnimated:YES];
+     }
+     withHandleError:handleError
+     fromGoogleId:[json valueForKey:@"google_id"]
+     andHostname:deviceHostname
+     andMac:deviceMac
+     andFirstName:[json valueForKey:@"fname"]
+     andLastName:[json valueForKey:@"lname"]
+     andEmail:[json valueForKey:@"email"]
+     ];
 }
 
 - (void) dismissKeyboard
@@ -217,94 +215,28 @@
     [self.searchBar resignFirstResponder];
 }
 
--(IBAction)filter:(id)sender
-{
-    
-    if(isSearched){
-        searchStart     = 0;
-        searchLength    = LoadLength;
-        userSearch      = [[NSMutableArray alloc] init];
-        if(filterState !=1 )
-        {
-            [searchAPI cancel];
-            [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/online-user-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
-            [searchAPI loadGetData];
-        }
-        else{
-            [searchAPI cancel];
-            [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/offline-user-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
-            [searchAPI loadGetData];
-        }
-    }
-    if(filterState==1)
-    {
-        [sender setSelected:YES];
-        filterState=2;
-    }
-    else {
-        [sender setSelected:NO];
-        filterState=1;
-    }
-    
-    if(isSearched){
-        searchStart     = 0;
-        searchLength    = LoadLength;
-        userSearch      = [[NSMutableArray alloc] init];
-        [self loadSearchUserWithLoadmore:NO];
-    }
-    
-    [self.userTable reloadData];
-}
-
--(void)loadOnlineUserWithLoadmore:(bool)flag{
+-(void)loadUserWithLoadmore:(bool)flag{
     if(flag){
-        onlineStart  = onlineLength;
-        onlineLength = onlineLength+LoadLength;
+        userStart  = userLength;
+        userLength = userLength+LoadLength;
     }
     
     [unifiUserResource
-     getOnlineUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+     getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
          for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
              if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
                  [json setObject: @"profile.jpg" forKey:@"picture"];
              }
-            [userOnline addObject:json];
+             [userList addObject:json];
          }
-         if(!firstLoad){
-             [DejalBezelActivityView removeViewAnimated:YES];
-             [userTable reloadData];
-         }
-         firstLoad=false;
+
+        [DejalBezelActivityView removeViewAnimated:YES];
+        [userTable reloadData];
      }
      withHandleError:handleError
-     fromStart:onlineStart toLength:onlineLength 
+     fromStart:userStart toLength:userLength
      ];
     
-}
-
--(void)loadOfflineUserWithLoadmore:(bool)flag{
-    if(flag){
-        offlineStart  = offlineLength;
-        offlineLength = offlineLength+LoadLength;
-    }
-        
-    [unifiUserResource
-     getOfflineUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
-         for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-             if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
-                [json setObject: @"profile.jpg" forKey:@"picture"];
-             }
-             [userOffline addObject:json];
-         }
-         if(!firstLoad){
-             [DejalBezelActivityView removeViewAnimated:YES];
-             [userTable reloadData];
-         }
-         firstLoad=false;
-     }
-     withHandleError:handleError
-     fromStart:offlineStart toLength:offlineLength
-     ];
 }
 
 -(void)loadSearchUserWithLoadmore:(bool)flag{
@@ -312,23 +244,11 @@
         searchStart  = searchLength;
         searchLength = searchLength+LoadLength;
     }
-    if(filterState==1)
-    {
-        [searchAPI cancel];
-        [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/online-user-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
-        [searchAPI loadGetData];
-    }
-    else{
-        [searchAPI cancel];
-        [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/offline-user-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
-        [searchAPI loadGetData];
-    }
-}
-
-- (void)failureView:(unifiFailureViewController *)viewController
-       retryWithSel:(SEL)selector{
-    [self initialize];
-
+    
+    [searchAPI cancel];
+    [searchAPI setUrl:[NSString stringWithFormat:@"http://%@/unifi/user-list?start=%i&length=%i&search=%@",ApiServerAddress,searchStart,searchLength,[searchBar text]]];
+    [searchAPI loadGetData];
+  
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle{

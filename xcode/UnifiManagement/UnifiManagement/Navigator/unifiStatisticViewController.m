@@ -15,6 +15,7 @@
 #import "unifiDeviceProfileViewController.h"
 #import "unifiUserProfileViewController.h"
 #import "unifiFailureViewController.h"
+#import "unifiTableList.h"
 @interface unifiStatisticViewController ()
 
 @end
@@ -130,7 +131,7 @@
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             NSMutableArray *dataSource = [[NSMutableArray alloc] init];
             
-            NSString *_average;
+            NSString *_average,*unit=@"";
             NSInteger plotCount=0;
             float averageTraffic=0.0f;
             
@@ -162,6 +163,33 @@
                                              }];
                     if(max < [[json valueForKey:@"bytes"] longLongValue])max = [[json valueForKey:@"bytes"] longLongValue];
                 }
+                
+                long divide=1;
+                if((NSInteger)(max / 1073741824) != 0){
+                    divide = 1073741824;
+                    unit = @"GB";
+                }
+                else if((NSInteger)(max / 1048576) != 0){
+                    divide = 1048576;
+                    unit = @"MB";
+                }
+                else if((NSInteger)(max / 1024) != 0){
+                    divide = 1024;
+                    unit = @"KB";
+                }
+                else{
+                    unit = @"B";
+                }
+                
+                for(NSInteger i=0;i<[dataSource count];i++){
+                    NSJSONSerialization *json= [dataSource objectAtIndex:i];
+                    [dataSource replaceObjectAtIndex:i withObject:@{
+                                                                    @"date":[ NSNumber numberWithLongLong:[[json valueForKey:@"date"] longLongValue]],
+                                                                    @"traffic":[ NSNumber numberWithDouble:[[json valueForKey:@"traffic"] doubleValue]/divide],
+                                                                    @"tag":[ NSNumber numberWithLongLong:[[json valueForKey:@"tag"] longLongValue]]
+                                                                    }];
+                }
+
             }
             else{
                 for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
@@ -170,7 +198,6 @@
                                              @"deviceCount":[ NSNumber numberWithLongLong:[[json valueForKey:@"user_count"] intValue] ],
                                              @"tag":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]]
                                              }];
-                    if(max < [[json valueForKey:@"bytes"] longLongValue])max = [[json valueForKey:@"bytes"] longLongValue];
                 }
             }
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dataSource
@@ -178,12 +205,14 @@
                                                                  error:nil];
             NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
+            
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 
                 if (jsonData) {
                     average.text = _average;
                     
-                    [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,%lld,\"%@\",%@)", jsonString,max,timeType,isTraffic ? @"true" : @"false"]];
+                    [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,\"%@\",\"%@\",%@)", jsonString,unit,timeType,isTraffic ? @"true" : @"false"]];
+                    NSLog(@"%@",[NSString stringWithFormat:@"setValue(%@,\"%@\",\"%@\",%@)", jsonString,unit,timeType,isTraffic ? @"true" : @"false"]);
                 }
                 [DejalBezelActivityView removeViewAnimated:YES];
             });
@@ -218,49 +247,83 @@
              if(coverView.alpha==1)coverView.alpha=0;
              if(responseJSON != nil){
                  if([[responseJSON valueForKey:@"code"] intValue] == 200){
+                     unifiTableList *authList = [[unifiTableList alloc] initWithFrame:CGRectMake(10, 7, 300, 0)];
+                     authList.header.text = @"Authorize Users";
+                     authList.firstColumn.text = @"Hostname";
+                     authList.secondColumn.text= @"Usage";
+                     authList.firstColumnSize = authList.firstColumnSize+30;
+                     authList.secondColumnX = authList.secondColumnX+15;
+                     
+                     unifiTableList *noAuthList = [[unifiTableList alloc] initWithFrame:CGRectMake(0,0,300,0)];
+                     noAuthList.header.text = @"Pending Device";
+                     noAuthList.firstColumn.text=@"Hostname";
+                     noAuthList.secondColumn.text=@"Usage";
+                     noAuthList.firstColumnSize = noAuthList.firstColumnSize+30;
+                     noAuthList.secondColumnX = noAuthList.secondColumnX+15;
+                     
                      for(NSJSONSerialization *json in [responseJSON valueForKey:@"data"]){
-                         if(![[ json valueForKey:@"is_auth"] boolValue])continue;
+                         if([[json valueForKey:@"is_auth"] boolValue]){
+                             
+                             UILabel *name;
+                             if([json valueForKey:@"name"] != [NSNull null]) name =  [unifiTableList generateUILabelWithTitle:[json valueForKey:@"name"]];
+                             else name =  [unifiTableList generateUILabelWithTitle:[json valueForKey:@"email"]];
+                             
+                             UILabel *hostname;
+                             if([json valueForKey:@"hostname"] != [NSNull null]) hostname = [unifiTableList generateUILabelWithTitle:[json valueForKey:@"hostname"]];
+                             else hostname = [unifiTableList generateUILabelWithTitle:[json valueForKey:@"mac"]];
+                            
+                             hostname.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
+                             
+                             UILabel *usage = [unifiTableList generateUILabelWithTitle:[self getValueWithUnit:[[json valueForKey:@"bytes"] longLongValue] ] ];
+                             usage.textAlignment = NSTextAlignmentRight;
+                             usage.textColor = [UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0];
+                             
+                             unifiUITapGestureRecognizer* nameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(nameTapped:)];
+                             // if labelView is not set userInteractionEnabled, you must do so
+                             [nameGesture initParameter];
+                             [nameGesture setParameter:[json valueForKey:@"google_id"] withKey:@"google_id"];
+                             [name setUserInteractionEnabled:YES];
+                             [name addGestureRecognizer:nameGesture];
+                             
+                             unifiUITapGestureRecognizer* hostnameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(hostnameTapped:)];
+                             // if labelView is not set userInteractionEnabled, you must do so
+                             [hostnameGesture initParameter];
+                             [hostnameGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
+                             [hostname setUserInteractionEnabled:YES];
+                             [hostname addGestureRecognizer:hostnameGesture];
+                             
+                             [authList addRowWithSubjectView:name andFirstColumnView:hostname andSecondColumnView:usage];
+
+                         }
+                         else{
+                
+                             UILabel *hostname;
+                             if([json valueForKey:@"hostname"] != [NSNull null]) hostname = [unifiTableList generateUILabelWithTitle:[json valueForKey:@"hostname"]];
+                             else hostname = [unifiTableList generateUILabelWithTitle:[json valueForKey:@"mac"]];
+                             
+                             hostname.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
+                             
+                             UILabel *usage = [unifiTableList generateUILabelWithTitle:[self getValueWithUnit:[[json valueForKey:@"bytes"] doubleValue] ] ];
+                             usage.textAlignment = NSTextAlignmentRight;
+                             usage.textColor = [UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0];
+                             
+                             
+                             unifiUITapGestureRecognizer* hostnameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(hostnameTapped:)];
+                             // if labelView is not set userInteractionEnabled, you must do so
+                             [hostnameGesture initParameter];
+                             [hostnameGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
+                             [hostname setUserInteractionEnabled:YES];
+                             [hostname addGestureRecognizer:hostnameGesture];
+                             
+                             [noAuthList addRowWithSubjectString:@"Unknown" andFirstColumnView:hostname andSecondColumnView:usage];
                          
-                         UILabel *describe,*hostname;
-                         describe = [[UILabel alloc] initWithFrame:CGRectMake(11, contentSize, 185, 21)];
-                         hostname = [[UILabel alloc] initWithFrame:CGRectMake(204, contentSize, 103, 21)];
-                         
-                         [describe setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
-                         [describe setTextAlignment:NSTextAlignmentLeft];
-                         [describe setFont:[UIFont systemFontOfSize:11]];
-                         
-                         if([json valueForKey:@"name"] == [NSNull null]) [describe setText:[json valueForKey:@"email"]];
-                         else [describe setText:[json valueForKey:@"name"]];
-                         
-                         
-                         
-                         [hostname setTextColor:[UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0]];
-                         [hostname setTextAlignment:NSTextAlignmentLeft];
-                         [hostname setFont:[UIFont systemFontOfSize:11]];
-                         if([json valueForKey:@"hostname"] != [NSNull null]) [hostname setText:[json valueForKey:@"hostname"]];
-                         else [hostname setText:[json valueForKey:@"mac"]];
-                         
-                         [scrollView addSubview:describe];
-                         [scrollView addSubview:hostname];
-                         
-                         unifiUITapGestureRecognizer* describeGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(describeTapped:)];
-                         // if labelView is not set userInteractionEnabled, you must do so
-                         [describeGesture initParameter];
-                         [describeGesture setParameter:[json valueForKey:@"google_id"] withKey:@"google_id"];
-                         [describe setUserInteractionEnabled:YES];
-                         [describe addGestureRecognizer:describeGesture];
-                         
-                         unifiUITapGestureRecognizer* hostnameGesture = [[unifiUITapGestureRecognizer alloc] initWithTarget:self action:@selector(hostnameTapped:)];
-                         // if labelView is not set userInteractionEnabled, you must do so
-                         [hostnameGesture initParameter];
-                         [hostnameGesture setParameter:[json valueForKey:@"mac"] withKey:@"mac"];
-                         [hostname setUserInteractionEnabled:YES];
-                         [hostname addGestureRecognizer:hostnameGesture];
-                         
-                         contentSize+=20;
-                         [scrollView setContentSize:CGSizeMake(68, contentSize)];
-                         
+                         }
                      }
+                     
+                    noAuthList.frame = CGRectMake(10, authList.contentSize+12, 300, 0);
+                    [scrollView addSubview:authList];
+                    [scrollView addSubview:noAuthList];
+                    [scrollView setContentSize:CGSizeMake(300, noAuthList.contentSize + noAuthList.frame.origin.y+30)];
                  }
                  else{
                      UILabel *describe = [[UILabel alloc] initWithFrame:CGRectMake(75, 100, 250, 21)];
@@ -402,7 +465,7 @@
     }
 
 }
--(void)describeTapped:(unifiUITapGestureRecognizer*)gestureRecognizer{
+-(void)nameTapped:(unifiUITapGestureRecognizer*)gestureRecognizer{
     NSLog(@"%@",[gestureRecognizer getParameterByKey:@"google_id"]);
     unifiUserProfileViewController *userProfile = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiUserProfileViewController"];
     userProfile.googleId= [gestureRecognizer getParameterByKey:@"google_id"];
@@ -499,6 +562,23 @@
         [self showGraph];
     }
     
+}
+-(NSString *)getValueWithUnit:(float)value{
+    if((NSInteger)(value/1073741824) != 0){
+        value = value / 1073741824;
+        return [NSString stringWithFormat:@"%.1f %@",value,@"GB"];
+    }
+    else if((NSInteger)(value / 1048576) != 0){
+        value = value / 1048576;
+        return [NSString stringWithFormat:@"%.1f %@",value,@"MB"];
+    }
+    else if((NSInteger)(value / 1024) != 0){
+        value = value / 1024;
+        return [NSString stringWithFormat:@"%.1f %@",value,@"KB"];
+    }
+    else{
+        return [NSString stringWithFormat:@"%.1f %@",value,@"B"];
+    }
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleBlackTranslucent;

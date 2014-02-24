@@ -40,7 +40,7 @@
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
                                                     cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                timeoutInterval:10.0];
+                                                timeoutInterval:7];
 
     theConnection=[[NSURLConnection alloc] initWithRequest:request  delegate:self startImmediately:YES];
     if (!theConnection) {
@@ -54,7 +54,7 @@
     
      NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
                                            cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                       timeoutInterval:60.0];
+                                       timeoutInterval:20];
     // Create the request.
     // Specify that it will be a POST request
     request.HTTPMethod = @"POST";

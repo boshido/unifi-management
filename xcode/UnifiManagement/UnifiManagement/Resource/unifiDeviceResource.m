@@ -31,11 +31,26 @@
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/unauthorized-device-list?start=%i&length=%i",ApiServerAddress,start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
++(void)getBlockedDeviceList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/blocked-device-list?start=%i&length=%i",ApiServerAddress,start,length] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
+
++(void)getDeviceSessionHistoryList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length withMac:(NSString *)mac{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-session-history?start=%i&length=%i&mac=%@",ApiServerAddress,start,length,mac] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
++(void)getDeviceAuthHistoryList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length withMac:(NSString *)mac{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device-auth-history?start=%i&length=%i&mac=%@",ApiServerAddress,start,length,mac] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    [object loadGetData];
+}
+
 +(void)getAuthorizedDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromGoogleId:(NSString *)googleId{
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/authorized-device?google_id=%@",ApiServerAddress,googleId] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
 +(void)getDevice:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromMac:(NSString *)mac{
+    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/device?mac=%@",ApiServerAddress,mac] );
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/device?mac=%@",ApiServerAddress,mac] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }

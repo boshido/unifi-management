@@ -20,4 +20,5 @@
 
 +(unifiGlobalVariable *)sharedGlobalData;
 +(void)initialValue;
++(void)refreshValue;
 @end

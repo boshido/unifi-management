@@ -108,7 +108,7 @@
     [cell setCellStyle:TextWithTreeDetailRowStyle];
     
     NSJSONSerialization *json;
-    
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     json = [notificationList objectAtIndex:indexPath.row];
     if ([self.notificationList count] >= notificationLength && indexPath.row == [self.notificationList count] - 2)
         [self loadNotificationListWithLoadmore:YES];

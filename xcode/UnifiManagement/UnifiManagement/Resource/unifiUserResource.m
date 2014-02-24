@@ -10,7 +10,7 @@
 
 @implementation unifiUserResource
 
-+(void)getUserList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
++(void)getUserList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStart:(NSInteger)start toLength:(NSInteger)length {
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/user-list",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }

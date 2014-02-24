@@ -25,6 +25,17 @@
  
     [object loadGetData];
 }
+
++(void)getTopTenTrafficUserReport:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromStartTime:(NSTimeInterval )time andType:(NSString *)type{
+    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/top-ten-user-report?time=%f&type=%@",ApiServerAddress,time,type]);
+    unifiApiConnector *object = [[unifiApiConnector alloc]
+                                 initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/top-ten-user-report?time=%f&type=%@",ApiServerAddress,time,type]
+                                 withCompleteCallback:completeCallback withErrorCallback:errorCallback
+                                 ];
+    
+    [object loadGetData];
+}
+
 +(void)getMapList:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/map-list",ApiServerAddress] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
@@ -34,7 +45,6 @@
     [object loadGetData];
 }
 +(void)getSettingsInformation:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromTokenId:(NSString *)tokenId{
-    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/settings-information?token_id=%@",ApiServerAddress,tokenId]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/settings-information?token_id=%@",ApiServerAddress,tokenId] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
     [object loadGetData];
 }
@@ -54,19 +64,16 @@
 }
 
 +(void)setIosToken:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromTokenId:(NSString *)tokenId isEnabled:(NSString *) flag{
-    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/ios-token",ApiServerAddress ]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/ios-token",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"token_id=%@&enabled=%@",tokenId,flag != nil ? flag : @""]];
     
     [object loadPostData];
 }
 +(void)setGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id withName:(NSString *)name andDownload:(NSInteger)download andUpload:(NSInteger)upload {
-    NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/group",ApiServerAddress ]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/group",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"id=%@&name=%@&qos_rate_max_down=%i&qos_rate_max_up=%i",id,name,download,upload]];
     
     [object loadPostData];
 }
 +(void)deleteGroup:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback fromId:(NSString *)id {
-     NSLog(@"%@",[NSString stringWithFormat:@"http://%@/unifi/delete-group",ApiServerAddress ]);
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/delete-group",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"id=%@",id]];
     
     [object loadPostData];
@@ -103,5 +110,12 @@
     unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/change-device-to-group",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback andData:[NSString stringWithFormat:@"group_id=%@&user_id=%@",groupId,UserId]];
     
     [object loadPostData];
+}
+
+
++(void)getCurrentUsage:(ApiCompleteCallback)completeCallback withHandleError:(ApiErrorCallback)errorCallback{
+    unifiApiConnector *object = [[unifiApiConnector alloc] initWithUrl:[NSString stringWithFormat:@"http://%@/unifi/current-usage",ApiServerAddress ] withCompleteCallback:completeCallback withErrorCallback:errorCallback];
+    
+    [object loadGetData];
 }
 @end

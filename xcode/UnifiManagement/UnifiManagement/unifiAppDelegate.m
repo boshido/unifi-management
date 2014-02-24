@@ -57,10 +57,9 @@
     
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-//    UIStoryboard *storyboard = [self.window.rootViewController storyboard];
-//    unifiSplashViewController *splashView = [storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"];
-//    splashView.flag = true;
-//    [self.window.rootViewController  presentViewController:splashView animated:NO completion:nil];
+    UIStoryboard *storyboard = [self.window.rootViewController storyboard];
+    unifiSplashViewController *splashView = [storyboard instantiateViewControllerWithIdentifier:@"unifiSplashViewController"];
+    [self.window.rootViewController  presentViewController:splashView animated:NO completion:nil];
     
 //    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
 //    [DejalBezelActivityView activityViewForView:self.window.rootViewController.view withLabel:@"Authenticating"];

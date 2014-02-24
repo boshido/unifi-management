@@ -101,26 +101,26 @@
                       }
                   }
                   else{
-                      [unifiGlobalVariable initialValue];
+                      [unifiGlobalVariable refreshValue];
                       if(needCallback != nil)needCallback();
                   }
               }
               withHandleError:^(NSError *error) {
-                  [unifiGlobalVariable initialValue];
+                  [unifiGlobalVariable refreshValue];
                   if(needCallback != nil)needCallback();
               }
               fromEmail:[responseJSON valueForKey:@"email"]
               ];
          }
          withHandleError:^(NSError *error) {
-             [unifiGlobalVariable initialValue];
+             [unifiGlobalVariable refreshValue];
              if(needCallback != nil)needCallback();
          }
          fromRefreshToken:refreshToken
          ];
     }
     else{
-        [unifiGlobalVariable initialValue];
+        [unifiGlobalVariable refreshValue];
         if(needCallback != nil)needCallback();
     }
 }

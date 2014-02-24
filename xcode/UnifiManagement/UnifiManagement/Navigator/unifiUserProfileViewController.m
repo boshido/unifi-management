@@ -88,7 +88,6 @@
     [unifiGoogleResource
      getUserData:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
          userData = [responseJSON valueForKey:@"data"];
-         NSLog(@"%@",responseJSON);
          [profileName setText:[userData valueForKey:@"name"]];
          [profileEmail setText:[userData valueForKey:@"email"]];
          [profilePicture.layer setCornerRadius:45.0f];

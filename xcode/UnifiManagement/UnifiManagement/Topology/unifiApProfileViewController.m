@@ -106,6 +106,9 @@
             authList.header.text = @"Authorized Device";
             authList.firstColumn.text=@"Hostname";
             authList.secondColumn.text=@"Usage";
+            authList.firstColumnSize = authList.firstColumnSize+30;
+            authList.secondColumnX = authList.secondColumnX+15;
+            
             if([[[responseJSON valueForKey:@"data"] valueForKey:@"auth"] count]>0)
                 for(NSJSONSerialization *json in [[responseJSON valueForKey:@"data"] valueForKey:@"auth"]){
                     
@@ -120,8 +123,9 @@
                         hostname = [unifiTableList generateUILabelWithTitle:[json valueForKey:@"hostname"]];
                     else
                         hostname = [unifiTableList generateUILabelWithTitle:[json valueForKey:@"mac"]];
+                     hostname.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
                     
-                    UIButton *traffic = [unifiTableList generateUIButtonWithTitle:[self getValueWithUnit:[[json valueForKey:@"bytes"] intValue]]];
+                    UIButton *traffic = [unifiTableList generateUIButtonWithTitle:[self getValueWithUnit:[[json valueForKey:@"bytes"] doubleValue]]];
                     [traffic setTitleColor:[UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0] forState:UIControlStateNormal];
                     traffic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
                     
@@ -150,6 +154,9 @@
             noAuthList.header.text = @"Pending Device";
             noAuthList.firstColumn.text=@"Hostname";
             noAuthList.secondColumn.text=@"Usage";
+            noAuthList.firstColumnSize = noAuthList.firstColumnSize+30;
+            noAuthList.secondColumnX = noAuthList.secondColumnX+15;
+            
             if([[[responseJSON valueForKey:@"data"] valueForKey:@"not_auth"] count]>0)
                 for(NSJSONSerialization *json in [[responseJSON valueForKey:@"data"] valueForKey:@"not_auth"]){
                     
@@ -158,8 +165,9 @@
                         hostname = [unifiTableList generateUILabelWithTitle:[json valueForKey:@"hostname"]];
                     else
                         hostname = [unifiTableList generateUILabelWithTitle:[json valueForKey:@"mac"]];
+                    hostname.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
                     
-                    UIButton *traffic = [unifiTableList generateUIButtonWithTitle:[self getValueWithUnit:[[json valueForKey:@"bytes"] intValue]]];
+                    UIButton *traffic = [unifiTableList generateUIButtonWithTitle:[self getValueWithUnit:[[json valueForKey:@"bytes"] doubleValue]]];
                     [traffic setTitleColor:[UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0] forState:UIControlStateNormal];
                     traffic.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
                     
@@ -292,21 +300,21 @@
     [self.navigationController pushViewController:deviceProfile animated:YES];
 }
 
--(NSString *)getValueWithUnit:(float)value{
+-(NSString *)getValueWithUnit:(double)value{
     if((NSInteger)(value/1073741824) != 0){
         value = value / 1073741824;
-        return [NSString stringWithFormat:@"%0.0f %@",value,@"GB"];
+        return [NSString stringWithFormat:@"%.1f %@",value,@"GB"];
     }
     else if((NSInteger)(value / 1048576) != 0){
         value = value / 1048576;
-        return [NSString stringWithFormat:@"%0.0f %@",value,@"MB"];
+        return [NSString stringWithFormat:@"%.1f %@",value,@"MB"];
     }
     else if((NSInteger)(value / 1024) != 0){
         value = value / 1024;
-        return [NSString stringWithFormat:@"%0.0f %@",value,@"KB"];
+        return [NSString stringWithFormat:@"%.1f %@",value,@"KB"];
     }
     else{
-        return [NSString stringWithFormat:@"%0.0f %@",value,@"B"];
+        return [NSString stringWithFormat:@"%.1f %@",value,@"B"];
     }
 }
 -(UIStatusBarStyle)preferredStatusBarStyle{

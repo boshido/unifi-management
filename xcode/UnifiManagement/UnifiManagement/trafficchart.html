@@ -47,24 +47,6 @@
             {
                 c1 = $("#chartContainer").dxChart(
                 {
-                    commonSeriesSettings: {
-                        argumentField: "date",
-                        tagField:"tag",
-                        label: {
-                            visible: true,
-                            connector: { visible: true },  
-                            format: 'fixedPoint',
-                            precision: 2,
-                            backgroundColor:'rgb(47, 47, 47)',
-                            customizeText: function(value){
-                                return parseUnitWithLabel(value.value);
-                            }
-                        }
-                    },
-                    series: [
-                        { type: 'spline' , valueField: "traffic", name: "Traffic" , color: 'rgba(62,62,62,1)'}
-                                                    
-                    ],
                     pointClick: function (clickedPoint,e) { 
                         var iframe = document.createElement("IFRAME");
                         iframe.setAttribute("src", "js-call:showUser:"+clickedPoint.tag);
@@ -72,52 +54,17 @@
                         iframe.parentNode.removeChild(iframe);
                         iframe = null;
                     },
-                    argumentAxis:{
-                       type: 'discrete',
-                       label:{
-                            alignment:'center',
-                            customizeText: function () {
-                                return getDateForChart(type,new Date(this.value));                             
-                            }
-                       }
-                       /* grid: {
-                            visible: true,
-                            color: 'rgba(62,62,62,1)'
-                        }*/
-                    },
-                    valueAxis: {
-                        label:{
-                            customizeText: function () {
-                                return parseUnit(this.value,label);
-                            }
-                        },
-                        grid: {
-                            visible: true,
-                            // color: 'rgba(62,62,62,1)',
-                            // size:2
-                            color: 'rgba(144,144,144,1)',
-                            size:2
-                        },
-                        title:{
-                            font: {
-                                color: 'rgba(255,255,255,1)',
-                                opacity: 1,
-                                size: 14,
-                                weight: 800
-                            }
-                        }
-                    },
-                    tooltip:{
-                        enabled: false,
-                        format: 'fixedPoint',
-                        precision: 2,
-                        customizeText: function(value){
+                    // tooltip:{
+                    //     enabled: false,
+                    //     format: 'fixedPoint',
+                    //     precision: 2,
+                    //     customizeText: function(value){
 
-                            return parseUnitWithLabel(value.value);
-                        },
-                        color:'rgba(255, 255, 255,1)',
-                        font: {  color: 'rgba(80,80,80,1)' }
-                    },
+                    //         return parseUnitWithLabel(value.value);
+                    //     },
+                    //     color:'rgba(255, 255, 255,1)',
+                    //     font: {  color: 'rgba(80,80,80,1)' }
+                    // },
                     title: {
                         text: 'Recent Traffic<br>'+getDate(new Date()),
                         font: {
@@ -159,21 +106,24 @@
                     }
                 });
             }
-            function setValue(dataSource,max,timeType,isTraffic){
-                // source = source.data;
-                // var dataSource = [];
-                // var categories = [];       
-                // var max = Math.max.apply(Math,source.map(function(o){return o.bytes;}));
-                var label = getUnit(max);
+            function setValue(dataSource,unit,timeType,isTraffic){
+                
+
                 if(isTraffic){
-                    // for(var y in source){
-                    //     dataSource.unshift({
-                    //         date:new Date(source[y].datetime.sec*1000),
-                    //         traffic:source[y].bytes,
-                    //         tag:source[y]._id
-                    //     });  
-                    //    // categories.push(source[y].datetime.sec*1000);
-                    // }
+                    var label; 
+                    if(unit == "GB"){
+                        label = 'GigaBytes';
+                    }
+                    else if(unit == "MB"){
+                        label = 'MegaBytes';
+                    }                   
+                    else if(unit == "KB"){
+                        label = 'KiloBytes';
+                    }
+                    else{
+                        label = 'Bytes';
+                    }
+
                     c1.dxChart('instance').option('dataSource',dataSource);
                     c1.dxChart('instance').option('commonSeriesSettings',{
                                                     argumentField: "date",
@@ -185,7 +135,7 @@
                                                         precision: 2,
                                                         backgroundColor:'rgb(47, 47, 47)',
                                                         customizeText: function(value){
-                                                            return parseUnitWithLabel(value.value);
+                                                            return value.value.toFixed(2)+" "+unit;
                                                         }
                                                     }
                                                 });
@@ -196,7 +146,7 @@
                     c1.dxChart('instance').option('valueAxis',{
                             label:{
                                 customizeText: function () {
-                                    return parseUnit(this.value,label);
+                                    return this.value.toFixed(2);
                                 }
                             },
                             grid: {
@@ -295,60 +245,60 @@
                 }
             }
 
-            function parseUnitWithLabel(data){
-                data = parseInt(data);
-                if(Math.floor(data/1073741824) != 0){
-                    data = data / 1073741824;
-                    label = 'GB';
-                    data = data.toFixed(2);
-                }
-                else if(Math.floor(data / 1048576) != 0){
-                    data = data / 1048576;
-                    label = 'MB';
-                    data = data.toFixed(2);
-                }                   
-                else if(Math.floor(data / 1024) != 0){
-                    data = data / 1024;
-                    label = 'KB';
-                    data = data.toFixed(2);
-                }
-                else{
-                    label = 'B';
-                }
-                return data+' '+label;
-            }
+            // function parseUnitWithLabel(data){
+            //     data = parseInt(data);
+            //     if(Math.floor(data/1073741824) != 0){
+            //         data = data / 1073741824;
+            //         label = 'GB';
+            //         data = data.toFixed(2);
+            //     }
+            //     else if(Math.floor(data / 1048576) != 0){
+            //         data = data / 1048576;
+            //         label = 'MB';
+            //         data = data.toFixed(2);
+            //     }                   
+            //     else if(Math.floor(data / 1024) != 0){
+            //         data = data / 1024;
+            //         label = 'KB';
+            //         data = data.toFixed(2);
+            //     }
+            //     else{
+            //         label = 'B';
+            //     }
+            //     return data+' '+label;
+            // }
 
-            function parseUnit(data,type){
-                data = parseInt(data);
-                if(type == 'GigaBytes'){
-                    data = data / 1073741824;
-                }
-                else if(type == 'MegaBytes'){
-                    data = data / 1048576;
-                }                   
-                else if(type == 'KiloBytes'){
-                    data = data / 1024;
-                }
+            // function parseUnit(data,type){
+            //     data = parseInt(data);
+            //     if(type == 'GigaBytes'){
+            //         data = data / 1073741824;
+            //     }
+            //     else if(type == 'MegaBytes'){
+            //         data = data / 1048576;
+            //     }                   
+            //     else if(type == 'KiloBytes'){
+            //         data = data / 1024;
+            //     }
 
-                return data.toFixed(1);
-            }
+            //     return data.toFixed(1);
+            // }
 
-            function getUnit(data){
-                data = parseInt(data);
-                if(Math.floor(data/1073741824) != 0){
-                    label = 'GigaBytes';
-                }
-                else if(Math.floor(data / 1048576) != 0){
-                    label = 'MegaBytes';
-                }                   
-                else if(Math.floor(data / 1024) != 0){
-                    label = 'KiloBytes';
-                }
-                else{
-                    label = 'Bytes';
-                }
-                return label;
-            }
+            // function getUnit(data){
+            //     data = parseInt(data);
+            //     if(Math.floor(data/1073741824) != 0){
+            //         label = 'GigaBytes';
+            //     }
+            //     else if(Math.floor(data / 1048576) != 0){
+            //         label = 'MegaBytes';
+            //     }                   
+            //     else if(Math.floor(data / 1024) != 0){
+            //         label = 'KiloBytes';
+            //     }
+            //     else{
+            //         label = 'Bytes';
+            //     }
+            //     return label;
+            // }
             
             function getDateForChart(parameter,time){
                 if(parameter=='hourly'){

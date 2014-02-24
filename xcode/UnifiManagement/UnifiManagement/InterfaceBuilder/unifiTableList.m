@@ -7,19 +7,23 @@
 //
 
 #import "unifiTableList.h"
-const NSInteger subjectColumnX = 10;
-const NSInteger firstColumnX = 145;
-const NSInteger secondColumnX = 220;
-const NSInteger gapBetweenRow = 18;
+
 
 @implementation unifiTableList{
     
 }
-@synthesize header,firstColumn,secondColumn,line,contentSize;
+@synthesize header,firstColumn,secondColumn,line,contentSize,subjectColumnX,subjectColumnSize,firstColumnX,secondColumnX,gapBetweenRow,firstColumnSize,secondColumnSize;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        subjectColumnX = 10;
+        subjectColumnSize = 125;
+        firstColumnX = 145;
+        secondColumnX = 220;
+        gapBetweenRow = 18;
+        firstColumnSize = 60;
+        secondColumnSize = 60;
         // Initialization code
         header =[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 105, 21)];
         header.font = [UIFont systemFontOfSize:12];
@@ -27,13 +31,13 @@ const NSInteger gapBetweenRow = 18;
         header.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
         header.textAlignment = NSTextAlignmentLeft;
         
-        firstColumn =[[UILabel alloc] initWithFrame:CGRectMake(firstColumnX, 0, 60, 21)];
+        firstColumn =[[UILabel alloc] initWithFrame:CGRectMake(firstColumnX, 0, firstColumnSize, 21)];
         firstColumn.font = [UIFont systemFontOfSize:12];
         firstColumn.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
         firstColumn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
         firstColumn.textAlignment = NSTextAlignmentCenter;
         
-        secondColumn =[[UILabel alloc] initWithFrame:CGRectMake(secondColumnX, 0, 60, 21)];
+        secondColumn =[[UILabel alloc] initWithFrame:CGRectMake(secondColumnX, 0, secondColumnSize, 21)];
         secondColumn.font = [UIFont systemFontOfSize:12];
         secondColumn.textColor = [UIColor colorWithRed:0.663 green:0.639 blue:0.671 alpha:1.0];
         secondColumn.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
@@ -54,18 +58,35 @@ const NSInteger gapBetweenRow = 18;
 
 }
 
+-(void) setFirstColumnX:(NSInteger)value{
+    firstColumnX = value;
+    firstColumn.frame =CGRectMake(firstColumnX, 0, firstColumnSize, 21);
+}
+-(void) setSecondColumnX:(NSInteger)value{
+    secondColumnX = value;
+    secondColumn.frame =CGRectMake(secondColumnX, 0, secondColumnSize, 21);
+}
+-(void) setFirstColumnSize:(NSInteger)value{
+    firstColumnSize = value;
+    firstColumn.frame =CGRectMake(firstColumnX, 0, firstColumnSize, 21);
+}
+-(void) setSecondColumnSize:(NSInteger)value{
+    secondColumnSize = value;
+    secondColumn.frame =CGRectMake(secondColumnX, 0, secondColumnSize, 21);
+}
+
 -(void)addRowWithSubjectString:(NSString *)subject andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView{
 
     
-    UILabel *subjectView =[[UILabel alloc] initWithFrame:CGRectMake( subjectColumnX , contentSize, 125, 21)];
+    UILabel *subjectView =[[UILabel alloc] initWithFrame:CGRectMake( subjectColumnX , contentSize, subjectColumnSize, 21)];
     subjectView.font = [UIFont systemFontOfSize:12];
     subjectView.textColor = [UIColor whiteColor];
     subjectView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.0];
     subjectView.textAlignment = NSTextAlignmentLeft;
     subjectView.text=subject;
     
-    firstColumnView.frame = CGRectMake(firstColumnX, contentSize, 60, 21);
-    secondColumnView.frame = CGRectMake(secondColumnX, contentSize, 60, 21);
+    firstColumnView.frame = CGRectMake(firstColumnX, contentSize, firstColumnSize, 21);
+    secondColumnView.frame = CGRectMake(secondColumnX, contentSize, secondColumnSize, 21);
     
     [self addSubview:subjectView];
     [self addSubview:firstColumnView];
@@ -76,9 +97,9 @@ const NSInteger gapBetweenRow = 18;
 }
 -(void)addRowWithSubjectView:(UIView*)subjectView andFirstColumnView:(UIView*)firstColumnView andSecondColumnView:(UIView*)secondColumnView{
     
-    subjectView.frame = CGRectMake( subjectColumnX , contentSize, 125, 21);
-    firstColumnView.frame = CGRectMake(firstColumnX, contentSize, 60, 21);
-    secondColumnView.frame = CGRectMake(secondColumnX, contentSize, 60, 21);
+    subjectView.frame = CGRectMake( subjectColumnX , contentSize, subjectColumnSize, 21);
+    firstColumnView.frame = CGRectMake(firstColumnX, contentSize, firstColumnSize, 21);
+    secondColumnView.frame = CGRectMake(secondColumnX, contentSize, secondColumnSize, 21);
     
     [self addSubview:subjectView];
     [self addSubview:firstColumnView];

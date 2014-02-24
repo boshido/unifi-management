@@ -52,34 +52,34 @@
     [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     
-    [unifiUserResource
-        getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
-            NSString *image;
-            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
-                if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
-                    image = @"profile.jpg";
-                }
-                else{
-                    image = [json valueForKey:@"picture"];
-                }
-                NSDictionary *dictionary = @{ @"json"  : json,
-                                              @"image" : image
-                                              };
-            
-                if([[json valueForKey:@"online"] intValue]>0){
-                    [userOnline addObject:dictionary];
-                }
-                else{
-                    [userOffline addObject:dictionary];
-                }
-            }
-            [DejalBezelActivityView removeViewAnimated:YES];
-            [userTable reloadData];
-        }
-        withHandleError:^(NSError *error) {
-            [DejalBezelActivityView removeViewAnimated:YES];
-        }
-    ];
+//    [unifiUserResource
+//        getUserList:^(NSJSONSerialization *responseJSON,NSString *reponseString){
+//            NSString *image;
+//            for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
+//                if([json valueForKey:@"picture"] == NULL || [json valueForKey:@"picture"] == [NSNull null]){
+//                    image = @"profile.jpg";
+//                }
+//                else{
+//                    image = [json valueForKey:@"picture"];
+//                }
+//                NSDictionary *dictionary = @{ @"json"  : json,
+//                                              @"image" : image
+//                                              };
+//            
+//                if([[json valueForKey:@"online"] intValue]>0){
+//                    [userOnline addObject:dictionary];
+//                }
+//                else{
+//                    [userOffline addObject:dictionary];
+//                }
+//            }
+//            [DejalBezelActivityView removeViewAnimated:YES];
+//            [userTable reloadData];
+//        }
+//        withHandleError:^(NSError *error) {
+//            [DejalBezelActivityView removeViewAnimated:YES];
+//        }
+//    ];
     
 }
 - (void)didReceiveMemoryWarning

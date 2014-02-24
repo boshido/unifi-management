@@ -14,7 +14,9 @@
 
 @end
 
-@implementation unifiTabViewController
+@implementation unifiTabViewController{
+    NSTimer *autoLoad;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,10 +44,18 @@
 //    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
 //    [self.view addGestureRecognizer:swipeRight];
 //    swipeRight.delegate = self;
-    [self loadNotification];
-    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNotification) userInfo:nil repeats:YES];
+    
 }
-
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self loadNotification];
+    autoLoad = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loadNotification) userInfo:nil repeats:YES];
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [autoLoad invalidate];
+    autoLoad = Nil;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

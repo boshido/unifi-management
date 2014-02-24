@@ -75,7 +75,6 @@
             self.thirdDetailTextLabel.frame = CGRectMake(225.0f,20.0f, 100, 20);
             break;
         case TextWithTreeDetailRowStyle:
-            [self setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
             self.textLabel.frame = CGRectMake(15.0f, 10.0f, 280, 20);
             self.textLabel.font = [UIFont systemFontOfSize:13];
             self.textLabel.textColor = [UIColor colorWithRed:0.435 green:0.443 blue:0.475 alpha:1.0];

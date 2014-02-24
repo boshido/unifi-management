@@ -15,7 +15,7 @@ static unifiGlobalVariable *sharedGlobalData = nil;
     if(sharedGlobalData == nil){
         sharedGlobalData = [[super allocWithZone:NULL] init];
         // initial value
-        [self initialValue];
+        //[self initialValue];
     }
     return sharedGlobalData;
 }
@@ -39,5 +39,14 @@ static unifiGlobalVariable *sharedGlobalData = nil;
     sharedGlobalData.profilePicture=@"";
     sharedGlobalData.refreshToken=@"";
     sharedGlobalData.iosToken=@"";
+}
++(void) refreshValue{
+    sharedGlobalData.permissionName=@"";
+    sharedGlobalData.permissionNumber=-1;
+    sharedGlobalData.name=@"";
+    sharedGlobalData.surname=@"";
+    sharedGlobalData.email=@"";
+    sharedGlobalData.profilePicture=@"";
+    sharedGlobalData.refreshToken=@"";
 }
 @end

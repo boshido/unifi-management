@@ -10,6 +10,9 @@
 #import "DejalActivityView.h"
 #import "unifiDeviceResource.h"
 #import "unifiFailureViewController.h"
+#import "unifiDeviceHistoryViewController.h"
+#import "unifiUserListViewController.h"
+
 static NSInteger TimePlus = 60*60*24*5;
 
 @interface unifiDeviceProfileViewController ()
@@ -22,7 +25,7 @@ static NSInteger TimePlus = 60*60*24*5;
     NSTimeInterval timeStart,timeEnd;
     ApiErrorCallback handleError;
 }
-@synthesize hostname,mac,ip,wlan,download,upload,activity,signal,signalImg,deviceImg,deviceMac,statisticChart,blockBtn,statusImg,authorizeBtn;
+@synthesize deviceData,hostname,mac,ip,wlan,group,download,upload,activity,signal,signalImg,deviceImg,deviceMac,statisticChart,blockBtn,statusImg,authorizeBtn;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -37,6 +40,18 @@ static NSInteger TimePlus = 60*60*24*5;
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
    
+    
+    
+    __weak typeof(self) weakSelf=self;
+    handleError= ^(NSError *error) {
+        [DejalBezelActivityView removeViewAnimated:YES];
+        unifiFailureViewController *failureController = [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
+        //failureController.delegate = weakSelf;
+        [[weakSelf navigationController] presentViewController:failureController animated:YES completion:nil];
+    };
+    
+}
+- (void)viewDidAppear:(BOOL)animated{
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"devicetrafficchart" ofType:@"html"]]];
     
     UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
@@ -48,21 +63,12 @@ static NSInteger TimePlus = 60*60*24*5;
     swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
     [statisticChart addGestureRecognizer:swipeRight];
     swipeRight.delegate = self;
-
+    
     statisticChart.delegate = self;
     statisticChart.scrollView.scrollEnabled = NO;
     statisticChart.scrollView.bounces = NO;
-
+    
     [statisticChart loadRequest:urlRequest];
-    
-    __weak typeof(self) weakSelf=self;
-    handleError= ^(NSError *error) {
-        [DejalBezelActivityView removeViewAnimated:YES];
-        unifiFailureViewController *failureController = [[weakSelf storyboard] instantiateViewControllerWithIdentifier:@"unifiFailureViewController"];
-        //failureController.delegate = weakSelf;
-        [[weakSelf navigationController] presentViewController:failureController animated:YES completion:nil];
-    };
-    
 }
 - (void)initialize{
     isFirstLoad = true;
@@ -73,7 +79,7 @@ static NSInteger TimePlus = 60*60*24*5;
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     [self loadDevice];
     [self dailyStatisticWithLoading:NO];
-    autoLoad = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(loadDevice) userInfo:nil repeats:YES];
+    //autoLoad = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(loadDevice) userInfo:nil repeats:YES];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -86,14 +92,11 @@ static NSInteger TimePlus = 60*60*24*5;
     [unifiDeviceResource
      getDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-            NSJSONSerialization *json  = [responseJSON valueForKey:@"data"];
-            NSString *_hostname,*_deviceImg,*_statusImg,*_download,*_upload,*_activity,*_ip,*_wlan,*_signal,*_signalImg;
-            _hostname = [json valueForKey:@"hostname"] == [NSNull null] ? @"No Hostname" : [json valueForKey:@"hostname"];
+            deviceData  = [responseJSON valueForKey:@"data"];
+            NSString *_hostname,*_deviceImg,*_statusImg,*_download,*_upload,*_activity,*_ip,*_wlan,*_group,*_signal,*_signalImg;
+            _hostname = [deviceData valueForKey:@"hostname"] == [NSNull null] ? @"No Hostname" : [deviceData valueForKey:@"hostname"];
             
-            
-//         if([[json valueForKey:@"is_auth"] boolValue]){
-//             [authorizeBtn setSelected:YES];
-//         }
+            _group = [deviceData valueForKey:@"usergroup_name"];
             
             NSRange search = [_hostname rangeOfString:@"iphone" options:NSCaseInsensitiveSearch];
             if(search.location != NSNotFound)
@@ -119,17 +122,17 @@ static NSInteger TimePlus = 60*60*24*5;
             if([[responseJSON valueForKey:@"code"] intValue] == 200){
                 _statusImg = @"Dotted.png";
                 
-                _download =  [self getValueWithUnit:[[json valueForKey:@"rx_bytes"] floatValue]];
-                _upload = [self getValueWithUnit:[[json valueForKey:@"tx_bytes"] floatValue]];
-                _activity = [NSString stringWithFormat:@"%@/Sec",[self getValueWithUnit:[[json valueForKey:@"bytes.r"] floatValue]]];
-                _ip = [json valueForKey:@"ip"];
-                _wlan = [json valueForKey:@"essid"];
+                _download =  [self getValueWithUnit:[[deviceData valueForKey:@"rx_bytes"] floatValue]];
+                _upload = [self getValueWithUnit:[[deviceData valueForKey:@"tx_bytes"] floatValue]];
+                _activity = [NSString stringWithFormat:@"%@/Sec",[self getValueWithUnit:[[deviceData valueForKey:@"bytes.r"] floatValue]]];
+                _ip = [deviceData valueForKey:@"ip"];
+                _wlan = [deviceData valueForKey:@"essid"];
                 
                 NSInteger quality;
-                if([[json valueForKey:@"signal"] intValue] <= -100)
+                if([[deviceData valueForKey:@"signal"] intValue] <= -100)
                     quality=0;
-                else if([[json valueForKey:@"signal"] intValue] >= -50)quality = 100;
-                else quality = 2 * ([[json valueForKey:@"signal"] intValue] + 100);
+                else if([[deviceData valueForKey:@"signal"] intValue] >= -50)quality = 100;
+                else quality = 2 * ([[deviceData valueForKey:@"signal"] intValue] + 100);
                 
                 _signal = [NSString stringWithFormat:@"%i%%",quality];
                 
@@ -139,9 +142,6 @@ static NSInteger TimePlus = 60*60*24*5;
             }
             else{
                 
-                if([[json valueForKey:@"blocked"] boolValue]){
-                    [blockBtn setSelected:YES];
-                }
                 _statusImg = @"DottedSelected.png";
                 _download = @"-";
                 _upload = @"-";
@@ -155,15 +155,22 @@ static NSInteger TimePlus = 60*60*24*5;
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [deviceImg setImage:[UIImage imageNamed:_deviceImg]];
                 hostname.text = _hostname;
-                mac.text = [json valueForKey:@"mac"];
+                mac.text = [deviceData valueForKey:@"mac"];
                 statusImg.image = [UIImage imageNamed:_statusImg];
                 download.text = _download;
                 upload.text = _upload;
                 activity.text = _activity;
                 ip.text = _ip;
                 wlan.text = _wlan;
+                group.text = _group;
                 signal.text = _signal;
                 signalImg.image = [UIImage imageNamed:_signalImg];
+                if([[deviceData valueForKey:@"blocked"] boolValue]){
+                    [blockBtn setSelected:YES];
+                }
+                if([[deviceData valueForKey:@"is_auth"] boolValue]){
+                    [authorizeBtn setSelected:YES];
+                }
                 
                 if(!isFirstLoad){
                     [DejalBezelActivityView removeViewAnimated:YES];
@@ -191,7 +198,7 @@ static NSInteger TimePlus = 60*60*24*5;
                  long long max=0;
                  for(NSMutableDictionary *json in [responseJSON valueForKey:@"data"]){
                      [dataSource addObject: @{
-                                              @"date":[ NSNumber numberWithLongLong:[[json valueForKey:@"date"] longLongValue]*1000 ],
+                                              @"date":[ NSNumber numberWithLongLong:[[[json valueForKey:@"datetime"] valueForKey:@"sec"] longLongValue]*1000 ],
                                               @"download":[ NSNumber numberWithLongLong:[[json valueForKey:@"tx_bytes"] longLongValue]],
                                               @"upload":[ NSNumber numberWithLongLong:[[json valueForKey:@"rx_bytes"] longLongValue]]
                                               }];
@@ -222,50 +229,23 @@ static NSInteger TimePlus = 60*60*24*5;
     ];
 }
 
--(IBAction)blockDevice:(id)sender{
-    
-    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
-    if(!blockBtn.isSelected){
-        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
-        [unifiDeviceResource
-             blockDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-                 [blockBtn setSelected:YES];
-                 [self loadDevice];
-             }
-             withHandleError:handleError
-             fromMac:deviceMac
-        ];
-    }
-    else{
-        [unifiDeviceResource
-         unBlockDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
-             [blockBtn setSelected:NO];
-             [self loadDevice];
-         }
-         withHandleError:handleError
-         fromMac:deviceMac
-         ];
-    }
-
-}
-
 // ----------------------------------   View        ------------------------------------
 
 -(NSString *)getValueWithUnit:(float)value{
     if((NSInteger)(value/1073741824) != 0){
         value = value / 1073741824;
-        return [NSString stringWithFormat:@"%0.0f %@",value,@"GB"];
+        return [NSString stringWithFormat:@"%.1f %@",value,@"GB"];
     }
     else if((NSInteger)(value / 1048576) != 0){
         value = value / 1048576;
-        return [NSString stringWithFormat:@"%0.0f %@",value,@"MB"];
+        return [NSString stringWithFormat:@"%.1f %@",value,@"MB"];
     }
     else if((NSInteger)(value / 1024) != 0){
         value = value / 1024;
-        return [NSString stringWithFormat:@"%0.0f %@",value,@"KB"];
+        return [NSString stringWithFormat:@"%.1f %@",value,@"KB"];
     }
     else{
-        return [NSString stringWithFormat:@"%0.0f %@",value,@"B"];
+        return [NSString stringWithFormat:@"%.1f %@",value,@"B"];
     }
 }
 // ----------------------------------   Delegate    ------------------------------------
@@ -280,6 +260,62 @@ static NSInteger TimePlus = 60*60*24*5;
 // ----------------------------------   Event    ------------------------------------
 -(IBAction)backToParent:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
+}
+-(IBAction)blockDevice:(id)sender{
+    
+    [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+    if(!blockBtn.isSelected){
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+        [unifiDeviceResource
+         blockDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+             [blockBtn setSelected:YES];
+             [self loadDevice];
+         }
+         withHandleError:handleError
+         fromMac:deviceMac
+         ];
+    }
+    else{
+        [unifiDeviceResource
+         unBlockDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+             [blockBtn setSelected:NO];
+             [self loadDevice];
+         }
+         withHandleError:handleError
+         fromMac:deviceMac
+         ];
+    }
+    
+}
+
+-(IBAction)authorizeDevice:(id)sender{
+    
+    if(!authorizeBtn.isSelected){
+        unifiUserListViewController *userList = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiUserListViewController"];
+        userList.deviceMac = [deviceData valueForKey:@"mac"];
+        userList.deviceHostname = [deviceData valueForKey:@"hostname"] == [NSNull null] ? @"" : [deviceData valueForKey:@"hostname"];
+        [self.navigationController pushViewController:userList animated:YES];
+    }
+    else{
+        [DejalBezelActivityView currentActivityView].showNetworkActivityIndicator = YES;
+        [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
+        [unifiDeviceResource
+         unAuthorizeDevice:^(NSJSONSerialization *responseJSON, NSString *responseNSString) {
+             [authorizeBtn setSelected:NO];
+             [self performSelector:@selector(loadDevice) withObject:Nil afterDelay:1.0f];
+         }
+         withHandleError:handleError
+         fromMac:deviceMac
+         ];
+    }
+    
+}
+
+-(IBAction)viewHistory:(id)sender
+{
+    unifiDeviceHistoryViewController *history = [self.storyboard instantiateViewControllerWithIdentifier:@"unifiDeviceHistoryViewController"];
+    history.deviceMac=deviceMac;
+    [self.navigationController pushViewController:history animated:YES ];
 }
 
 -(void) swipeRight:(UISwipeGestureRecognizer *) recognizer {
