@@ -212,7 +212,6 @@
                     average.text = _average;
                     
                     [ chart stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"setValue(%@,\"%@\",\"%@\",%@)", jsonString,unit,timeType,isTraffic ? @"true" : @"false"]];
-                    NSLog(@"%@",[NSString stringWithFormat:@"setValue(%@,\"%@\",\"%@\",%@)", jsonString,unit,timeType,isTraffic ? @"true" : @"false"]);
                 }
                 [DejalBezelActivityView removeViewAnimated:YES];
             });
@@ -243,18 +242,19 @@
     [DejalBezelActivityView activityViewForView:self.view withLabel:@"Loading."];
     [unifiSystemResource
          getTrafficUserReport:^(NSJSONSerialization *responseJSON,NSString *responseString){
-             //NSLog(@"%@",responseString);
              if(coverView.alpha==1)coverView.alpha=0;
              if(responseJSON != nil){
                  if([[responseJSON valueForKey:@"code"] intValue] == 200){
                      unifiTableList *authList = [[unifiTableList alloc] initWithFrame:CGRectMake(10, 7, 300, 0)];
+                     authList.userInteractionEnabled=YES;
                      authList.header.text = @"Authorize Users";
                      authList.firstColumn.text = @"Hostname";
                      authList.secondColumn.text= @"Usage";
                      authList.firstColumnSize = authList.firstColumnSize+30;
                      authList.secondColumnX = authList.secondColumnX+15;
                      
-                     unifiTableList *noAuthList = [[unifiTableList alloc] initWithFrame:CGRectMake(0,0,300,0)];
+                     unifiTableList *noAuthList = [[unifiTableList alloc] initWithFrame:CGRectMake(10,0,300,0)];
+                     noAuthList.userInteractionEnabled=YES;
                      noAuthList.header.text = @"Pending Device";
                      noAuthList.firstColumn.text=@"Hostname";
                      noAuthList.secondColumn.text=@"Usage";
@@ -320,7 +320,7 @@
                          }
                      }
                      
-                    noAuthList.frame = CGRectMake(10, authList.contentSize+12, 300, 0);
+                    noAuthList.frame = CGRectMake(10, authList.contentSize+12, noAuthList.frame.size.width, noAuthList.frame.size.height);
                     [scrollView addSubview:authList];
                     [scrollView addSubview:noAuthList];
                     [scrollView setContentSize:CGSizeMake(300, noAuthList.contentSize + noAuthList.frame.origin.y+30)];

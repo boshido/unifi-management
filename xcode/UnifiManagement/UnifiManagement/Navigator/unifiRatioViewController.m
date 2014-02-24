@@ -161,7 +161,6 @@
                      
                      dispatch_async(dispatch_get_main_queue(), ^(void){
                          ratioChart.alpha =1;
-                         NSLog(@"%@",jsonString);
                          if(pageNumber == 1){
                             header.text = @"Wlan Device Count";
                              leftButton.alpha=0;
