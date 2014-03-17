@@ -29,6 +29,7 @@
     
     [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"BlackBG.png"]];
     [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"BlackBG.png"]];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:0.106 green:0.718 blue:0.651 alpha:1.0]];
     // For Tab Bar
 //    [[UITabBar appearance] setBackgroundImage:BarBackground];
 //    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"BarBG.png"]];
